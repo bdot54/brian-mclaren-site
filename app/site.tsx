@@ -91,6 +91,27 @@ const recentWriting = [
   },
 ];
 
+const SPEAKING_EMAIL = "mclaren.brian@gmail.com";
+
+function createSpeakingEmail(form: FormData) {
+  const value = (name: string) => String(form.get(name) ?? "").trim();
+  const subject = `Speaking inquiry from ${value("name")}`;
+  const body = [
+    `Name: ${value("name")}`,
+    `Email: ${value("email")}`,
+    `Organization: ${value("organization")}`,
+    `Proposed date(s): ${value("proposedDates")}`,
+    `Audience: ${value("audience")}`,
+    `Format: ${value("format")}`,
+    `Topic or theme: ${value("topics") || "Not provided"}`,
+    "",
+    "Additional details:",
+    value("message") || "Not provided",
+  ].join("\n");
+
+  return `mailto:${SPEAKING_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+
 export function BrianSite() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [selectedPath, setSelectedPath] = useState(pathways[0]);
@@ -99,8 +120,9 @@ export function BrianSite() {
 
   async function submitNewsletter(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const newsletterForm = event.currentTarget;
     setNewsletterStatus("Joining…");
-    const form = new FormData(event.currentTarget);
+    const form = new FormData(newsletterForm);
 
     try {
       const response = await fetch("/api/newsletter", {
@@ -110,7 +132,7 @@ export function BrianSite() {
       });
       const result = (await response.json()) as { error?: string };
       if (!response.ok) throw new Error(result.error || "Please try again.");
-      event.currentTarget.reset();
+      newsletterForm.reset();
       setNewsletterStatus("You’re on the list. Welcome.");
     } catch (error) {
       setNewsletterStatus(
@@ -121,8 +143,10 @@ export function BrianSite() {
 
   async function submitInquiry(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const inquiryForm = event.currentTarget;
     setInquiryStatus("Sending your inquiry…");
-    const form = new FormData(event.currentTarget);
+    const form = new FormData(inquiryForm);
+    const emailLink = createSpeakingEmail(form);
 
     try {
       const response = await fetch("/api/speaking", {
@@ -132,10 +156,11 @@ export function BrianSite() {
       });
       const result = (await response.json()) as { error?: string };
       if (!response.ok) throw new Error(result.error || "Please try again.");
-      event.currentTarget.reset();
+      inquiryForm.reset();
       setInquiryStatus(
-        "Thank you. Your invitation has been received for review.",
+        `Thank you. Your inquiry has been saved, and your email app is opening a message to ${SPEAKING_EMAIL}. Send that message to complete your inquiry.`,
       );
+      window.location.href = emailLink;
     } catch (error) {
       setInquiryStatus(
         error instanceof Error ? error.message : "Please try again.",
