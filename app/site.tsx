@@ -12,7 +12,7 @@ const bookLinks = {
   "Life After Doom":
     "https://us.macmillan.com/books/9781250893277/lifeafterdoom/",
   "Everything Must Change":
-    "https://www.thomasnelson.com/9781400280292/everything-must-change/",
+    "https://faithgateway.com/products/everything-must-change-when-the-worlds-biggest-problems-and-jesus-good-news-collide-1",
   "The Galápagos Islands":
     "https://www.broadleafbooks.com/store/product/9781506448251/The-Galapagos-Islands",
   "The Last Voyage":
