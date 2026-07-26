@@ -70,6 +70,11 @@ test("links every pathway recommendation to its book page", async () => {
 
   assert.match(site, /href=\{bookLinks\[book\]\}/);
   assert.match(site, /target="_blank"/);
+  assert.match(
+    site,
+    /faithgateway\.com\/products\/everything-must-change-when-the-worlds-biggest-problems-and-jesus-good-news-collide-1/,
+  );
+  assert.doesNotMatch(site, /thomasnelson\.com/);
 });
 
 test("removes starter-only assets and metadata", async () => {
