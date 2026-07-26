@@ -91,27 +91,6 @@ const recentWriting = [
   },
 ];
 
-const SPEAKING_EMAIL = "mclaren.brian@gmail.com";
-
-function createSpeakingEmail(form: FormData) {
-  const value = (name: string) => String(form.get(name) ?? "").trim();
-  const subject = `Speaking inquiry from ${value("name")}`;
-  const body = [
-    `Name: ${value("name")}`,
-    `Email: ${value("email")}`,
-    `Organization: ${value("organization")}`,
-    `Proposed date(s): ${value("proposedDates")}`,
-    `Audience: ${value("audience")}`,
-    `Format: ${value("format")}`,
-    `Topic or theme: ${value("topics") || "Not provided"}`,
-    "",
-    "Additional details:",
-    value("message") || "Not provided",
-  ].join("\n");
-
-  return `mailto:${SPEAKING_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-}
-
 export function BrianSite() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [selectedPath, setSelectedPath] = useState(pathways[0]);
@@ -146,7 +125,6 @@ export function BrianSite() {
     const inquiryForm = event.currentTarget;
     setInquiryStatus("Sending your inquiry…");
     const form = new FormData(inquiryForm);
-    const emailLink = createSpeakingEmail(form);
 
     try {
       const response = await fetch("/api/speaking", {
@@ -157,10 +135,7 @@ export function BrianSite() {
       const result = (await response.json()) as { error?: string };
       if (!response.ok) throw new Error(result.error || "Please try again.");
       inquiryForm.reset();
-      setInquiryStatus(
-        `Thank you. Your inquiry has been saved, and your email app is opening a message to ${SPEAKING_EMAIL}. Send that message to complete your inquiry.`,
-      );
-      window.location.href = emailLink;
+      setInquiryStatus("Thank you. Your inquiry has been emailed to Brian’s team.");
     } catch (error) {
       setInquiryStatus(
         error instanceof Error ? error.message : "Please try again.",
@@ -277,7 +252,7 @@ export function BrianSite() {
               </div>
               <figcaption className="portrait-caption">
                 <strong>Brian D. McLaren</strong>
-                <span>Writer · teacher · restless questioner</span>
+                <span>Writer · teacher · public theologian</span>
               </figcaption>
             </figure>
           </div>
@@ -305,7 +280,7 @@ export function BrianSite() {
             <div className="section-heading">
               <div>
                 <p className="eyebrow">Current work</p>
-                <h2 id="now-heading">What Brian is exploring now</h2>
+                <h2 id="now-heading">Brian’s Latest &amp; Upcoming Works</h2>
               </div>
               <p>
                 New fiction imagines humanity’s next chapter. New nonfiction
@@ -732,8 +707,8 @@ export function BrianSite() {
               <div className="archive-box">
                 <h3>Two decades of questions, ideas, and conversation</h3>
                 <p>
-                  The full WordPress archive remains searchable while a
-                  carefully selected collection is prepared for this new home.
+                  Search an archive of Brian’s writings, speaking engagements,
+                  podcasts, and more.
                 </p>
                 <form
                   className="archive-search"
@@ -767,7 +742,9 @@ export function BrianSite() {
           <div className="section-inner newsletter-grid">
             <div className="newsletter-copy">
               <p className="eyebrow">Stay in the conversation</p>
-              <h2 id="newsletter-heading">A thoughtful letter, when there’s something to say</h2>
+              <h2 id="newsletter-heading">
+                A thoughtful outreach, only when there’s something to say
+              </h2>
               <p>
                 New writing, book news, events, and a few useful things worth
                 sharing—sent with care, never clutter.
