@@ -13,6 +13,9 @@ test("builds the Brian McLaren site and its core journeys", async () => {
   assert.match(site, /Exploring faith, courage/);
   assert.match(site, /The Last Voyage/);
   assert.match(site, /Begin a speaking inquiry/);
+  assert.match(site, /mclaren\.brian@gmail\.com/);
+  assert.match(site, /inquiryForm\.reset\(\)/);
+  assert.doesNotMatch(site, /event\.currentTarget\.reset\(\)/);
   assert.match(site, /Join the letter/);
   assert.doesNotMatch(site, /codex-preview|Your site is taking shape/);
 });
