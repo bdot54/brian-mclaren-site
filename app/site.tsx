@@ -2,27 +2,61 @@
 
 import { FormEvent, useState } from "react";
 
+const bookLinks = {
+  "Faith After Doubt":
+    "https://us.macmillan.com/books/9781250828378/faithafterdoubt/",
+  "Do I Stay Christian?":
+    "https://us.macmillan.com/books/9781250262790/doistaychristian/",
+  "A Generous Orthodoxy":
+    "https://www.zondervan.com/9780310258032/a-generous-orthodoxy/",
+  "Life After Doom":
+    "https://us.macmillan.com/books/9781250893277/lifeafterdoom/",
+  "Everything Must Change":
+    "https://www.thomasnelson.com/9781400280292/everything-must-change/",
+  "The Galápagos Islands":
+    "https://www.broadleafbooks.com/store/product/9781506448251/The-Galapagos-Islands",
+  "The Last Voyage":
+    "https://www.hachette.com.au/brian-d-mclaren/the-last-voyage",
+  "The Great Rift":
+    "https://www.hachette.co.uk/titles/brian-d-mclaren/the-great-rift/9781399838788/",
+  "The Seventh Story": "https://www.theseventhstory.com/paperback",
+} as const;
+
+type RecommendedBook = keyof typeof bookLinks;
+
 const pathways = [
   {
     id: "renew",
     label: "My faith is changing",
     title: "A wiser faith can make room for honest doubt.",
     body: "Begin with Brian’s work on spiritual growth, religious identity, and the possibility of a faith that becomes more generous as it matures.",
-    books: ["Faith After Doubt", "Do I Stay Christian?", "A Generous Orthodoxy"],
+    books: [
+      "Faith After Doubt",
+      "Do I Stay Christian?",
+      "A Generous Orthodoxy",
+    ] satisfies RecommendedBook[],
   },
   {
     id: "world",
     label: "The world feels fragile",
     title: "Face reality fully—without surrendering courage.",
     body: "Explore writing about ecological overshoot, social fracture, grief, resilience, and the communities we need for a turbulent future.",
-    books: ["Life After Doom", "Everything Must Change", "The Galápagos Islands"],
+    books: [
+      "Life After Doom",
+      "Everything Must Change",
+      "The Galápagos Islands",
+    ] satisfies RecommendedBook[],
   },
   {
     id: "future",
     label: "I want a story",
     title: "Sometimes fiction helps us see the present more clearly.",
     body: "Travel beyond Earth with speculative stories about technology, power, belonging, and the human values worth carrying into any future.",
-    books: ["The Last Voyage", "The Great Rift", "The Seventh Story"],
+    books: [
+      "The Last Voyage",
+      "The Great Rift",
+      "The Seventh Story",
+    ] satisfies RecommendedBook[],
   },
 ];
 
@@ -34,7 +68,7 @@ const books = [
     image: "/the-last-voyage.jpg",
     alt: "Cover of The Last Voyage",
     copy: "A science-fiction journey asking what humanity should carry forward—and what we must leave behind.",
-    href: "https://www.hachette.com.au/brian-d-mclaren/the-last-voyage",
+    href: bookLinks["The Last Voyage"],
   },
   {
     title: "Life After Doom",
@@ -43,7 +77,7 @@ const books = [
     image: "/life-after-doom.jpg",
     alt: "Cover of Life After Doom",
     copy: "Wisdom, grief, and resilient hope for a world confronting overlapping crises.",
-    href: "https://us.macmillan.com/books/9781250893277/lifeafterdoom/",
+    href: bookLinks["Life After Doom"],
   },
   {
     title: "Do I Stay Christian?",
@@ -52,7 +86,7 @@ const books = [
     image: "/do-i-stay-christian.jpg",
     alt: "Cover of Do I Stay Christian?",
     copy: "A candid guide for doubters, the disappointed, and the disillusioned.",
-    href: "https://us.macmillan.com/books/9781250262790/doistaychristian/",
+    href: bookLinks["Do I Stay Christian?"],
   },
   {
     title: "Faith After Doubt",
@@ -61,7 +95,7 @@ const books = [
     image: "/faith-after-doubt.jpg",
     alt: "Cover of Faith After Doubt",
     copy: "Why old beliefs stop working—and how doubt can lead toward a deeper faith.",
-    href: "https://us.macmillan.com/books/9781250828378/faithafterdoubt/",
+    href: bookLinks["Faith After Doubt"],
   },
 ];
 
@@ -371,7 +405,14 @@ export function BrianSite() {
               <p>{selectedPath.body}</p>
               <div className="pathway-books" aria-label="Suggested books">
                 {selectedPath.books.map((book) => (
-                  <span key={book}>{book}</span>
+                  <a
+                    href={bookLinks[book]}
+                    target="_blank"
+                    rel="noreferrer"
+                    key={book}
+                  >
+                    {book}
+                  </a>
                 ))}
               </div>
             </div>

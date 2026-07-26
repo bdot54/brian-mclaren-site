@@ -781,7 +781,7 @@ img {
   z-index: 1;
 }
 
-.pathway-books span {
+.pathway-books a {
   border: 1px solid rgba(255, 255, 255, 0.28);
   border-radius: 99px;
   font-size: 0.72rem;
@@ -789,6 +789,17 @@ img {
   letter-spacing: 0.05em;
   padding: 0.65rem 0.9rem;
   text-transform: uppercase;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease;
+}
+
+.pathway-books a:hover,
+.pathway-books a:focus-visible {
+  background: var(--paper-light);
+  border-color: var(--paper-light);
+  color: var(--ink);
 }
 
 .books-section {

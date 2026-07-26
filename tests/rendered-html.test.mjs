@@ -42,6 +42,36 @@ test("uses server-side transactional email for speaking inquiries", async () => 
   assert.match(speakingRoute, /escapeHtml/);
 });
 
+test("links every pathway recommendation to its book page", async () => {
+  const site = await readFile(
+    new URL("../app/site.tsx", import.meta.url),
+    "utf8",
+  );
+
+  const recommendedBooks = [
+    "Faith After Doubt",
+    "Do I Stay Christian?",
+    "A Generous Orthodoxy",
+    "Life After Doom",
+    "Everything Must Change",
+    "The Galápagos Islands",
+    "The Last Voyage",
+    "The Great Rift",
+    "The Seventh Story",
+  ];
+
+  for (const book of recommendedBooks) {
+    assert.match(
+      site,
+      new RegExp(`"${book.replace(/[?]/g, "\\?")}":?\\s*["\\n]`),
+      `Missing link mapping for ${book}`,
+    );
+  }
+
+  assert.match(site, /href=\{bookLinks\[book\]\}/);
+  assert.match(site, /target="_blank"/);
+});
+
 test("removes starter-only assets and metadata", async () => {
   const [page, layout, packageJson] = await Promise.all([
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
