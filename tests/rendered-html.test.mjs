@@ -13,11 +13,33 @@ test("builds the Brian McLaren site and its core journeys", async () => {
   assert.match(site, /Exploring faith, courage/);
   assert.match(site, /The Last Voyage/);
   assert.match(site, /Begin a speaking inquiry/);
-  assert.match(site, /mclaren\.brian@gmail\.com/);
   assert.match(site, /inquiryForm\.reset\(\)/);
+  assert.match(site, /emailed to Brian’s team/);
+  assert.doesNotMatch(site, /mailto:/);
   assert.doesNotMatch(site, /event\.currentTarget\.reset\(\)/);
   assert.match(site, /Join the letter/);
+  assert.match(site, /Writer · teacher · public theologian/);
+  assert.match(site, /Brian’s Latest &amp; Upcoming Works/);
+  assert.match(site, /Search an archive of Brian’s writings/);
+  assert.match(site, /A thoughtful outreach, only when there’s something to say/);
+  assert.doesNotMatch(site, /restless questioner/);
+  assert.doesNotMatch(site, /What Brian is exploring now/);
   assert.doesNotMatch(site, /codex-preview|Your site is taking shape/);
+});
+
+test("uses server-side transactional email for speaking inquiries", async () => {
+  const speakingRoute = await readFile(
+    new URL("../app/api/speaking/route.ts", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(speakingRoute, /https:\/\/api\.resend\.com\/emails/);
+  assert.match(speakingRoute, /RESEND_API_KEY/);
+  assert.match(speakingRoute, /SPEAKING_FROM_EMAIL/);
+  assert.match(speakingRoute, /mclaren\.brian@gmail\.com/);
+  assert.match(speakingRoute, /reply_to: inquiry\.email/);
+  assert.match(speakingRoute, /Idempotency-Key/);
+  assert.match(speakingRoute, /escapeHtml/);
 });
 
 test("removes starter-only assets and metadata", async () => {
