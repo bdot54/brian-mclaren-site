@@ -128,11 +128,26 @@ const books = [
 ];
 
 const topics = [
-  "Faith after certainty",
-  "Courage in a world falling apart",
-  "Spirituality and social transformation",
-  "A just and generous Christianity",
-  "Story, belonging, and the human future",
+  {
+    title: "Faith after certainty",
+    body: "An honest, hopeful conversation for people whose inherited beliefs no longer fit—exploring how doubt can become a doorway to a more mature, generous faith.",
+  },
+  {
+    title: "Courage in a world falling apart",
+    body: "How do we face ecological, social, and personal upheaval without denial or despair? Brian offers practices for grief, resilience, and courageous action.",
+  },
+  {
+    title: "Spirituality and social transformation",
+    body: "A practical exploration of how contemplation, compassion, and inner transformation can become fuel for justice, repair, and the common good.",
+  },
+  {
+    title: "A just and generous Christianity",
+    body: "A vision of Christianity centered on the way of Jesus: expansive love, humility, inclusion, and solidarity across differences.",
+  },
+  {
+    title: "Story, belonging, and the human future",
+    body: "An imaginative look at the stories shaping our identities and our future—and how better stories can help us build belonging and choose what humanity carries forward.",
+  },
 ];
 
 const recentWriting = [
@@ -519,21 +534,41 @@ export function BrianSite() {
                 just, generous, and compassionate way forward.
               </p>
               <div className="about-points">
-                <div className="about-point">
+                <a className="about-point about-point-link" href="/books">
                   <strong>Author</strong>
                   <span>More than twenty books across nonfiction and fiction.</span>
-                </div>
+                </a>
                 <div className="about-point">
                   <strong>Speaker</strong>
                   <span>Keynotes, conversations, retreats, and virtual gatherings.</span>
                 </div>
                 <div className="about-point">
                   <strong>Teacher</strong>
-                  <span>Faculty member with the Center for Action and Contemplation.</span>
+                  <span>
+                    Faculty member with the{" "}
+                    <a
+                      href="https://cac.org/about/cac-faculty/"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Center for Action and Contemplation
+                    </a>
+                    .
+                  </span>
                 </div>
                 <div className="about-point">
                   <strong>Podcaster</strong>
-                  <span>Co-host of the CAC podcast Learning How to See.</span>
+                  <span>
+                    Co-host of the CAC podcast{" "}
+                    <a
+                      href="https://cac.org/podcast/learning-how-to-see/"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Learning How to See
+                    </a>
+                    .
+                  </span>
                 </div>
               </div>
             </div>
@@ -565,10 +600,14 @@ export function BrianSite() {
               </div>
               <div className="topic-list" aria-label="Possible speaking themes">
                 {topics.map((topic, index) => (
-                  <div key={topic}>
-                    <span>0{index + 1}</span>
-                    <p>{topic}</p>
-                  </div>
+                  <details className="topic-item" key={topic.title}>
+                    <summary>
+                      <span>0{index + 1}</span>
+                      <span className="topic-title">{topic.title}</span>
+                      <i aria-hidden="true">+</i>
+                    </summary>
+                    <p className="topic-description">{topic.body}</p>
+                  </details>
                 ))}
               </div>
             </div>
@@ -815,8 +854,9 @@ export function BrianSite() {
                 A thoughtful outreach, only when there’s something to say
               </h2>
               <p>
-                New writing, book news, events, and a few useful things worth
-                sharing—sent with care, never clutter.
+                Join the letter for updates on new writing, book news, events,
+                and a few useful things worth sharing—sent with care, never
+                clutter.
               </p>
             </div>
 
