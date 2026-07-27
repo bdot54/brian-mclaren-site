@@ -154,8 +154,31 @@ test("keeps internal links, media, and verified destinations intact", async () =
   assert.match(site, /instagram\.com\/brian_mclaren\//);
   assert.match(
     site,
-    /a-new-book-by-a-good-friend-birthing-the-symbiotic-age\//,
+    /a-new-book-by-a-good-friend-birthing-the-symbiotic-age/,
   );
+  assert.match(site, /action="\/archive"/);
+  assert.doesNotMatch(site, /brianmclaren\.net/);
+});
+
+test("includes a searchable local copy of the full legacy archive", async () => {
+  const [archivePage, archiveEntryPage, indexText, entryText] = await Promise.all([
+    readFile(new URL("../app/archive/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/archive/[slug]/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../public/archive/index.json", import.meta.url), "utf8"),
+    readFile(
+      new URL("../public/archive/content/78840.json", import.meta.url),
+      "utf8",
+    ),
+  ]);
+  const archive = JSON.parse(indexText);
+
+  assert.equal(archive.count, 4992);
+  assert.equal(archive.entries.length, 4992);
+  assert.match(archivePage, /search-index\.json/);
+  assert.match(archivePage, /Search the complete archive/);
+  assert.match(archiveEntryPage, /archive\/content/);
+  assert.doesNotMatch(indexText, /brianmclaren\.net/);
+  assert.doesNotMatch(entryText, /brianmclaren\.net/);
 });
 
 test("includes a complete first-party books library", async () => {
