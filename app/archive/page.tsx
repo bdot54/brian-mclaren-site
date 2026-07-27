@@ -35,6 +35,8 @@ export default function ArchivePage() {
   const [archive, setArchive] = useState<ArchiveIndex | null>(null);
   const [terms, setTerms] = useState<SearchTerms | null>(null);
   const [query, setQuery] = useState(() => searchParams.get("q") ?? "");
+  const [selectedKinds, setSelectedKinds] = useState<string[]>([]);
+  const [selectedBooks, setSelectedBooks] = useState<string[]>([]);
 
   useEffect(() => {
     Promise.all([
@@ -46,13 +48,29 @@ export default function ArchivePage() {
     });
   }, []);
 
+  const contentTypes = useMemo(
+    () =>
+      archive
+        ? [...new Set(archive.entries.map((entry) => entry.taxonomy.kind))].sort()
+        : [],
+    [archive],
+  );
+  const books = useMemo(
+    () =>
+      archive
+        ? [...new Set(archive.entries.flatMap((entry) => entry.taxonomy.book ? [entry.taxonomy.book] : []))].sort()
+        : [],
+    [archive],
+  );
+  const hasFilters = selectedKinds.length > 0 || selectedBooks.length > 0;
+
   const results = useMemo(() => {
     if (!archive) return [];
     const requestedTerms = queryTerms(query);
-    if (!requestedTerms.length) return archive.entries.slice(0, 24);
-    if (!terms) return [];
+    if (requestedTerms.length && !terms) return [];
 
-    const matchedIds = requestedTerms
+    const matchedIds = requestedTerms.length
+      ? requestedTerms
       .map((term) => terms[term] ?? [])
       .reduce<number[] | null>(
         (matches, termMatches) =>
@@ -60,10 +78,15 @@ export default function ArchivePage() {
             ? termMatches
             : matches.filter((id) => termMatches.includes(id)),
         null,
-      );
+      )
+      : null;
 
     return archive.entries
-      .filter((entry) => matchedIds?.includes(entry.id))
+      .filter((entry) =>
+        (!matchedIds || matchedIds.includes(entry.id)) &&
+        (!selectedKinds.length || selectedKinds.includes(entry.taxonomy.kind)) &&
+        (!selectedBooks.length || (entry.taxonomy.book && selectedBooks.includes(entry.taxonomy.book))),
+      )
       .sort((a, b) => {
         const score = (entry: ArchiveEntry) =>
           requestedTerms.reduce(
@@ -75,11 +98,23 @@ export default function ArchivePage() {
           );
         return score(b) - score(a) || b.publishedAt.localeCompare(a.publishedAt);
       })
-      .slice(0, 60);
-  }, [archive, query, terms]);
+      .slice(0, requestedTerms.length || hasFilters ? 60 : 24);
+  }, [archive, query, terms, selectedKinds, selectedBooks, hasFilters]);
 
   const submitSearch = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+  };
+
+  const toggleSelection = (
+    value: string,
+    selected: string[],
+    setSelected: (values: string[]) => void,
+  ) => {
+    setSelected(
+      selected.includes(value)
+        ? selected.filter((item) => item !== value)
+        : [...selected, value],
+    );
   };
 
   return (
@@ -116,13 +151,61 @@ export default function ArchivePage() {
             <button type="submit">Search</button>
           </div>
         </form>
+
+        <details className="archive-filters">
+          <summary>Filter your search</summary>
+          <div className="archive-filter-groups">
+            <fieldset>
+              <legend>Content type</legend>
+              <div className="archive-filter-options">
+                {contentTypes.map((kind) => (
+                  <label key={kind}>
+                    <input
+                      type="checkbox"
+                      checked={selectedKinds.includes(kind)}
+                      onChange={() => toggleSelection(kind, selectedKinds, setSelectedKinds)}
+                    />
+                    {kind}
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend>Book</legend>
+              <div className="archive-filter-options archive-filter-books">
+                {books.map((book) => (
+                  <label key={book}>
+                    <input
+                      type="checkbox"
+                      checked={selectedBooks.includes(book)}
+                      onChange={() => toggleSelection(book, selectedBooks, setSelectedBooks)}
+                    />
+                    {book}
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+          </div>
+          {hasFilters ? (
+            <button
+              className="archive-clear-filters"
+              type="button"
+              onClick={() => {
+                setSelectedKinds([]);
+                setSelectedBooks([]);
+              }}
+            >
+              Clear filters
+            </button>
+          ) : null}
+        </details>
       </section>
 
       <section className="archive-results" aria-live="polite">
         <div className="archive-results-heading">
           <h2>
             {archive
-              ? query.trim()
+              ? query.trim() || hasFilters
                 ? `${results.length} matching entries`
                 : `Latest entries from ${archive.count.toLocaleString()} archived pieces`
               : "Loading the curated archive…"}
