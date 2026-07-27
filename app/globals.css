@@ -1270,6 +1270,31 @@ img {
   padding-right: 4vw;
 }
 
+.ideas-media-list > h3 {
+  align-items: center;
+  color: var(--red);
+  display: flex;
+  font-family: var(--font-sans);
+  font-size: clamp(0.86rem, 1.25vw, 1.02rem);
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  margin: 3rem 0 0;
+  text-transform: uppercase;
+}
+
+.ideas-media-list > h3::before {
+  background: currentColor;
+  content: "";
+  display: inline-block;
+  height: 2px;
+  margin-right: 0.75rem;
+  width: 2.2rem;
+}
+
+.ideas-media-list > h3:first-child {
+  margin-top: 0;
+}
+
 .post-row {
   border-bottom: 1px solid var(--line);
   display: grid;
