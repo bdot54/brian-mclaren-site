@@ -8,7 +8,7 @@ const bookLinks = {
   "Do I Stay Christian?":
     "https://us.macmillan.com/books/9781250262790/doistaychristian/",
   "A Generous Orthodoxy":
-    "https://www.zondervan.com/9780310258032/a-generous-orthodoxy/",
+    "https://www.zondervan.com/author/1182/brian-d-mclaren/",
   "Life After Doom":
     "https://us.macmillan.com/books/9781250893277/lifeafterdoom/",
   "Everything Must Change":
@@ -21,11 +21,11 @@ const bookLinks = {
     "https://www.hachette.co.uk/titles/brian-d-mclaren/the-great-rift/9781399838788/",
   "The Seventh Story": "https://www.theseventhstory.com/paperback",
   "Naked Spirituality":
-    "/archive/naked-spirituality-a-life-with-god-in-12-simple-words-2",
+    "https://www.harpercollins.com/products/naked-spirituality-brian-d-mclaren",
   "We Make the Road by Walking":
     "https://www.hachettebookgroup.com/titles/brian-d-mclaren/we-make-the-road-by-walking/9781455514014/",
   "A New Kind of Christianity":
-    "https://www.hachette.co.uk/titles/brian-d-mclaren/a-new-kind-of-christianity/9780340995495/",
+    "https://www.harpercollins.com/products/a-new-kind-of-christianity-brian-d-mclaren",
 } as const;
 
 type RecommendedBook = keyof typeof bookLinks;
