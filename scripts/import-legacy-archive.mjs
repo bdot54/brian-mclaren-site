@@ -15,6 +15,46 @@ const eventTitlePattern =
 const emailArtifactPattern =
   /data-saferedirecturl|google\.com\/url\?q=|\[here\]|m_\d{6,}/i;
 
+const bookTitles = [
+  "A Generous Orthodoxy",
+  "A New Kind of Christian",
+  "Everything Must Change",
+  "Do I Stay Christian",
+  "Faith After Doubt",
+  "Naked Spirituality",
+  "We Make the Road by Walking",
+  "Life After Doom",
+  "The Great Rift",
+  "The Last Voyage",
+  "The Seventh Story",
+  "Cory and the Seventh Story",
+  "The Galápagos Islands",
+  "Why Did Jesus, Moses, the Buddha, and Mohammed Cross the Road",
+  "The Secret Message of Jesus",
+  "Finding Our Way Again",
+  "The Story We Find Ourselves In",
+  "A Search for What Is Real",
+  "The Church on the Other Side",
+  "The Justice Project",
+  "The Beautiful Logic of a Meaningful Life",
+  "More Ready Than You Realize",
+  "The Great Spiritual Migration",
+  "A New Kind of Christianity",
+  "The Rebirthing of God",
+  "The Word of the Lord to Evangelicals",
+  "The Word of the Lord to Democrats",
+  "The Word of the Lord to Republicans",
+];
+
+const topicRules = [
+  ["Faith & Spirituality", /\b(faith|god|jesus|christian\w*|church\w*|prayer\w*|spiritual\w*|theolog\w*|religion\w*|scripture\w*|bible)\b/gi],
+  ["Justice & Society", /\b(justice|racial\w*|racism|democracy|politic\w*|peace|violence|war|immigra\w*|inequality|poverty)\b/gi],
+  ["Ecology & Climate", /\b(climate\w*|ecolog\w*|earth|environment\w*|planet\w*|species|extinction|nature|creation)\b/gi],
+  ["Community & Belonging", /\b(community|belonging|neighbor|friendship|family|together|relationship)\b/gi],
+  ["Courage & Hope", /\b(courage|hope|grief|healing|resilien|compassion|love|joy)\b/gi],
+  ["Culture & Story", /\b(story|fiction|novel|culture|art|music|film|media|imagination)\b/gi],
+];
+
 function decodeHtml(value = "") {
   return value
     .replace(/&#(\d+);/g, (_, code) => String.fromCodePoint(Number(code)))
@@ -130,6 +170,50 @@ function curationReason(item, body) {
   return null;
 }
 
+function matchCount(value, pattern) {
+  return (value.match(pattern) ?? []).length;
+}
+
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function archiveTaxonomy(title, body) {
+  const text = `${title}\n${body}`;
+  const bookText = `${title}\n${body.slice(0, 1800)}`;
+  const matchedBook = bookTitles.find((book) => {
+    const escapedBook = escapeRegExp(book);
+    return (
+      new RegExp(`\\b${escapedBook}\\b`, "i").test(title) ||
+      new RegExp(
+        `\\b(?:my |new |latest |this |the )?(?:book|novel|audiobook)\\b[^.!?]{0,80}\\b${escapedBook}\\b|\\b${escapedBook}\\b[^.!?]{0,80}\\b(?:book|novel|audiobook|read|order|buy|release)\\b`,
+        "i",
+      ).test(bookText)
+    );
+  });
+  const lowerTitle = title.toLowerCase();
+  let kind = "Blog post";
+  if (/\bpodcast\b/i.test(`${title}\n${body.slice(0, 900)}`)) kind = "Podcast";
+  else if (/^(q\s*[&+]\s*[ra]|q\s*[&+]\s*r:|q\s*[&+]\s*r\b)|\bq\s*[&+]\s*r\b/i.test(title)) kind = "Q&A";
+  else if (/\b(poem|poetry)\b/i.test(`${title}\n${body.slice(0, 280)}`)) kind = "Poem";
+  else if (/\b(sermon|homily)\b/i.test(text)) kind = "Sermon";
+  else if (/\b(interview|conversation with|guest appearance)\b/i.test(text)) kind = "Interview";
+  else if (matchedBook || /\b(my (new|latest) book|book (?:launch|release|news))\b/i.test(text)) kind = "Book note";
+  else if (/\b(reader writes|letter)\b/i.test(lowerTitle)) kind = "Letter";
+
+  const topics = topicRules
+    .map(([label, pattern]) => ({ label, score: matchCount(text, pattern) }))
+    .filter(({ score }) => score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 3)
+    .map(({ label }) => label);
+
+  if (!topics.length) topics.push("Reflection", "Ideas");
+  if (topics.length === 1) topics.push("Reflection");
+
+  return { kind, topics, book: matchedBook ?? null };
+}
+
 const excluded = [];
 const records = imported
   .map((item) => {
@@ -148,6 +232,10 @@ const records = imported
       title: htmlToText(item.title?.rendered ?? "Untitled"),
       excerpt: excerptFrom(body),
       body,
+      taxonomy: archiveTaxonomy(
+        htmlToText(item.title?.rendered ?? "Untitled"),
+        body,
+      ),
     };
     const reason = curationReason(item, body);
     if (reason) excluded.push({ ...record, reason });
