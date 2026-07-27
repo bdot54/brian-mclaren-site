@@ -165,7 +165,7 @@ test("keeps internal links, media, and verified destinations intact", async () =
     /drive\.google\.com\/drive\/folders\/19OqldLnPUral_BSoofdeH8LKHiDdhwbE/,
   );
   assert.match(site, /instagram\.com\/brian_mclaren\//);
-  assert.match(site, /href="#newsletter">Join the letter<\/a>/);
+  assert.match(site, /href="#newsletter">Join The Letter<\/a>/);
   assert.match(site, /https:\/\/x\.com\/brianmclaren/);
   assert.match(
     site,
