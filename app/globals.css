@@ -1483,6 +1483,41 @@ img {
   text-decoration: none;
 }
 
+.archive-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 1rem;
+}
+
+.archive-tag {
+  border: 1px solid rgba(8, 40, 69, 0.24);
+  color: var(--ink-soft);
+  font-family: var(--font-sans);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  line-height: 1.15;
+  padding: 0.34rem 0.48rem;
+  text-transform: uppercase;
+}
+
+.archive-tag-kind {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+
+.archive-tag-book {
+  background: var(--lime-soft);
+  border-color: var(--lime-soft);
+  color: var(--ink);
+}
+
+.archive-entry-tags {
+  margin: 1.5rem 0 2.25rem;
+}
+
 .archive-result time,
 .archive-entry-page time {
   font-size: 0.7rem;

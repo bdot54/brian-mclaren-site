@@ -12,6 +12,11 @@ type ArchiveEntry = {
   modifiedAt: string;
   title: string;
   excerpt: string;
+  taxonomy: {
+    kind: string;
+    topics: string[];
+    book: string | null;
+  };
 };
 
 type ArchiveIndex = {
@@ -139,6 +144,15 @@ export default function ArchivePage() {
             <div>
               <h2>{entry.title}</h2>
               <p>{entry.excerpt}</p>
+              <div className="archive-tags" aria-label="Entry categories">
+                <span className="archive-tag archive-tag-kind">{entry.taxonomy.kind}</span>
+                {entry.taxonomy.topics.map((topic) => (
+                  <span className="archive-tag" key={topic}>{topic}</span>
+                ))}
+                {entry.taxonomy.book ? (
+                  <span className="archive-tag archive-tag-book">Book: {entry.taxonomy.book}</span>
+                ) : null}
+              </div>
             </div>
             <span aria-hidden="true">→</span>
           </Link>

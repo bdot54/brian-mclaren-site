@@ -13,6 +13,11 @@ type ArchiveEntry = {
   publishedAt: string;
   modifiedAt: string;
   body: string;
+  taxonomy: {
+    kind: string;
+    topics: string[];
+    book: string | null;
+  };
 };
 
 export default function ArchiveEntryPage() {
@@ -65,6 +70,15 @@ export default function ArchiveEntryPage() {
           }).format(new Date(entry.publishedAt))}
         </time>
         <h1>{entry.title}</h1>
+        <div className="archive-tags archive-entry-tags" aria-label="Entry categories">
+          <span className="archive-tag archive-tag-kind">{entry.taxonomy.kind}</span>
+          {entry.taxonomy.topics.map((topic) => (
+            <span className="archive-tag" key={topic}>{topic}</span>
+          ))}
+          {entry.taxonomy.book ? (
+            <span className="archive-tag archive-tag-book">Book: {entry.taxonomy.book}</span>
+          ) : null}
+        </div>
         <div className="archive-entry-body">
           {entry.body.split(/\n{2,}/).map((paragraph, index) => (
             <p key={`${index}-${paragraph.slice(0, 30)}`}>{paragraph}</p>
