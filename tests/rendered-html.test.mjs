@@ -108,6 +108,16 @@ test("links every pathway recommendation to its book page", async () => {
     /faithgateway\.com\/products\/everything-must-change-when-the-worlds-biggest-problems-and-jesus-good-news-collide-1/,
   );
   assert.doesNotMatch(site, /thomasnelson\.com/);
+  assert.match(site, /zondervan\.com\/author\/1182\/brian-d-mclaren/);
+  assert.match(
+    site,
+    /harpercollins\.com\/products\/naked-spirituality-brian-d-mclaren/,
+  );
+  assert.match(
+    site,
+    /harpercollins\.com\/products\/a-new-kind-of-christianity-brian-d-mclaren/,
+  );
+  assert.doesNotMatch(site, /href: "\/archive\/naked-spirituality/);
 });
 
 test("removes starter-only assets and metadata", async () => {
