@@ -352,6 +352,55 @@ export function BrianSite() {
           </div>
         </div>
 
+        <section className="section start-section" aria-labelledby="start-heading">
+          <div className="section-inner pathway-layout">
+            <div className="pathway-intro">
+              <p className="eyebrow">New here?</p>
+              <h2 id="start-heading">Start where you are.</h2>
+              <p>
+                Brian’s work spans decades and genres. Choose the doorway that
+                sounds most like you today.
+              </p>
+              <div className="pathway-buttons">
+                {pathways.map((pathway, index) => (
+                  <button
+                    className={`pathway-button ${
+                      selectedPath.id === pathway.id ? "active" : ""
+                    }`}
+                    type="button"
+                    key={pathway.id}
+                    onClick={() => setSelectedPath(pathway)}
+                    aria-pressed={selectedPath.id === pathway.id}
+                  >
+                    <span>{pathway.label}</span>
+                    <i aria-hidden="true">{index + 1}</i>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="pathway-panel" aria-live="polite">
+              <span className="pathway-number">
+                0{pathways.findIndex((item) => item.id === selectedPath.id) + 1}
+              </span>
+              <h3>{selectedPath.title}</h3>
+              <p>{selectedPath.body}</p>
+              <div className="pathway-books" aria-label="Suggested books">
+                {selectedPath.books.map((book) => (
+                  <a
+                    href={bookLinks[book]}
+                    target="_blank"
+                    rel="noreferrer"
+                    key={book}
+                  >
+                    {book}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section className="section current-work" aria-labelledby="now-heading">
           <div className="section-inner">
             <div className="section-heading">
@@ -408,55 +457,6 @@ export function BrianSite() {
                     </p>
                   </div>
                 </article>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="section start-section" aria-labelledby="start-heading">
-          <div className="section-inner pathway-layout">
-            <div className="pathway-intro">
-              <p className="eyebrow">New here?</p>
-              <h2 id="start-heading">Start where you are.</h2>
-              <p>
-                Brian’s work spans decades and genres. Choose the doorway that
-                sounds most like you today.
-              </p>
-              <div className="pathway-buttons">
-                {pathways.map((pathway, index) => (
-                  <button
-                    className={`pathway-button ${
-                      selectedPath.id === pathway.id ? "active" : ""
-                    }`}
-                    type="button"
-                    key={pathway.id}
-                    onClick={() => setSelectedPath(pathway)}
-                    aria-pressed={selectedPath.id === pathway.id}
-                  >
-                    <span>{pathway.label}</span>
-                    <i aria-hidden="true">{index + 1}</i>
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="pathway-panel" aria-live="polite">
-              <span className="pathway-number">
-                0{pathways.findIndex((item) => item.id === selectedPath.id) + 1}
-              </span>
-              <h3>{selectedPath.title}</h3>
-              <p>{selectedPath.body}</p>
-              <div className="pathway-books" aria-label="Suggested books">
-                {selectedPath.books.map((book) => (
-                  <a
-                    href={bookLinks[book]}
-                    target="_blank"
-                    rel="noreferrer"
-                    key={book}
-                  >
-                    {book}
-                  </a>
-                ))}
               </div>
             </div>
           </div>

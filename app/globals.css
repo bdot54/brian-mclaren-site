@@ -524,7 +524,7 @@ img {
   box-shadow: 0 30px 60px rgba(0, 0, 0, 0.38);
   max-height: 565px;
   object-fit: contain;
-  transform: rotate(-2.5deg) translateY(12px);
+  transform: translateY(12px);
 }
 
 .feature-copy {

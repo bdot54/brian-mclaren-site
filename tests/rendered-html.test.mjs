@@ -27,6 +27,10 @@ test("builds the Brian McLaren site and its core journeys", async () => {
   assert.match(site, /You don’t need certainty to begin exploring/);
   assert.match(site, /I want to grow spiritually/);
   assert.match(site, /A deeper spiritual life can begin with simple practices/);
+  assert.ok(
+    site.indexOf('className="section start-section"') <
+      site.indexOf('className="section current-work"'),
+  );
   assert.doesNotMatch(site, /restless questioner/);
   assert.doesNotMatch(site, /What Brian is exploring now/);
   assert.doesNotMatch(site, /codex-preview|Your site is taking shape/);
