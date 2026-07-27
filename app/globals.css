@@ -1262,12 +1262,11 @@ img {
 .ideas-grid {
   border-top: 1px solid var(--ink);
   display: grid;
-  grid-template-columns: 1.4fr 1fr;
+  grid-template-columns: 1fr;
 }
 
 .post-list {
-  border-right: 1px solid var(--line);
-  padding-right: 4vw;
+  padding-bottom: 4rem;
 }
 
 .ideas-media-list > h3 {
@@ -1329,7 +1328,14 @@ img {
 }
 
 .archive-box {
-  padding-left: 4vw;
+  border-top: 1px solid var(--ink);
+  max-width: 760px;
+  padding-top: 2rem;
+}
+
+.archive-kicker {
+  color: var(--red);
+  margin: 0 0 0.75rem;
 }
 
 .archive-box h3 {

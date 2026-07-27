@@ -829,6 +829,7 @@ export function BrianSite() {
               </div>
 
               <div className="archive-box">
+                <p className="kicker archive-kicker">Search the archive</p>
                 <h3>Two decades of questions, ideas, and conversation</h3>
                 <p>
                   Search an archive of Brian’s writings, speaking engagements,
