@@ -1043,6 +1043,29 @@ img {
   margin-top: 2.4rem;
 }
 
+.speaking-topics-heading,
+.archive-kicker {
+  align-items: center;
+  color: var(--red);
+  display: flex;
+  font-family: var(--font-sans);
+  font-size: clamp(0.86rem, 1.25vw, 1.02rem);
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  margin: 2.4rem 0 0;
+  text-transform: uppercase;
+}
+
+.speaking-topics-heading::before,
+.archive-kicker::before {
+  background: currentColor;
+  content: "";
+  display: inline-block;
+  height: 2px;
+  margin-right: 0.75rem;
+  width: 2.2rem;
+}
+
 .topic-item {
   border-bottom: 1px solid rgba(255, 255, 255, 0.18);
 }
@@ -1334,7 +1357,6 @@ img {
 }
 
 .archive-kicker {
-  color: var(--red);
   margin: 0 0 0.75rem;
 }
 

@@ -609,6 +609,7 @@ export function BrianSite() {
                   selectively.
                 </p>
               </div>
+              <p className="speaking-topics-heading">Past public speaking topics</p>
               <div className="topic-list" aria-label="Possible speaking themes">
                 {topics.map((topic, index) => (
                   <details className="topic-item" key={topic.title}>
