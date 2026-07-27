@@ -8,6 +8,13 @@ const contentRoot = join(archiveRoot, "content");
 const wordpressRoot = "https://brianmclaren.net/wp-json/wp/v2";
 const contentTypes = ["posts", "pages", "portfolio"];
 
+const eventLogisticsPattern =
+  /\b(register|registration|tickets?|eventbrite|venue|lodging|check-?in|schedule|calendar|directions|giftcards|conference|retreat|webinar|workshop|speaking (?:at|in)|speaking engagement|i(?:'|’)ll be (?:speaking|at)|you(?:'|’)re invited|coming up|save the date|join (?:me|us) (?:at|in))\b/i;
+const eventTitlePattern =
+  /\b(friends in|where i(?:'|’)ll be|i(?:'|’)ll be at|coming up|you(?:'|’)re invited|southern lights)\b/i;
+const emailArtifactPattern =
+  /data-saferedirecturl|google\.com\/url\?q=|\[here\]|m_\d{6,}/i;
+
 function decodeHtml(value = "") {
   return value
     .replace(/&#(\d+);/g, (_, code) => String.fromCodePoint(Number(code)))
@@ -100,11 +107,30 @@ async function fetchAll(type) {
   );
 
   console.log(`Imported ${type}: ${totalPages} pages.`);
-  return [firstPage, ...pageResults].flat();
+  return [firstPage, ...pageResults]
+    .flat()
+    .map((item) => ({ ...item, legacyType: type }));
 }
 
 const imported = (await Promise.all(contentTypes.map(fetchAll))).flat();
 const usedSlugs = new Set();
+function curationReason(item, body) {
+  if (item.legacyType !== "posts") return "non-post WordPress content";
+
+  const rawContent = item.content?.rendered ?? "";
+  const title = htmlToText(item.title?.rendered ?? "Untitled");
+  if (emailArtifactPattern.test(rawContent)) return "email-template artifact";
+  if (
+    eventLogisticsPattern.test(`${title}\n${body}`) ||
+    eventTitlePattern.test(title)
+  ) {
+    return "time-sensitive event logistics";
+  }
+
+  return null;
+}
+
+const excluded = [];
 const records = imported
   .map((item) => {
     const baseSlug = item.slug || `archive-${item.id}`;
@@ -112,7 +138,7 @@ const records = imported
     usedSlugs.add(slug);
     const body = htmlToText(item.content?.rendered || item.excerpt?.rendered || "");
 
-    return {
+    const record = {
       id: item.id,
       slug,
       sourceUrl: item.link,
@@ -123,7 +149,11 @@ const records = imported
       excerpt: excerptFrom(body),
       body,
     };
+    const reason = curationReason(item, body);
+    if (reason) excluded.push({ ...record, reason });
+    return reason ? null : record;
   })
+  .filter(Boolean)
   .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
 
 const legacyUrlMap = new Map(
@@ -174,7 +204,11 @@ for (const record of localRecords) {
 
 await writeFile(
   join(archiveRoot, "index.json"),
-  `${JSON.stringify({ count: localRecords.length, entries: index })}\n`,
+  `${JSON.stringify({
+    count: localRecords.length,
+    excludedCount: excluded.length,
+    entries: index,
+  })}\n`,
 );
 await writeFile(join(archiveRoot, "search-index.json"), `${JSON.stringify(terms)}\n`);
 
@@ -184,4 +218,6 @@ await Promise.all(
   ),
 );
 
-console.log(`Imported ${localRecords.length} archive entries.`);
+console.log(
+  `Imported ${localRecords.length} curated archive entries; excluded ${excluded.length} non-archival records.`,
+);

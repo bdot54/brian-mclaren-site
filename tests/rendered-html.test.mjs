@@ -175,20 +175,27 @@ test("keeps internal links, media, and verified destinations intact", async () =
   assert.doesNotMatch(site, /brianmclaren\.net/);
 });
 
-test("includes a searchable local copy of the full legacy archive", async () => {
+test("includes a searchable, curated local archive", async () => {
   const [archivePage, archiveEntryPage, indexText, entryText] = await Promise.all([
     readFile(new URL("../app/archive/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/archive/[slug]/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../public/archive/index.json", import.meta.url), "utf8"),
     readFile(
-      new URL("../public/archive/content/78840.json", import.meta.url),
+      new URL("../public/archive/content/78660.json", import.meta.url),
       "utf8",
     ),
   ]);
   const archive = JSON.parse(indexText);
 
-  assert.equal(archive.count, 4992);
-  assert.equal(archive.entries.length, 4992);
+  assert.ok(archive.count > 3000);
+  assert.ok(archive.count < 4992);
+  assert.ok(archive.excludedCount > 0);
+  assert.equal(archive.entries.length, archive.count);
+  assert.equal(
+    archive.entries.some((entry) => entry.id === 78694),
+    false,
+    "excludes old Southern Lights event logistics",
+  );
   assert.match(archivePage, /search-index\.json/);
   assert.match(archivePage, /Search the complete archive/);
   assert.match(archivePage, /<h2>/);
