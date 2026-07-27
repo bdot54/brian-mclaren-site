@@ -920,6 +920,7 @@ export function BrianSite() {
             >
               General contact
             </a>
+            <a href="#newsletter">Join the letter</a>
             <a
               href="https://cac.org/podcast/learning-how-to-see/"
               target="_blank"
@@ -933,6 +934,13 @@ export function BrianSite() {
               rel="noreferrer"
             >
               Instagram
+            </a>
+            <a
+              href="https://x.com/brianmclaren"
+              target="_blank"
+              rel="noreferrer"
+            >
+              X
             </a>
           </div>
         </div>
