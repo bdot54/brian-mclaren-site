@@ -22,6 +22,7 @@ test("builds the Brian McLaren site and its core journeys", async () => {
   assert.match(site, /Brian’s Latest &amp; Upcoming Works/);
   assert.match(site, /Search an archive of Brian’s writings/);
   assert.match(site, /A thoughtful outreach, only when there’s something to say/);
+  assert.match(site, /Join the letter for updates on new writing/);
   assert.match(site, /I’m not sure what I believe/);
   assert.match(site, /You don’t need certainty to begin exploring/);
   assert.match(site, /I want to grow spiritually/);
@@ -29,6 +30,24 @@ test("builds the Brian McLaren site and its core journeys", async () => {
   assert.doesNotMatch(site, /restless questioner/);
   assert.doesNotMatch(site, /What Brian is exploring now/);
   assert.doesNotMatch(site, /codex-preview|Your site is taking shape/);
+});
+
+test("links Brian’s work and expands every speaking theme", async () => {
+  const site = await readFile(
+    new URL("../app/site.tsx", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(site, /className="about-point about-point-link" href="\/books"/);
+  assert.match(site, /https:\/\/cac\.org\/about\/cac-faculty\//);
+  assert.match(site, /https:\/\/cac\.org\/podcast\/learning-how-to-see\//);
+  assert.match(site, /<details className="topic-item"/);
+  assert.match(site, /<summary>/);
+  assert.match(site, /topic-description/);
+  assert.equal(
+    [...site.matchAll(/title: "(?:Faith after certainty|Courage in a world falling apart|Spirituality and social transformation|A just and generous Christianity|Story, belonging, and the human future)"/g)].length,
+    5,
+  );
 });
 
 test("uses server-side transactional email for speaking inquiries", async () => {

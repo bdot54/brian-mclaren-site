@@ -944,6 +944,32 @@ img {
   line-height: 1.45;
 }
 
+.about-point-link {
+  color: inherit;
+  display: block;
+  text-decoration: none;
+}
+
+.about-point-link,
+.about-point span a {
+  transition:
+    color 180ms ease,
+    border-color 180ms ease;
+}
+
+.about-point span a {
+  border-bottom: 1px solid currentColor;
+  color: inherit;
+  text-decoration: none;
+}
+
+.about-point-link:hover,
+.about-point-link:focus-visible,
+.about-point span a:hover,
+.about-point span a:focus-visible {
+  color: var(--red);
+}
+
 .speaking-section {
   background: var(--ink);
   color: white;
@@ -998,24 +1024,57 @@ img {
   margin-top: 2.4rem;
 }
 
-.topic-list div {
-  align-items: baseline;
+.topic-item {
   border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.topic-item summary {
+  align-items: baseline;
+  cursor: pointer;
   display: grid;
   gap: 1rem;
-  grid-template-columns: 35px 1fr;
+  grid-template-columns: 35px 1fr auto;
+  list-style: none;
   padding: 0.9rem 0;
 }
 
-.topic-list span {
+.topic-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.topic-item summary > span:first-child {
   color: var(--moss-light);
   font-family: var(--serif);
 }
 
-.topic-list p {
+.topic-title {
   font-family: var(--serif);
   font-size: 1.08rem;
-  margin: 0;
+}
+
+.topic-item summary i {
+  color: var(--moss-light);
+  font-family: var(--sans);
+  font-size: 1.3rem;
+  font-style: normal;
+  transition: transform 180ms ease;
+}
+
+.topic-item[open] summary i {
+  transform: rotate(45deg);
+}
+
+.topic-item summary:hover .topic-title,
+.topic-item summary:focus-visible .topic-title {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.topic-description {
+  color: #cbd2d8;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: -0.2rem 2rem 1.1rem 51px;
 }
 
 .inquiry-card {
