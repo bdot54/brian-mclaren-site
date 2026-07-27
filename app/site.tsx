@@ -152,9 +152,9 @@ const topics = [
 
 const recentWriting = [
   {
-    date: "May 2026",
-    title: "Friends in SW Florida — May 15 at FGCU",
-    href: "/archive/friends-in-sw-florida-may-15-at-fgcu",
+    date: "Jun. 2025",
+    title: "A Nautilus Book Award for Life After Doom",
+    href: "/archive/a-nautilus-book-award-for-life-after-doom",
   },
   {
     date: "Jan. 2026",
@@ -162,11 +162,14 @@ const recentWriting = [
     href: "/archive/a-new-book-by-a-good-friend-birthing-the-symbiotic-age",
   },
   {
-    date: "Jan. 2026",
-    title: "Important 2026 update",
-    href: "/archive/important-2026-update",
+    date: "Feb. 2025",
+    title: "A conversation on Soul Boom",
+    href: "/archive/its-not-every-day-you-get-to-hang-out-with-rainn-wilson-aka-dwight-schrute",
   },
 ];
+
+const recentPodcasts = [{ date: "Aug. 2025", title: "Faith, Fear, and Facing the Future", href: "https://podcasts.apple.com/us/podcast/39-brian-d-mclaren-faith-fear-and-facing-the-future/id1733794201?i=1000721093891" }];
+const recentVideos = [{ date: "2025", title: "Interview with Brian D. McLaren: The Last Voyage", href: "https://www.youtube.com/watch?v=hnLNbGbFOLU" }];
 
 export function BrianSite() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -802,7 +805,8 @@ export function BrianSite() {
             </div>
 
             <div className="ideas-grid">
-              <div className="post-list">
+              <div className="post-list ideas-media-list">
+                <h3>Recent posts</h3>
                 {recentWriting.map((post) => (
                   <a
                     className="post-row"
@@ -813,6 +817,14 @@ export function BrianSite() {
                     <h3>{post.title}</h3>
                     <span aria-hidden="true">↗</span>
                   </a>
+                ))}
+                <h3>Recent podcasts</h3>
+                {recentPodcasts.map((post) => (
+                  <a className="post-row" href={post.href} key={post.title} target="_blank" rel="noreferrer"><time>{post.date}</time><h3>{post.title}</h3><span aria-hidden="true">↗</span></a>
+                ))}
+                <h3>Recent videos</h3>
+                {recentVideos.map((post) => (
+                  <a className="post-row" href={post.href} key={post.title} target="_blank" rel="noreferrer"><time>{post.date}</time><h3>{post.title}</h3><span aria-hidden="true">↗</span></a>
                 ))}
               </div>
 
