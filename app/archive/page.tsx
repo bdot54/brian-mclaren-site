@@ -93,8 +93,8 @@ export default function ArchivePage() {
         <p className="eyebrow">The Brian D. McLaren archive</p>
         <h1>Two decades of questions, ideas, and conversation.</h1>
         <p>
-          Search Brian’s complete collection of writings, event notes, and
-          other work—now available here.
+          Search a curated collection of Brian’s essays, conversations,
+          podcast appearances, and other enduring work.
         </p>
 
         <form className="archive-page-search" onSubmit={submitSearch}>
@@ -120,7 +120,7 @@ export default function ArchivePage() {
               ? query.trim()
                 ? `${results.length} matching entries`
                 : `Latest entries from ${archive.count.toLocaleString()} archived pieces`
-              : "Loading the complete archive…"}
+              : "Loading the curated archive…"}
           </h2>
         </div>
 
