@@ -20,6 +20,7 @@ test("builds the Brian McLaren site and its core journeys", async () => {
   assert.match(site, /Join the letter/);
   assert.match(site, /Writer · teacher · public theologian/);
   assert.match(site, /Brian’s Latest &amp; Upcoming Works/);
+  assert.match(site, /Books for the journey/);
   assert.match(site, /Search an archive of Brian’s writings/);
   assert.match(site, /A thoughtful outreach, only when there’s something to say/);
   assert.match(site, /Join the letter for updates on new writing/);
@@ -33,6 +34,7 @@ test("builds the Brian McLaren site and its core journeys", async () => {
   );
   assert.doesNotMatch(site, /restless questioner/);
   assert.doesNotMatch(site, /What Brian is exploring now/);
+  assert.doesNotMatch(site, /Ideas for the road ahead/);
   assert.doesNotMatch(site, /codex-preview|Your site is taking shape/);
 });
 
