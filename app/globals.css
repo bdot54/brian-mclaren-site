@@ -1283,7 +1283,6 @@ img {
 }
 
 .ideas-grid {
-  border-top: 1px solid var(--ink);
   display: grid;
   grid-template-columns: 1fr;
 }
