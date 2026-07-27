@@ -21,7 +21,7 @@ const bookLinks = {
     "https://www.hachette.co.uk/titles/brian-d-mclaren/the-great-rift/9781399838788/",
   "The Seventh Story": "https://www.theseventhstory.com/paperback",
   "Naked Spirituality":
-    "https://brianmclaren.net/naked-spirituality-a-life-with-god-in-12-simple-words-2/",
+    "/archive/naked-spirituality-a-life-with-god-in-12-simple-words-2",
   "We Make the Road by Walking":
     "https://www.hachettebookgroup.com/titles/brian-d-mclaren/we-make-the-road-by-walking/9781455514014/",
   "A New Kind of Christianity":
@@ -154,17 +154,17 @@ const recentWriting = [
   {
     date: "May 2026",
     title: "Friends in SW Florida — May 15 at FGCU",
-    href: "https://brianmclaren.net/friends-in-sw-florida-may-15-at-fgcu/",
+    href: "/archive/friends-in-sw-florida-may-15-at-fgcu",
   },
   {
     date: "Jan. 2026",
     title: "A new book by a good friend: Birthing the Symbiotic Age",
-    href: "https://brianmclaren.net/a-new-book-by-a-good-friend-birthing-the-symbiotic-age/",
+    href: "/archive/a-new-book-by-a-good-friend-birthing-the-symbiotic-age",
   },
   {
     date: "Jan. 2026",
     title: "Important 2026 update",
-    href: "https://brianmclaren.net/important-2026-update/",
+    href: "/archive/important-2026-update",
   },
 ];
 
@@ -389,8 +389,8 @@ export function BrianSite() {
                 {selectedPath.books.map((book) => (
                   <a
                     href={bookLinks[book]}
-                    target="_blank"
-                    rel="noreferrer"
+                    target={bookLinks[book].startsWith("http") ? "_blank" : undefined}
+                    rel={bookLinks[book].startsWith("http") ? "noreferrer" : undefined}
                     key={book}
                   >
                     {book}
@@ -737,11 +737,9 @@ export function BrianSite() {
                 </p>
                 <a
                   className="text-link"
-                  href="https://brianmclaren.net/important-2026-update/"
-                  target="_blank"
-                  rel="noreferrer"
+                  href="/archive/important-2026-update"
                 >
-                  Read the update ↗
+                  Read the update →
                 </a>
               </article>
               <article className="event-card">
@@ -801,8 +799,6 @@ export function BrianSite() {
                   <a
                     className="post-row"
                     href={post.href}
-                    target="_blank"
-                    rel="noreferrer"
                     key={post.title}
                   >
                     <time>{post.date}</time>
@@ -820,15 +816,14 @@ export function BrianSite() {
                 </p>
                 <form
                   className="archive-search"
-                  action="https://brianmclaren.net/"
+                  action="/archive"
                   method="get"
-                  target="_blank"
                 >
                   <label className="form-field" htmlFor="archive-query">
                     <span className="kicker">Search the archive</span>
                     <input
                       id="archive-query"
-                      name="s"
+                      name="q"
                       type="search"
                       placeholder="Faith, doubt, ecology…"
                     />
@@ -921,9 +916,7 @@ export function BrianSite() {
           <div className="footer-column">
             <strong>Connect</strong>
             <a
-              href="https://brianmclaren.net/contact/"
-              target="_blank"
-              rel="noreferrer"
+              href="#speaking"
             >
               General contact
             </a>
