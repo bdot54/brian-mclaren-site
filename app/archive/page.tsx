@@ -12,6 +12,7 @@ type ArchiveEntry = {
   modifiedAt: string;
   title: string;
   excerpt: string;
+  externalUrl?: string;
   taxonomy: {
     kind: string;
     topics: string[];
@@ -42,8 +43,9 @@ export default function ArchivePage() {
     Promise.all([
       fetch("/archive/index.json").then((response) => response.json()),
       fetch("/archive/search-index.json").then((response) => response.json()),
-    ]).then(([index, searchTerms]) => {
-      setArchive(index);
+      fetch("/archive/verified-media.json").then((response) => response.json()),
+    ]).then(([index, searchTerms, media]) => {
+      setArchive({ ...index, count: index.count + media.length, entries: [...media, ...index.entries] });
       setTerms(searchTerms);
     });
   }, []);
@@ -132,7 +134,7 @@ export default function ArchivePage() {
       <section className="archive-hero">
         <p className="eyebrow">The Brian D. McLaren archive</p>
         <h1>Two decades of questions, ideas, and conversation.</h1>
-        <p>
+            <p>
           Search a curated collection of Brian’s essays, conversations,
           podcast appearances, and other enduring work.
         </p>
@@ -212,9 +214,11 @@ export default function ArchivePage() {
           </h2>
         </div>
 
-        {results.map((entry) => (
-          <Link
-            href={`/archive/${entry.slug}`}
+        {results.map((entry) => {
+          const ResultLink = entry.externalUrl ? "a" : Link;
+          const linkProps = entry.externalUrl ? { href: entry.externalUrl, target: "_blank", rel: "noreferrer" } : { href: `/archive/${entry.slug}` };
+          return <ResultLink
+            {...linkProps}
             className="archive-result"
             key={entry.id}
           >
@@ -238,8 +242,8 @@ export default function ArchivePage() {
               </div>
             </div>
             <span aria-hidden="true">→</span>
-          </Link>
-        ))}
+          </ResultLink>;
+        })}
 
         {archive && query.trim() && !results.length ? (
           <p className="archive-empty">
