@@ -925,7 +925,7 @@ export function BrianSite() {
           <div className="footer-brand">
             <p className="footer-name">Brian D. McLaren</p>
             <p className="footer-tagline">
-              Author · Speaker · Activist · Public theologian
+              Author · Speaker · Activist · Theologian
             </p>
           </div>
           <div className="footer-column">
@@ -942,7 +942,7 @@ export function BrianSite() {
             >
               General contact
             </a>
-            <a href="#newsletter">Join the letter</a>
+            <a href="#newsletter">Join The Letter</a>
             <a
               href="https://cac.org/podcast/learning-how-to-see/"
               target="_blank"
