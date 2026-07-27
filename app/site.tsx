@@ -471,7 +471,7 @@ export function BrianSite() {
             <div className="section-heading">
               <div>
                 <p className="eyebrow">Selected books</p>
-                <h2 id="books-heading">Ideas for the road ahead</h2>
+                <h2 id="books-heading">Books for the journey</h2>
               </div>
               <a
                 className="text-link"
