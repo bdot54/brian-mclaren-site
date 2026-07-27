@@ -1356,7 +1356,8 @@ img {
   padding-top: 2rem;
 }
 
-.archive-kicker {
+.archive-box .archive-kicker {
+  color: #e3492f;
   margin: 0 0 0.75rem;
 }
 
