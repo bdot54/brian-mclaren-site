@@ -511,12 +511,20 @@ export function BrianSite() {
           aria-labelledby="about-heading"
         >
           <div className="section-inner about-grid">
-            <div className="quote-block">
-              <blockquote>
-                “Anything written by Brian McLaren is always filled with
-                insight, courage, and creative theology.”
-              </blockquote>
-              <cite>— Fr. Richard Rohr</cite>
+            <div className="about-aside">
+              <div className="quote-block">
+                <blockquote>
+                  “Anything written by Brian McLaren is always filled with
+                  insight, courage, and creative theology.”
+                </blockquote>
+                <cite>— Fr. Richard Rohr</cite>
+              </div>
+              <figure className="about-portrait">
+                <img
+                  src="/brian-portrait.jpg"
+                  alt="Brian D. McLaren outdoors"
+                />
+              </figure>
             </div>
 
             <div className="about-copy">

@@ -890,6 +890,10 @@ img {
   grid-template-columns: 0.9fr 1.1fr;
 }
 
+.about-aside {
+  min-width: 0;
+}
+
 .quote-block {
   border-left: 1px solid var(--ink);
   margin-top: 2rem;
@@ -912,6 +916,21 @@ img {
   letter-spacing: 0.1em;
   margin-top: 1.2rem;
   text-transform: uppercase;
+}
+
+.about-portrait {
+  background: var(--ink);
+  margin: 2rem 0 0;
+  overflow: hidden;
+}
+
+.about-portrait img {
+  aspect-ratio: 1.1;
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  width: 100%;
 }
 
 .about-copy > p {

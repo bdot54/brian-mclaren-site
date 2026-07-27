@@ -21,6 +21,7 @@ test("builds the Brian McLaren site and its core journeys", async () => {
   assert.match(site, /Writer · teacher · public theologian/);
   assert.match(site, /Brian’s Latest &amp; Upcoming Works/);
   assert.match(site, /Books for the journey/);
+  assert.match(site, /className="about-portrait"/);
   assert.match(site, /Search an archive of Brian’s writings/);
   assert.match(site, /A thoughtful outreach, only when there’s something to say/);
   assert.match(site, /Join the letter for updates on new writing/);
