@@ -115,13 +115,13 @@ export default function ArchivePage() {
 
       <section className="archive-results" aria-live="polite">
         <div className="archive-results-heading">
-          <p>
+          <h2>
             {archive
               ? query.trim()
                 ? `${results.length} matching entries`
                 : `Latest entries from ${archive.count.toLocaleString()} archived pieces`
               : "Loading the complete archive…"}
-          </p>
+          </h2>
         </div>
 
         {results.map((entry) => (
