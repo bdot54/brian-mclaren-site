@@ -1444,13 +1444,13 @@ img {
   padding-bottom: 6rem;
 }
 
-.archive-results-heading p {
-  color: var(--ink-soft);
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  margin: 1.3rem 0 0;
-  text-transform: uppercase;
+.archive-results-heading h2 {
+  font-family: var(--serif);
+  font-size: clamp(2.15rem, 4vw, 3.8rem);
+  font-weight: 400;
+  letter-spacing: -0.045em;
+  line-height: 1;
+  margin: 1.5rem 0 1.8rem;
 }
 
 .archive-result {

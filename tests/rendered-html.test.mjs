@@ -178,6 +178,7 @@ test("includes a searchable local copy of the full legacy archive", async () => 
   assert.equal(archive.entries.length, 4992);
   assert.match(archivePage, /search-index\.json/);
   assert.match(archivePage, /Search the complete archive/);
+  assert.match(archivePage, /<h2>/);
   assert.match(archiveEntryPage, /archive\/content/);
   assert.doesNotMatch(indexText, /brianmclaren\.net/);
   assert.doesNotMatch(entryText, /brianmclaren\.net/);
