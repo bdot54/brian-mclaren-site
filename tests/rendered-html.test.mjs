@@ -22,6 +22,10 @@ test("builds the Brian McLaren site and its core journeys", async () => {
   assert.match(site, /Brian’s Latest &amp; Upcoming Works/);
   assert.match(site, /Search an archive of Brian’s writings/);
   assert.match(site, /A thoughtful outreach, only when there’s something to say/);
+  assert.match(site, /I’m not sure what I believe/);
+  assert.match(site, /You don’t need certainty to begin exploring/);
+  assert.match(site, /I want to grow spiritually/);
+  assert.match(site, /A deeper spiritual life can begin with simple practices/);
   assert.doesNotMatch(site, /restless questioner/);
   assert.doesNotMatch(site, /What Brian is exploring now/);
   assert.doesNotMatch(site, /codex-preview|Your site is taking shape/);
@@ -58,6 +62,9 @@ test("links every pathway recommendation to its book page", async () => {
     "The Last Voyage",
     "The Great Rift",
     "The Seventh Story",
+    "Naked Spirituality",
+    "We Make the Road by Walking",
+    "A New Kind of Christianity",
   ];
 
   for (const book of recommendedBooks) {
