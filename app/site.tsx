@@ -20,6 +20,12 @@ const bookLinks = {
   "The Great Rift":
     "https://www.hachette.co.uk/titles/brian-d-mclaren/the-great-rift/9781399838788/",
   "The Seventh Story": "https://www.theseventhstory.com/paperback",
+  "Naked Spirituality":
+    "https://brianmclaren.net/naked-spirituality-a-life-with-god-in-12-simple-words-2/",
+  "We Make the Road by Walking":
+    "https://www.hachettebookgroup.com/titles/brian-d-mclaren/we-make-the-road-by-walking/9781455514014/",
+  "A New Kind of Christianity":
+    "https://www.hachette.co.uk/titles/brian-d-mclaren/a-new-kind-of-christianity/9780340995495/",
 } as const;
 
 type RecommendedBook = keyof typeof bookLinks;
@@ -56,6 +62,28 @@ const pathways = [
       "The Last Voyage",
       "The Great Rift",
       "The Seventh Story",
+    ] satisfies RecommendedBook[],
+  },
+  {
+    id: "unsure",
+    label: "I’m not sure what I believe",
+    title: "You don’t need certainty to begin exploring.",
+    body: "Start with honest, welcoming work about God, doubt, meaning, and spiritual curiosity—without pressure to arrive at a quick answer.",
+    books: [
+      "Naked Spirituality",
+      "Faith After Doubt",
+      "A New Kind of Christianity",
+    ] satisfies RecommendedBook[],
+  },
+  {
+    id: "spiritual",
+    label: "I want to grow spiritually",
+    title: "A deeper spiritual life can begin with simple practices.",
+    body: "Explore accessible ways to pray, pay attention, seek God, and grow in compassion through everyday life.",
+    books: [
+      "Naked Spirituality",
+      "We Make the Road by Walking",
+      "The Galápagos Islands",
     ] satisfies RecommendedBook[],
   },
 ];
