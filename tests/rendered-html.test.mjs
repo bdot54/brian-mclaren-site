@@ -195,6 +195,9 @@ test("includes a searchable, curated local archive", async () => {
   assert.ok(archive.entries.every((entry) => entry.taxonomy?.topics?.length >= 2));
   assert.match(archivePage, /archive-tags/);
   assert.match(archiveEntryPage, /archive-tag-book/);
+  assert.match(archivePage, /Filter your search/);
+  assert.match(archivePage, /Content type/);
+  assert.match(archivePage, /Clear filters/);
   assert.equal(
     archive.entries.some((entry) => entry.id === 78694),
     false,
