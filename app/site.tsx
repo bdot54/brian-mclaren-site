@@ -958,6 +958,13 @@ export function BrianSite() {
               Instagram
             </a>
             <a
+              href="https://www.facebook.com/p/Brian-D-McLaren-100044385220986/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Facebook
+            </a>
+            <a
               href="https://x.com/brianmclaren"
               target="_blank"
               rel="noreferrer"
