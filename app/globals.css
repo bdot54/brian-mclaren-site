@@ -1014,6 +1014,7 @@ img {
   font-family: var(--serif);
   font-size: 1.15rem;
   line-height: 1.65;
+  padding-top: 7px;
 }
 
 .availability-card {

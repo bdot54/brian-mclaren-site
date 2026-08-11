@@ -3,13 +3,21 @@ import { access, readFile } from "node:fs/promises";
 import test from "node:test";
 
 test("builds the Brian McLaren site and its core journeys", async () => {
-  const [site, layout] = await Promise.all([
+  const [site, layout, scrollRestorer] = await Promise.all([
     readFile(new URL("../app/site.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
+    readFile(
+      new URL("../app/scroll-position-restorer.tsx", import.meta.url),
+      "utf8",
+    ),
     access(new URL("../dist/server/index.js", import.meta.url)),
   ]);
 
   assert.match(layout, /Brian D\. McLaren/);
+  assert.match(layout, /ScrollPositionRestorer/);
+  assert.match(scrollRestorer, /sessionStorage\.setItem/);
+  assert.match(scrollRestorer, /popstate/);
+  assert.match(scrollRestorer, /pageshow/);
   assert.match(site, /Exploring faith, courage/);
   assert.match(site, /The Last Voyage/);
   assert.match(site, /Begin a speaking inquiry/);
