@@ -2090,9 +2090,14 @@ img {
 .catalogue-card {
   display: grid;
   gap: 1.25rem;
-  grid-template-columns: 42px 1fr;
+  grid-template-columns: 42px 84px 1fr;
   min-height: 230px;
   padding: 2rem 2rem 2.3rem 0;
+  transition: background-color 200ms ease;
+}
+
+.catalogue-card:hover {
+  background-color: var(--paper-light);
 }
 
 .catalogue-card:nth-child(odd) {
@@ -2111,6 +2116,28 @@ img {
   color: var(--red-dark);
   font-family: var(--serif);
   font-size: 0.9rem;
+}
+
+.catalogue-cover {
+  align-items: center;
+  aspect-ratio: 0.75;
+  background: var(--paper);
+  display: flex;
+  height: fit-content;
+  justify-content: center;
+  overflow: hidden;
+  padding: 8%;
+}
+
+.catalogue-cover img {
+  box-shadow: 0 14px 24px rgba(10, 32, 56, 0.2);
+  height: 100%;
+  object-fit: contain;
+  transition: transform 240ms ease;
+}
+
+.catalogue-card:hover .catalogue-cover img {
+  transform: translateY(-6px) rotate(-1deg);
 }
 
 .catalogue-meta {
@@ -2472,6 +2499,8 @@ img {
   .catalogue-card:nth-child(even) {
     border-bottom: 1px solid var(--line);
     border-right: 0;
+    gap: 1rem;
+    grid-template-columns: 32px 60px 1fr;
     min-height: 0;
     padding: 1.7rem 0 2rem;
   }

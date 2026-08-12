@@ -4,6 +4,8 @@ type CatalogueBook = {
   title: string;
   year: string;
   detail: string;
+  image: string;
+  href: string;
 };
 
 const featuredBooks = [
@@ -68,26 +70,36 @@ const fiction: CatalogueBook[] = [
     title: "The Great Rift",
     year: "2026",
     detail: "The Last Voyage trilogy · Book two · Forthcoming",
+    image: "/the-great-rift.jpg",
+    href: "https://www.hachette.co.uk/titles/brian-d-mclaren/the-great-rift/9781399838788/",
   },
   {
     title: "The Last Voyage",
     year: "2025",
     detail: "The Last Voyage trilogy · Book one",
+    image: "/the-last-voyage.jpg",
+    href: "https://www.hachette.com.au/brian-d-mclaren/the-last-voyage",
   },
   {
     title: "The Last Word and the Word After That",
     year: "2005",
     detail: "A New Kind of Christian trilogy · Book three",
+    image: "/the-last-word-and-the-word-after-that.jpg",
+    href: "https://www.broadleafbooks.com/store/product/9781506454634/The-Last-Word-and-the-Word-After-That",
   },
   {
     title: "The Story We Find Ourselves In",
     year: "2003",
     detail: "A New Kind of Christian trilogy · Book two",
+    image: "/the-story-we-find-ourselves-in.jpg",
+    href: "https://www.broadleafbooks.com/store/product/9781506454658/The-Story-We-Find-Ourselves-In",
   },
   {
     title: "A New Kind of Christian",
     year: "2001",
     detail: "A New Kind of Christian trilogy · Book one",
+    image: "/a-new-kind-of-christian.jpg",
+    href: "https://www.broadleafbooks.com/store/product/9781506454610/A-New-Kind-of-Christian",
   },
 ];
 
@@ -96,11 +108,15 @@ const storiesForAllAges: CatalogueBook[] = [
     title: "Cory and the Seventh Story",
     year: "2023",
     detail: "With Gareth Higgins · Illustrated by Anita Schmidt · Ages 3–7",
+    image: "/cory-and-the-seventh-story.jpg",
+    href: "https://www.penguinrandomhouse.com/books/717360/cory-and-the-seventh-story-by-brian-d-mclaren-and-gareth-higgins-illustrated-by-anita-schmidt/",
   },
   {
     title: "The Seventh Story: Us, Them, and the End of Violence",
     year: "2019",
     detail: "With Gareth Higgins · An illustrated fable and essays",
+    image: "/the-seventh-story.jpg",
+    href: "https://www.theseventhstory.com/paperback",
   },
 ];
 
@@ -109,86 +125,120 @@ const nonfiction: CatalogueBook[] = [
     title: "Life After Doom",
     year: "2024",
     detail: "Wisdom and Courage for a World Falling Apart",
+    image: "/life-after-doom.jpg",
+    href: "https://us.macmillan.com/books/9781250893277/lifeafterdoom/",
   },
   {
     title: "Do I Stay Christian?",
     year: "2022",
     detail: "A Guide for the Doubters, the Disappointed, and the Disillusioned",
+    image: "/do-i-stay-christian.jpg",
+    href: "https://us.macmillan.com/books/9781250262790/doistaychristian/",
   },
   {
     title: "Faith After Doubt",
     year: "2021",
     detail: "Why Your Beliefs Stopped Working and What to Do About It",
+    image: "/faith-after-doubt.jpg",
+    href: "https://us.macmillan.com/books/9781250828378/faithafterdoubt/",
   },
   {
     title: "The Galápagos Islands",
     year: "2019",
     detail: "A Spiritual Journey · Published in the UK as God Unbound",
+    image: "/the-galapagos-islands.jpg",
+    href: "https://www.broadleafbooks.com/store/product/9781506448251/The-Galapagos-Islands",
   },
   {
     title: "Seeking Aliveness",
     year: "2017",
     detail: "Daily Reflections on a New Way to Experience and Practice Faith",
+    image: "/seeking-aliveness.jpg",
+    href: "https://www.hachettebookgroup.com/titles/brian-d-mclaren/seeking-aliveness/9781478947462/",
   },
   {
     title: "The Great Spiritual Migration",
     year: "2016",
     detail: "How the World’s Largest Religion Is Seeking a Better Way to Be Christian",
+    image: "/the-great-spiritual-migration.jpg",
+    href: "https://www.penguinrandomhouse.com/books/250879/the-great-spiritual-migration-by-brian-d-mclaren/",
   },
   {
     title: "We Make the Road by Walking",
     year: "2014",
     detail: "A Year-Long Quest for Spiritual Formation, Reorientation, and Activation",
+    image: "/we-make-the-road-by-walking.jpg",
+    href: "https://www.hachettebookgroup.com/titles/brian-d-mclaren/we-make-the-road-by-walking/9781455514014/",
   },
   {
     title: "Why Did Jesus, Moses, the Buddha, and Mohammed Cross the Road?",
     year: "2012",
     detail: "Christian Identity in a Multi-Faith World",
+    image: "/why-did-jesus-cross-the-road.jpg",
+    href: "https://www.hachettebookgroup.com/titles/brian-d-mclaren/why-did-jesus-moses-the-buddha-and-mohammed-cross-the-road/9781455513949/",
   },
   {
     title: "Naked Spirituality",
     year: "2011",
     detail: "A Life with God in 12 Simple Words",
+    image: "/naked-spirituality.jpg",
+    href: "https://www.harpercollins.com/products/naked-spirituality-brian-d-mclaren",
   },
   {
     title: "A New Kind of Christianity",
     year: "2010",
     detail: "Ten Questions That Are Transforming the Faith",
+    image: "/a-new-kind-of-christianity.jpg",
+    href: "https://www.harpercollins.com/products/a-new-kind-of-christianity-brian-d-mclaren",
   },
   {
     title: "Finding Our Way Again",
     year: "2008",
     detail: "The Return of the Ancient Practices · Foreword by Phyllis Tickle",
+    image: "/finding-our-way-again.jpg",
+    href: "",
   },
   {
     title: "Everything Must Change",
     year: "2007",
     detail: "Jesus, Global Crises, and a Revolution of Hope",
+    image: "/everything-must-change.jpg",
+    href: "https://faithgateway.com/products/everything-must-change-when-the-worlds-biggest-problems-and-jesus-good-news-collide-1",
   },
   {
     title: "The Secret Message of Jesus",
     year: "2006",
     detail: "Uncovering the Truth That Could Change Everything",
+    image: "/the-secret-message-of-jesus.jpg",
+    href: "",
   },
   {
     title: "A Generous Orthodoxy",
     year: "2004",
     detail: "A personal confession and emerging-church landmark",
+    image: "/a-generous-orthodoxy.jpg",
+    href: "https://www.zondervan.com/author/1182/brian-d-mclaren/",
   },
   {
     title: "More Ready Than You Realize",
     year: "2002",
     detail: "The Power of Everyday Conversations",
+    image: "/more-ready-than-you-realize.jpg",
+    href: "https://www.amazon.com/More-Ready-than-Realize-Conversations/dp/0310239648",
   },
   {
     title: "The Church on the Other Side",
     year: "2000",
     detail: "Doing Ministry in the Postmodern Matrix · Revised from Reinventing Your Church",
+    image: "/the-church-on-the-other-side.jpg",
+    href: "https://www.amazon.com/Church-Other-Side-Brian-McLaren/dp/0310252199",
   },
   {
     title: "Finding Faith",
     year: "1999",
     detail: "A Self-Discovery Guide for Your Spiritual Quest · Later issued in two volumes",
+    image: "/finding-faith.jpg",
+    href: "https://www.amazon.com/Finding-Faith-Self-Discovery-Guide-Spiritual/dp/0310238382",
   },
 ];
 
@@ -197,31 +247,43 @@ const collaborations: CatalogueBook[] = [
     title: "The Justice Project",
     year: "2009",
     detail: "Co-edited with Elisa Padilla and Ashley Bunting Seeber",
+    image: "/the-justice-project.jpg",
+    href: "",
   },
   {
     title: "The Voice of Luke: Not Even Sandals",
     year: "2007",
     detail: "With Chris Seay",
+    image: "/the-voice-of-luke.jpg",
+    href: "",
   },
   {
     title: "The Dust Off Their Feet",
     year: "2006",
     detail: "With Chris Seay · Lessons from the First Church",
+    image: "/the-dust-off-their-feet.jpg",
+    href: "",
   },
   {
     title: "Adventures in Missing the Point",
     year: "2003",
     detail: "With Tony Campolo",
+    image: "/adventures-in-missing-the-point.jpg",
+    href: "https://www.amazon.com/Adventures-Missing-Point-Controlled-Neutered/dp/0310253845",
   },
   {
     title: "The Church in Emerging Culture: Five Perspectives",
     year: "2003",
     detail: "Contributor · Edited by Leonard Sweet",
+    image: "/the-church-in-emerging-culture.jpg",
+    href: "https://www.amazon.com/Church-Emerging-Culture-Five-Perspectives/dp/0310254876",
   },
   {
     title: "A Is for Abductive",
     year: "2003",
     detail: "With Leonard Sweet and Jerry Haselmayer",
+    image: "/a-is-for-abductive.jpg",
+    href: "https://www.amazon.com/Abductive-Leonard-Sweet/dp/0310243564",
   },
 ];
 
@@ -255,21 +317,46 @@ function CatalogueSection({
         <p>{intro}</p>
       </div>
       <div className="catalogue-grid">
-        {books.map((book, index) => (
-          <article className="catalogue-card" key={book.title}>
-            <span className="catalogue-number">
-              {String(index + 1).padStart(2, "0")}
-            </span>
-            <div>
-              <div className="catalogue-meta">
-                <span>{book.year}</span>
-                <span>{eyebrow}</span>
+        {books.map((book, index) => {
+          const cardContent = (
+            <>
+              <span className="catalogue-number">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <div className="catalogue-cover">
+                <img src={book.image} alt={`Cover of ${book.title}`} />
               </div>
-              <h3>{book.title}</h3>
-              <p>{book.detail}</p>
-            </div>
-          </article>
-        ))}
+              <div>
+                <div className="catalogue-meta">
+                  <span>{book.year}</span>
+                  <span>{eyebrow}</span>
+                </div>
+                <h3>{book.title}</h3>
+                <p>{book.detail}</p>
+              </div>
+            </>
+          );
+
+          if (!book.href) {
+            return (
+              <article className="catalogue-card" key={book.title}>
+                {cardContent}
+              </article>
+            );
+          }
+
+          return (
+            <a
+              className="catalogue-card"
+              href={book.href}
+              target="_blank"
+              rel="noreferrer"
+              key={book.title}
+            >
+              {cardContent}
+            </a>
+          );
+        })}
       </div>
     </section>
   );
