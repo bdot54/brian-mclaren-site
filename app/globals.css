@@ -2121,7 +2121,7 @@ img {
 .catalogue-cover {
   align-items: center;
   aspect-ratio: 0.75;
-  background: var(--paper);
+  background: var(--paper-light);
   display: flex;
   height: fit-content;
   justify-content: center;
