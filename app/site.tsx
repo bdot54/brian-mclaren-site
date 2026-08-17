@@ -250,6 +250,9 @@ export function BrianSite() {
           <nav className="desktop-nav" aria-label="Main navigation">
             <a href="#about">About</a>
             <a href="/books">Books</a>
+            <a href="https://payhip.com/BrianMcLaren" target="_blank" rel="noreferrer">
+              Store
+            </a>
             <a href="#speaking">Speaking</a>
             <a href="#ideas">Writing</a>
             <a href="#events">Events</a>
@@ -279,6 +282,14 @@ export function BrianSite() {
           </a>
           <a href="/books" onClick={closeMenu}>
             Books
+          </a>
+          <a
+            href="https://payhip.com/BrianMcLaren"
+            target="_blank"
+            rel="noreferrer"
+            onClick={closeMenu}
+          >
+            Store
           </a>
           <a href="#speaking" onClick={closeMenu}>
             Speaking
