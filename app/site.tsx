@@ -157,14 +157,14 @@ const recentWriting = [
     href: "/archive/in-tribute-dr-john-esposito-1940-2026",
   },
   {
+    date: "Aug. 2026",
+    title: "In Tribute: Dr. Patrick Keifert",
+    href: "/archive/in-tribute-dr-patrick-keifert",
+  },
+  {
     date: "Jan. 2026",
     title: "A new book by a good friend: Birthing the Symbiotic Age",
     href: "/archive/a-new-book-by-a-good-friend-birthing-the-symbiotic-age",
-  },
-  {
-    date: "Feb. 2025",
-    title: "A conversation on Soul Boom",
-    href: "/archive/its-not-every-day-you-get-to-hang-out-with-rainn-wilson-aka-dwight-schrute",
   },
 ];
 
