@@ -153,6 +153,11 @@ const topics = [
 const recentWriting = [
   {
     date: "Aug. 2026",
+    title: "The 100 Most-Read Posts, All Time",
+    href: "/archive/the-100-most-read-posts-of-all-time",
+  },
+  {
+    date: "Aug. 2026",
     title: "In Tribute: Dr. John Esposito (1940-2026)",
     href: "/archive/in-tribute-dr-john-esposito-1940-2026",
   },
@@ -160,11 +165,6 @@ const recentWriting = [
     date: "Aug. 2026",
     title: "In Tribute: Dr. Patrick Keifert",
     href: "/archive/in-tribute-dr-patrick-keifert",
-  },
-  {
-    date: "Jan. 2026",
-    title: "A new book by a good friend: Birthing the Symbiotic Age",
-    href: "/archive/a-new-book-by-a-good-friend-birthing-the-symbiotic-age",
   },
 ];
 
