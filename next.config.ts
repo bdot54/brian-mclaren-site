@@ -48,6 +48,7 @@ const legacyRedirects = [
   { source: "/archives/blog/politics-and-consciousness.html", destination: "/archive/politics-and-consciousness", permanent: true },
   { source: "/archives/blog/prayer-for-enemies.html", destination: "/archive/prayer-for-enemies", permanent: true },
   { source: "/archives/blog/preaching-in-challenging-times.html", destination: "/archive/preaching-in-challenging-times", permanent: true },
+  { source: "/archives/blog/q-r-exegeting-matthew-25.html", destination: "/archive/q-r-exegeting-matthew-25", permanent: true },
   { source: "/archives/blog/q-r-onward-christian-what.html", destination: "/archive/q-r-onward-christian-what", permanent: true },
   { source: "/archives/blog/q-r-romans-13.html", destination: "/archive/q-r-romans-13", permanent: true },
   { source: "/archives/blog/q-r-the-propitiation-question.html", destination: "/archive/q-r-the-propitiation-question", permanent: true },
