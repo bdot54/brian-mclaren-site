@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 
 type ArchiveIndex = {
   entries: Array<{ id: number; slug: string }>;
@@ -19,6 +19,39 @@ type ArchiveEntry = {
     book: string | null;
   };
 };
+
+const INLINE_LINK = /\[([^\]]+)\]\(([^)]+)\)/g;
+
+function renderInlineLinks(text: string) {
+  const nodes: ReactNode[] = [];
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
+  let key = 0;
+
+  INLINE_LINK.lastIndex = 0;
+  while ((match = INLINE_LINK.exec(text))) {
+    if (match.index > lastIndex) {
+      nodes.push(text.slice(lastIndex, match.index));
+    }
+    const [, label, href] = match;
+    nodes.push(
+      href.startsWith("/") ? (
+        <Link href={href} key={key++}>
+          {label}
+        </Link>
+      ) : (
+        <a href={href} target="_blank" rel="noreferrer" key={key++}>
+          {label}
+        </a>
+      ),
+    );
+    lastIndex = match.index + match[0].length;
+  }
+  if (lastIndex < text.length) {
+    nodes.push(text.slice(lastIndex));
+  }
+  return nodes;
+}
 
 export default function ArchiveEntryPage() {
   const params = useParams<{ slug: string }>();
@@ -81,7 +114,14 @@ export default function ArchiveEntryPage() {
         </div>
         <div className="archive-entry-body">
           {entry.body.split(/\n{2,}/).map((paragraph, index) => (
-            <p key={`${index}-${paragraph.slice(0, 30)}`}>{paragraph}</p>
+            <p key={`${index}-${paragraph.slice(0, 30)}`}>
+              {paragraph.split("\n").map((line, lineIndex, lines) => (
+                <span key={lineIndex}>
+                  {renderInlineLinks(line)}
+                  {lineIndex < lines.length - 1 ? <br /> : null}
+                </span>
+              ))}
+            </p>
           ))}
         </div>
       </article>

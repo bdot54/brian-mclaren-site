@@ -152,9 +152,9 @@ const topics = [
 
 const recentWriting = [
   {
-    date: "Jun. 2025",
-    title: "A Nautilus Book Award for Life After Doom",
-    href: "/archive/a-nautilus-book-award-for-life-after-doom",
+    date: "Aug. 2026",
+    title: "In Tribute: Dr. John Esposito (1940-2026)",
+    href: "/archive/in-tribute-dr-john-esposito-1940-2026",
   },
   {
     date: "Jan. 2026",
