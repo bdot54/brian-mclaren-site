@@ -177,7 +177,7 @@ test("keeps internal links, media, and verified destinations intact", async () =
   assert.match(site, /https:\/\/x\.com\/brianmclaren/);
   assert.match(
     site,
-    /a-new-book-by-a-good-friend-birthing-the-symbiotic-age/,
+    /the-100-most-read-posts-of-all-time/,
   );
   assert.match(site, /action="\/archive"/);
   assert.doesNotMatch(site, /brianmclaren\.net/);
