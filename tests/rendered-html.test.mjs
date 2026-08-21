@@ -117,6 +117,10 @@ test("links every pathway recommendation to its book page", async () => {
   );
   assert.doesNotMatch(site, /thomasnelson\.com/);
   assert.match(site, /zondervan\.com\/author\/1182\/brian-d-mclaren/);
+  assert.match(site, /amazon\.com\/dp\/1399838784/);
+  assert.match(site, /Pre-sale available now/);
+  assert.match(site, /next-card-cover-link/);
+  assert.match(site, /next-card-title-link/);
   assert.match(
     site,
     /harpercollins\.com\/products\/naked-spirituality-brian-d-mclaren/,
