@@ -586,10 +586,24 @@ img {
   overflow: hidden;
 }
 
+.next-card-cover-link {
+  background: var(--ink);
+  display: block;
+  overflow: hidden;
+}
+
 .next-card img {
+  display: block;
   height: 100%;
   object-fit: cover;
+  transition: filter 180ms ease, transform 260ms ease;
   width: 100%;
+}
+
+.next-card-cover-link:hover img,
+.next-card-cover-link:focus-visible img {
+  filter: brightness(0.82);
+  transform: scale(1.035);
 }
 
 .next-card-copy {
@@ -606,6 +620,51 @@ img {
   letter-spacing: -0.04em;
   line-height: 1;
   margin: 0.8rem 0 1rem;
+}
+
+.presale-note {
+  color: var(--red);
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  margin-top: 0.6rem;
+  text-transform: uppercase;
+}
+
+.next-card-title-link {
+  color: inherit;
+  text-decoration: none;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  transition: color 180ms ease, text-decoration-color 180ms ease;
+}
+
+.next-card-title-link span {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: 0.58em;
+  letter-spacing: 0;
+  margin-left: 0.18em;
+  transition: transform 180ms ease;
+  vertical-align: 0.18em;
+}
+
+.next-card-title-link:hover,
+.next-card-title-link:focus-visible {
+  color: var(--red);
+  text-decoration: underline;
+}
+
+.next-card-title-link:hover span,
+.next-card-title-link:focus-visible span {
+  transform: translate(0.12em, -0.12em);
+}
+
+.next-card-cover-link:focus-visible,
+.next-card-title-link:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 4px;
 }
 
 .next-card p {
@@ -2470,6 +2529,11 @@ img {
 
   .next-card {
     grid-template-columns: 0.75fr 1fr;
+  }
+
+  .presale-note {
+    font-size: 0.64rem;
+    letter-spacing: 0.09em;
   }
 
   .book-grid {

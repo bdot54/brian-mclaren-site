@@ -28,6 +28,9 @@ const bookLinks = {
     "https://www.harpercollins.com/products/a-new-kind-of-christianity-brian-d-mclaren",
 } as const;
 
+const greatRiftPresaleUrl =
+  "https://www.amazon.com/dp/1399838784?lv=shuf&channelId=500&plpRedirect=mhFallback";
+
 type RecommendedBook = keyof typeof bookLinks;
 
 const pathways = [
@@ -454,10 +457,28 @@ export function BrianSite() {
 
               <div className="next-work">
                 <article className="next-card">
-                  <img src="/the-great-rift.jpg" alt="" />
+                  <a
+                    className="next-card-cover-link"
+                    href={greatRiftPresaleUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="Pre-order The Great Rift on Amazon"
+                  >
+                    <img src="/the-great-rift.jpg" alt="Cover of The Great Rift" />
+                  </a>
                   <div className="next-card-copy">
                     <span className="kicker">Coming November 2026</span>
-                    <h3>The Great Rift</h3>
+                    <span className="presale-note">Pre-sale available now</span>
+                    <h3>
+                      <a
+                        className="next-card-title-link"
+                        href={greatRiftPresaleUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        The Great Rift <span aria-hidden="true">↗</span>
+                      </a>
+                    </h3>
                     <p>The second novel in the Mars trilogy.</p>
                   </div>
                 </article>
