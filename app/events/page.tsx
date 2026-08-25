@@ -39,14 +39,17 @@ const inPersonEvents: InPersonEvent[] = [
     dates: "September 2–5, 2027",
     title: "Wild Goose Festival",
     location: "Harmony, North Carolina",
-    tentative: true,
     href: "https://wildgoosefestival.org/",
   },
   {
     dates: "October 13–17, 2027",
     title: "Theology Beer Camp",
     location: "Montreat, North Carolina",
-    tentative: true,
+  },
+  {
+    dates: "October 27–31, 2027",
+    title: "Center for Action and Contemplation Event",
+    location: "Albuquerque, New Mexico",
   },
   {
     dates: "TBA",

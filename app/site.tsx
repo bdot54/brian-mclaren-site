@@ -183,6 +183,7 @@ export function BrianSite() {
   const isMediaInquiry =
     inquiryFormat === "Podcast Interview" || inquiryFormat === "Press Interview";
   const isInPersonInquiry = inquiryFormat === "In Person Appearances";
+  const isPodcastInquiry = inquiryFormat === "Podcast Interview";
 
   async function submitNewsletter(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -638,21 +639,21 @@ export function BrianSite() {
                 events, podcasts, and community conversations.
               </p>
               <div className="availability-card">
-                <strong>Scheduling note</strong>
-                <p>
-                  Brian is taking most of 2026 away from public speaking. His
-                  2027 calendar is planned to open in September 2026, with
-                  virtual appearances encouraged and travel considered
-                  selectively.
-                </p>
-              </div>
-              <div className="availability-card">
                 <strong>Available for Podcast Interviews</strong>
                 <p>
                   Brian is currently booking podcast interviews for his new
                   book releases: The Great Rift (Nov 2026), The Beautiful
                   Logic of a Meaningful Life (May 2027), and Ethnogensis
                   (Summer/Fall 2027).
+                </p>
+              </div>
+              <div className="availability-card">
+                <strong>Scheduling note</strong>
+                <p>
+                  Brian is taking most of 2026 away from public speaking. His
+                  2027 calendar is planned to open in September 2026, with
+                  virtual appearances encouraged and travel considered
+                  selectively.
                 </p>
               </div>
               <p className="speaking-topics-heading">Past public speaking topics</p>
@@ -764,11 +765,21 @@ export function BrianSite() {
                 )}
                 <div className="form-field form-field-full">
                   <label htmlFor="inquiry-topics">Topic or theme</label>
-                  <input
-                    id="inquiry-topics"
-                    name="topics"
-                    placeholder="What would you like Brian to explore?"
-                  />
+                  {isPodcastInquiry ? (
+                    <select id="inquiry-topics" name="topics" defaultValue="">
+                      <option value="">Choose one</option>
+                      <option>The Great Rift</option>
+                      <option>The Beautiful Logic of a Meaningful Life</option>
+                      <option>Ethnogenesis</option>
+                      <option>Other</option>
+                    </select>
+                  ) : (
+                    <input
+                      id="inquiry-topics"
+                      name="topics"
+                      placeholder="What would you like Brian to explore?"
+                    />
+                  )}
                 </div>
                 <div className="form-field form-field-full">
                   <label htmlFor="inquiry-message">Anything else?</label>
