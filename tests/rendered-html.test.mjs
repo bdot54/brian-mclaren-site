@@ -25,14 +25,14 @@ test("builds the Brian McLaren site and its core journeys", async () => {
   assert.match(site, /emailed to Brian’s team/);
   assert.doesNotMatch(site, /mailto:/);
   assert.doesNotMatch(site, /event\.currentTarget\.reset\(\)/);
-  assert.match(site, /Join the letter/);
+  assert.match(site, /Join EDGEWISE/);
   assert.match(site, /Writer · teacher · public theologian/);
   assert.match(site, /Brian’s Latest &amp; Upcoming Works/);
   assert.match(site, /Books for the journey/);
   assert.match(site, /className="about-portrait"/);
   assert.match(site, /Search an archive of Brian’s writings/);
   assert.match(site, /A thoughtful outreach, only when there’s something to say/);
-  assert.match(site, /Join the letter for updates on new writing/);
+  assert.match(site, /Join EDGEWISE for updates on new writing/);
   assert.match(site, /I’m not sure what I believe/);
   assert.match(site, /You don’t need certainty to begin exploring/);
   assert.match(site, /I want to grow spiritually/);
@@ -177,7 +177,7 @@ test("keeps internal links, media, and verified destinations intact", async () =
     /drive\.google\.com\/drive\/folders\/19OqldLnPUral_BSoofdeH8LKHiDdhwbE/,
   );
   assert.match(site, /instagram\.com\/brian_mclaren\//);
-  assert.match(site, /href="#newsletter">Join The Letter<\/a>/);
+  assert.match(site, /href="#newsletter">Join EDGEWISE<\/a>/);
   assert.match(site, /https:\/\/x\.com\/brianmclaren/);
   assert.match(
     site,
