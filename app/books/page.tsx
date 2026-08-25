@@ -16,7 +16,7 @@ const featuredBooks = [
     image: "/the-great-rift.jpg",
     alt: "Cover of The Great Rift",
     copy: "The second novel in the Mars trilogy—a story of survival, belonging, and the difficult work of beginning again.",
-    href: "https://www.hachette.co.uk/titles/brian-d-mclaren/the-great-rift/9781399838788/",
+    href: "https://bookshop.org/p/books/the-great-rift-brian-d-mclaren/21462f123b507d46",
   },
   {
     title: "The Last Voyage",
@@ -25,7 +25,7 @@ const featuredBooks = [
     image: "/the-last-voyage.jpg",
     alt: "Cover of The Last Voyage",
     copy: "Ten pioneers leave a faltering Earth for Mars, carrying human brilliance, old wounds, and one enormous question.",
-    href: "https://www.hachette.com.au/brian-d-mclaren/the-last-voyage",
+    href: "https://bookshop.org/p/books/the-last-voyage-brian-mclaren/20243554",
   },
   {
     title: "Life After Doom",
@@ -71,14 +71,14 @@ const fiction: CatalogueBook[] = [
     year: "2026",
     detail: "The Last Voyage trilogy · Book two · Forthcoming",
     image: "/the-great-rift.jpg",
-    href: "https://www.hachette.co.uk/titles/brian-d-mclaren/the-great-rift/9781399838788/",
+    href: "https://bookshop.org/p/books/the-great-rift-brian-d-mclaren/21462f123b507d46",
   },
   {
     title: "The Last Voyage",
     year: "2025",
     detail: "The Last Voyage trilogy · Book one",
     image: "/the-last-voyage.jpg",
-    href: "https://www.hachette.com.au/brian-d-mclaren/the-last-voyage",
+    href: "https://bookshop.org/p/books/the-last-voyage-brian-mclaren/20243554",
   },
   {
     title: "The Last Word and the Word After That",

@@ -572,6 +572,29 @@ img {
   width: fit-content;
 }
 
+.retailer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.4rem;
+}
+
+.next-card-copy .retailer-links {
+  margin-top: 1.1rem;
+}
+
+.next-card-copy .retailer-links a {
+  align-items: center;
+  border-bottom: 1px solid var(--ink);
+  display: inline-flex;
+  font-size: 0.66rem;
+  font-weight: 800;
+  gap: 0.4rem;
+  letter-spacing: 0.08em;
+  padding-bottom: 0.3rem;
+  text-transform: uppercase;
+  width: fit-content;
+}
+
 .next-work {
   display: grid;
   gap: 1.2rem;

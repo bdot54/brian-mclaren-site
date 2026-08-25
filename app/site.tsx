@@ -16,9 +16,9 @@ const bookLinks = {
   "The Galápagos Islands":
     "https://www.broadleafbooks.com/store/product/9781506448251/The-Galapagos-Islands",
   "The Last Voyage":
-    "https://www.hachette.com.au/brian-d-mclaren/the-last-voyage",
+    "https://bookshop.org/p/books/the-last-voyage-brian-mclaren/20243554",
   "The Great Rift":
-    "https://www.hachette.co.uk/titles/brian-d-mclaren/the-great-rift/9781399838788/",
+    "https://bookshop.org/p/books/the-great-rift-brian-d-mclaren/21462f123b507d46",
   "The Seventh Story": "https://www.theseventhstory.com/paperback",
   "Naked Spirituality":
     "https://www.harpercollins.com/products/naked-spirituality-brian-d-mclaren",
@@ -451,13 +451,29 @@ export function BrianSite() {
                     Earth for Mars—and must decide which human values deserve a
                     future.
                   </p>
-                  <a
-                    href="https://www.hachette.com.au/brian-d-mclaren/the-last-voyage"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Discover the book <span>↗</span>
-                  </a>
+                  <div className="retailer-links">
+                    <a
+                      href="https://bookshop.org/p/books/the-last-voyage-brian-mclaren/20243554"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Bookshop <span>↗</span>
+                    </a>
+                    <a
+                      href="https://www.barnesandnoble.com/w/the-last-voyage-brian-mclaren/1143718471"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Barnes &amp; Noble <span>↗</span>
+                    </a>
+                    <a
+                      href="https://www.amazon.com/dp/1399814141"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Amazon <span>↗</span>
+                    </a>
+                  </div>
                 </div>
               </article>
 
@@ -465,10 +481,10 @@ export function BrianSite() {
                 <article className="next-card">
                   <a
                     className="next-card-cover-link"
-                    href={greatRiftPresaleUrl}
+                    href={bookLinks["The Great Rift"]}
                     target="_blank"
                     rel="noreferrer"
-                    aria-label="Pre-order The Great Rift on Amazon"
+                    aria-label="Pre-order The Great Rift on Bookshop.org"
                   >
                     <img src="/the-great-rift.jpg" alt="Cover of The Great Rift" />
                   </a>
@@ -478,7 +494,7 @@ export function BrianSite() {
                     <h3>
                       <a
                         className="next-card-title-link"
-                        href={greatRiftPresaleUrl}
+                        href={bookLinks["The Great Rift"]}
                         target="_blank"
                         rel="noreferrer"
                       >
@@ -486,6 +502,21 @@ export function BrianSite() {
                       </a>
                     </h3>
                     <p>The second novel in the Mars trilogy.</p>
+                    <div className="retailer-links">
+                      <a href={bookLinks["The Great Rift"]} target="_blank" rel="noreferrer">
+                        Bookshop <span>↗</span>
+                      </a>
+                      <a
+                        href="https://www.barnesandnoble.com/w/the-great-rift-brian-d-mclaren/1149634824"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        Barnes &amp; Noble <span>↗</span>
+                      </a>
+                      <a href={greatRiftPresaleUrl} target="_blank" rel="noreferrer">
+                        Amazon <span>↗</span>
+                      </a>
+                    </div>
                   </div>
                 </article>
                 <article className="next-card next-card-typographic">
