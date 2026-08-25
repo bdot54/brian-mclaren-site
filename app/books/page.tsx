@@ -531,7 +531,7 @@ export default function BooksPage() {
               <article>
                 <span>The Last Voyage trilogy · Book three</span>
                 <h3>Ethnogenesis</h3>
-                <p>Announced as the concluding Mars novel.</p>
+                <p>Planned for Summer/Fall 2027.</p>
               </article>
             </div>
           </div>
