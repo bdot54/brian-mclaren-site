@@ -391,8 +391,9 @@ export default function BooksPage() {
             </a>
             <a href="/#speaking">Speaking</a>
             <a href="/#ideas">Writing</a>
+            <a href="/events">Events</a>
             <a className="nav-cta" href="/#newsletter">
-              Join the letter
+              Join EDGEWISE
             </a>
           </nav>
 

@@ -258,9 +258,9 @@ export function BrianSite() {
             </a>
             <a href="#speaking">Speaking</a>
             <a href="#ideas">Writing</a>
-            <a href="#events">Events</a>
+            <a href="/events">Events</a>
             <a className="nav-cta" href="#newsletter">
-              Join the letter
+              Join EDGEWISE
             </a>
           </nav>
 
@@ -300,11 +300,11 @@ export function BrianSite() {
           <a href="#ideas" onClick={closeMenu}>
             Writing
           </a>
-          <a href="#events" onClick={closeMenu}>
+          <a href="/events" onClick={closeMenu}>
             Events
           </a>
           <a href="#newsletter" onClick={closeMenu}>
-            Join the letter
+            Join EDGEWISE
           </a>
         </nav>
       </header>
@@ -341,7 +341,7 @@ export function BrianSite() {
               <div className="portrait-frame">
                 <img
                   src="/brian-portrait.jpg"
-                  alt="Brian D. McLaren outdoors"
+                  alt="Portrait of Brian D. McLaren"
                 />
               </div>
               <figcaption className="portrait-caption">
@@ -556,8 +556,8 @@ export function BrianSite() {
               </div>
               <figure className="about-portrait">
                 <img
-                  src="/brian-portrait.jpg"
-                  alt="Brian D. McLaren outdoors"
+                  src="/brian-portrait-outdoors.jpg"
+                  alt="Brian D. McLaren outdoors in the mountains"
                 />
               </figure>
             </div>
@@ -769,6 +769,9 @@ export function BrianSite() {
                 Find current scheduling information, sample conversations, and
                 everything an event or media team needs.
               </p>
+              <a className="text-link" href="/events">
+                See all events →
+              </a>
             </div>
 
             <div className="event-grid">
@@ -777,7 +780,7 @@ export function BrianSite() {
                 <h3>A quieter speaking year</h3>
                 <p>
                   Brian is stepping back from most public events in 2026.
-                  Follow updates here and join the letter for 2027 news.
+                  Follow updates here and join EDGEWISE for 2027 news.
                 </p>
                 <a
                   className="text-link"
@@ -903,7 +906,7 @@ export function BrianSite() {
                 A thoughtful outreach, only when there’s something to say
               </h2>
               <p>
-                Join the letter for updates on new writing, book news, events,
+                Join EDGEWISE for updates on new writing, book news, events,
                 and a few useful things worth sharing—sent with care, never
                 clutter.
               </p>
@@ -925,7 +928,7 @@ export function BrianSite() {
                   />
                 </label>
                 <button className="button button-primary" type="submit">
-                  Join the letter
+                  Join EDGEWISE
                 </button>
               </div>
               <div className="form-honeypot" aria-hidden="true">
@@ -974,7 +977,7 @@ export function BrianSite() {
             >
               General contact
             </a>
-            <a href="#newsletter">Join The Letter</a>
+            <a href="#newsletter">Join EDGEWISE</a>
             <a
               href="https://cac.org/podcast/learning-how-to-see/"
               target="_blank"

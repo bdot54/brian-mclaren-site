@@ -1338,6 +1338,73 @@ img {
   border-color: white;
 }
 
+.appearances-list {
+  border-top: 1px solid var(--ink);
+}
+
+.appearance-row {
+  align-items: center;
+  border-bottom: 1px solid var(--line);
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 0.85fr 1.4fr 0.75fr;
+  padding: 1.6rem 0;
+}
+
+.appearance-dates {
+  color: var(--red-dark);
+  font-family: var(--serif);
+  font-size: 1rem;
+}
+
+.appearance-copy h3 {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  font-family: var(--serif);
+  font-size: clamp(1.2rem, 1.8vw, 1.6rem);
+  font-weight: 400;
+  gap: 0.7rem;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.3rem;
+}
+
+.appearance-copy p {
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+.appearance-tentative {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  color: var(--ink-soft);
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  padding: 0.2rem 0.5rem;
+  text-transform: uppercase;
+}
+
+.appearance-action {
+  text-align: right;
+}
+
+.appearance-soon {
+  color: var(--ink-soft);
+  font-size: 0.72rem;
+  font-style: italic;
+}
+
+.media-grid {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.media-grid .event-card {
+  min-height: 260px;
+}
+
 .ideas-section {
   background: var(--paper-light);
 }
@@ -2555,8 +2622,18 @@ img {
 
   .library-feature-grid,
   .catalogue-grid,
-  .horizon-grid {
+  .horizon-grid,
+  .media-grid {
     grid-template-columns: 1fr;
+  }
+
+  .appearance-row {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .appearance-action {
+    text-align: left;
   }
 
   .catalogue-card,
