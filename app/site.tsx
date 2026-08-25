@@ -681,10 +681,15 @@ export function BrianSite() {
               <div className="availability-card">
                 <strong>Scheduling note</strong>
                 <p>
-                  Brian is taking most of 2026 away from public speaking. His
-                  2027 calendar is planned to open in September 2026, with
-                  virtual appearances encouraged and travel considered
-                  selectively.
+                  Brian is taking 2026 away from public speaking. Starting in
+                  2027, he plans to limit public speaking to six to ten
+                  in-person events per year with about the same number of
+                  online appearances. He will be available for podcast and
+                  press interviews primarily around the time of his book
+                  releases. His priorities in public speaking are a) college
+                  students and young adults, b) seminarians and clergy, and c)
+                  large gatherings where he can talk about his recent and
+                  upcoming books.
                 </p>
               </div>
               <p className="speaking-topics-heading">Past public speaking topics</p>
