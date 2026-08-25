@@ -18,6 +18,8 @@ export const speakingInquiries = sqliteTable("speaking_inquiries", {
   proposedDates: text("proposed_dates").notNull(),
   audience: text("audience").notNull(),
   format: text("format").notNull(),
+  venueOrCity: text("venue_or_city").notNull().default(""),
+  link: text("link").notNull().default(""),
   topics: text("topics").notNull().default(""),
   message: text("message").notNull().default(""),
   consent: integer("consent", { mode: "boolean" }).notNull().default(true),

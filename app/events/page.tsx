@@ -6,6 +6,7 @@ type InPersonEvent = {
   location: string;
   tentative?: boolean;
   href?: string;
+  linkText?: string;
 };
 
 type MediaAppearance = {
@@ -46,6 +47,14 @@ const inPersonEvents: InPersonEvent[] = [
     title: "Theology Beer Camp",
     location: "Montreat, North Carolina",
     tentative: true,
+  },
+  {
+    dates: "TBA",
+    title: "Additional dates open",
+    location:
+      "Brian has a few remaining dates open for public appearances, especially for youth and young adult gatherings.",
+    href: "/#speaking",
+    linkText: "To inquire, click here →",
   },
 ];
 
@@ -143,7 +152,9 @@ export default function EventsPage() {
               </p>
               <div className="library-stats" aria-label="Events overview">
                 <div>
-                  <strong>{inPersonEvents.length}</strong>
+                  <strong>
+                    {inPersonEvents.filter((event) => event.dates !== "TBA").length}
+                  </strong>
                   <span>2027 appearances announced</span>
                 </div>
                 <div>
@@ -189,14 +200,20 @@ export default function EventsPage() {
                   </div>
                   <div className="appearance-action">
                     {event.href ? (
-                      <a
-                        className="text-link"
-                        href={event.href}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        Learn more ↗
-                      </a>
+                      event.href.startsWith("/") ? (
+                        <a className="text-link" href={event.href}>
+                          {event.linkText ?? "Learn more ↗"}
+                        </a>
+                      ) : (
+                        <a
+                          className="text-link"
+                          href={event.href}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {event.linkText ?? "Learn more ↗"}
+                        </a>
+                      )
                     ) : (
                       <span className="appearance-soon">
                         More information coming soon
@@ -229,6 +246,38 @@ export default function EventsPage() {
             </div>
 
             <div className="media-grid">
+              <article className="event-card event-card-wide">
+                <span className="kicker">Podcast & press interviews</span>
+                <h3>Talk with Brian about his newest book</h3>
+                <p>
+                  In addition to his own podcast, Learning How to See, Brian
+                  enjoys participating in other podcast and press
+                  interviews—primarily to talk about his newest book
+                  releases.
+                </p>
+                <ul className="podcast-releases">
+                  <li>
+                    <strong>The Great Rift</strong>
+                    <span>Sci-fi novel · releases November 3, 2026</span>
+                  </li>
+                  <li>
+                    <strong>The Beautiful Logic of a Meaningful Life</strong>
+                    <span>May 11, 2027</span>
+                  </li>
+                  <li>
+                    <strong>Ethnogenesis</strong>
+                    <span>Summer/fall 2027 · date TBA</span>
+                  </li>
+                </ul>
+                <p>
+                  If you'd like to invite Brian to join you for a podcast
+                  conversation about <em>The Beautiful Logic of a Meaningful
+                  Life</em>, just answer a few questions to get started.
+                </p>
+                <a className="text-link" href="/#speaking">
+                  Begin a speaking inquiry →
+                </a>
+              </article>
               {mediaAppearances.map((item) => (
                 <article className="event-card" key={item.title}>
                   <span className="kicker">{item.kind}</span>
@@ -254,6 +303,15 @@ export default function EventsPage() {
             <h2 id="press-heading">Planning an event with Brian?</h2>
             <div className="horizon-grid">
               <article>
+                <span>Speaking inquiries</span>
+                <h3>Start a conversation about 2027</h3>
+                <p>
+                  <a className="text-link" href="/#speaking">
+                    Begin a speaking inquiry →
+                  </a>
+                </p>
+              </article>
+              <article>
                 <span>Press & event kit</span>
                 <h3>Approved photos and promotional materials</h3>
                 <p>
@@ -264,15 +322,6 @@ export default function EventsPage() {
                     rel="noreferrer"
                   >
                     Open the kit ↗
-                  </a>
-                </p>
-              </article>
-              <article>
-                <span>Speaking inquiries</span>
-                <h3>Start a conversation about 2027</h3>
-                <p>
-                  <a className="text-link" href="/#speaking">
-                    Begin a speaking inquiry →
                   </a>
                 </p>
               </article>

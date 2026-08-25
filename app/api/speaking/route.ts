@@ -12,6 +12,8 @@ type Inquiry = {
   proposedDates: string;
   audience: string;
   format: string;
+  venueOrCity: string;
+  link: string;
   topics: string;
   message: string;
   consent: boolean;
@@ -38,21 +40,29 @@ function formatInquiryText(inquiry: Inquiry) {
     `Proposed date(s): ${inquiry.proposedDates}`,
     `Audience: ${inquiry.audience}`,
     `Format: ${inquiry.format}`,
+    inquiry.venueOrCity ? `Venue or city: ${inquiry.venueOrCity}` : null,
+    inquiry.link ? `Link: ${inquiry.link}` : null,
     `Topic or theme: ${inquiry.topics || "Not provided"}`,
     "",
     "Additional details:",
     inquiry.message || "Not provided",
-  ].join("\n");
+  ]
+    .filter((line) => line !== null)
+    .join("\n");
 }
 
 function formatInquiryHtml(inquiry: Inquiry) {
-  const rows = [
+  const rows: Array<readonly [string, string]> = [
     ["Name", inquiry.name],
     ["Email", inquiry.email],
     ["Organization", inquiry.organization],
     ["Proposed date(s)", inquiry.proposedDates],
     ["Audience", inquiry.audience],
     ["Format", inquiry.format],
+    ...(inquiry.venueOrCity
+      ? ([["Venue or city", inquiry.venueOrCity]] as const)
+      : []),
+    ...(inquiry.link ? ([["Link", inquiry.link]] as const) : []),
     ["Topic or theme", inquiry.topics || "Not provided"],
     ["Additional details", inquiry.message || "Not provided"],
   ];
@@ -121,6 +131,8 @@ export async function POST(request: Request) {
       proposedDates?: string;
       audience?: string;
       format?: string;
+      venueOrCity?: string;
+      link?: string;
       topics?: string;
       message?: string;
       consent?: string;
@@ -138,6 +150,8 @@ export async function POST(request: Request) {
       proposedDates: clean(payload.proposedDates, 180),
       audience: clean(payload.audience, 300),
       format: clean(payload.format, 100),
+      venueOrCity: clean(payload.venueOrCity, 200),
+      link: clean(payload.link, 400),
       topics: clean(payload.topics, 500),
       message: clean(payload.message, 3000),
       consent: payload.consent === "yes",

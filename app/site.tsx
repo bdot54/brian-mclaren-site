@@ -179,6 +179,10 @@ export function BrianSite() {
   const [selectedPath, setSelectedPath] = useState(pathways[0]);
   const [newsletterStatus, setNewsletterStatus] = useState("");
   const [inquiryStatus, setInquiryStatus] = useState("");
+  const [inquiryFormat, setInquiryFormat] = useState("");
+  const isMediaInquiry =
+    inquiryFormat === "Podcast Interview" || inquiryFormat === "Press Interview";
+  const isInPersonInquiry = inquiryFormat === "In Person Appearances";
 
   async function submitNewsletter(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -218,6 +222,7 @@ export function BrianSite() {
       const result = (await response.json()) as { error?: string };
       if (!response.ok) throw new Error(result.error || "Please try again.");
       inquiryForm.reset();
+      setInquiryFormat("");
       setInquiryStatus("Thank you. Your inquiry has been emailed to Brian’s team.");
     } catch (error) {
       setInquiryStatus(
@@ -641,6 +646,15 @@ export function BrianSite() {
                   selectively.
                 </p>
               </div>
+              <div className="availability-card">
+                <strong>Available for Podcast Interviews</strong>
+                <p>
+                  Brian is currently booking podcast interviews for his new
+                  book releases: The Great Rift (Nov 2026), The Beautiful
+                  Logic of a Meaningful Life (May 2027), and Ethnogensis
+                  (Summer/Fall 2027).
+                </p>
+              </div>
               <p className="speaking-topics-heading">Past public speaking topics</p>
               <div className="topic-list" aria-label="Possible speaking themes">
                 {topics.map((topic, index) => (
@@ -677,7 +691,9 @@ export function BrianSite() {
                   />
                 </div>
                 <div className="form-field">
-                  <label htmlFor="inquiry-organization">Organization</label>
+                  <label htmlFor="inquiry-organization">
+                    {isMediaInquiry ? "Show or publication name" : "Organization"}
+                  </label>
                   <input
                     id="inquiry-organization"
                     name="organization"
@@ -694,25 +710,58 @@ export function BrianSite() {
                   />
                 </div>
                 <div className="form-field">
-                  <label htmlFor="inquiry-audience">Audience</label>
+                  <label htmlFor="inquiry-audience">
+                    {isMediaInquiry ? "Audience or listenership" : "Audience"}
+                  </label>
                   <input
                     id="inquiry-audience"
                     name="audience"
-                    placeholder="Who will be in the room?"
+                    placeholder={
+                      isMediaInquiry
+                        ? "Approximate size, if known"
+                        : "Approximate size and who'll be there (age range, role, etc.)"
+                    }
                     required
                   />
                 </div>
                 <div className="form-field">
                   <label htmlFor="inquiry-format">Format</label>
-                  <select id="inquiry-format" name="format" required>
+                  <select
+                    id="inquiry-format"
+                    name="format"
+                    required
+                    value={inquiryFormat}
+                    onChange={(event) => setInquiryFormat(event.target.value)}
+                  >
                     <option value="">Choose one</option>
-                    <option>Virtual conversation</option>
-                    <option>Virtual lecture + Q&amp;A</option>
-                    <option>In-person keynote</option>
-                    <option>Retreat or workshop</option>
-                    <option>Podcast or media interview</option>
+                    <option>In Person Appearances</option>
+                    <option>Podcast Interview</option>
+                    <option>Press Interview</option>
                   </select>
                 </div>
+                {isInPersonInquiry && (
+                  <div className="form-field">
+                    <label htmlFor="inquiry-venue">Venue or city</label>
+                    <input
+                      id="inquiry-venue"
+                      name="venueOrCity"
+                      placeholder="City, venue, or region"
+                    />
+                  </div>
+                )}
+                {isMediaInquiry && (
+                  <div className="form-field">
+                    <label htmlFor="inquiry-link">
+                      Link to your show or publication
+                    </label>
+                    <input
+                      id="inquiry-link"
+                      name="link"
+                      type="url"
+                      placeholder="https://"
+                    />
+                  </div>
+                )}
                 <div className="form-field form-field-full">
                   <label htmlFor="inquiry-topics">Topic or theme</label>
                   <input

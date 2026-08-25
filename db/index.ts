@@ -36,6 +36,8 @@ export async function ensureSchema() {
         proposed_dates TEXT NOT NULL,
         audience TEXT NOT NULL,
         format TEXT NOT NULL,
+        venue_or_city TEXT NOT NULL DEFAULT '',
+        link TEXT NOT NULL DEFAULT '',
         topics TEXT NOT NULL DEFAULT '',
         message TEXT NOT NULL DEFAULT '',
         consent INTEGER NOT NULL DEFAULT 1,
@@ -46,4 +48,19 @@ export async function ensureSchema() {
       "CREATE INDEX IF NOT EXISTS speaking_inquiries_created_at_idx ON speaking_inquiries(created_at)",
     ),
   ]);
+
+  // Backfill columns for databases created before venue_or_city/link existed.
+  // SQLite has no "ADD COLUMN IF NOT EXISTS", so these are run individually
+  // and a "duplicate column" failure (already-migrated database) is expected
+  // and safe to ignore.
+  for (const column of [
+    "ALTER TABLE speaking_inquiries ADD COLUMN venue_or_city TEXT NOT NULL DEFAULT ''",
+    "ALTER TABLE speaking_inquiries ADD COLUMN link TEXT NOT NULL DEFAULT ''",
+  ]) {
+    try {
+      await env.DB.prepare(column).run();
+    } catch {
+      // Column already exists; nothing to do.
+    }
+  }
 }

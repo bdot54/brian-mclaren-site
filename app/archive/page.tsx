@@ -73,7 +73,7 @@ export default function ArchivePage() {
 
     const matchedIds = requestedTerms.length
       ? requestedTerms
-      .map((term) => terms[term] ?? [])
+      .map((term) => terms?.[term] ?? [])
       .reduce<number[] | null>(
         (matches, termMatches) =>
           matches === null
