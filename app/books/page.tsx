@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
 
 type CatalogueBook = {
   title: string;
@@ -324,7 +326,13 @@ function CatalogueSection({
                 {String(index + 1).padStart(2, "0")}
               </span>
               <div className="catalogue-cover">
-                <img src={book.image} alt={`Cover of ${book.title}`} />
+                <Image
+                  src={book.image}
+                  alt={`Cover of ${book.title}`}
+                  width={600}
+                  height={900}
+                  sizes="(max-width: 760px) 28vw, 12vw"
+                />
               </div>
               <div>
                 <div className="catalogue-meta">
@@ -376,30 +384,30 @@ export default function BooksPage() {
 
       <header className="site-header">
         <div className="nav-wrap">
-          <a className="brand" href="/" aria-label="Brian D. McLaren home">
+          <Link className="brand" href="/" aria-label="Brian D. McLaren home">
             <span className="brand-mark" aria-hidden="true">
               BM
             </span>
             <span className="brand-name">Brian D. McLaren</span>
-          </a>
+          </Link>
 
           <nav className="desktop-nav" aria-label="Main navigation">
-            <a href="/">Home</a>
-            <a href="/#about">About</a>
-            <a href="/books" aria-current="page">
+            <Link href="/">Home</Link>
+            <Link href="/#about">About</Link>
+            <Link href="/books" aria-current="page">
               Books
-            </a>
-            <a href="/#speaking">Speaking</a>
-            <a href="/#ideas">Writing</a>
-            <a href="/events">Events</a>
-            <a className="nav-cta" href="/#newsletter">
+            </Link>
+            <Link href="/#speaking">Speaking</Link>
+            <Link href="/#ideas">Writing</Link>
+            <Link href="/events">Events</Link>
+            <Link className="nav-cta" href="/#newsletter">
               Join EDGEWISE
-            </a>
+            </Link>
           </nav>
 
-          <a className="menu-button books-home-link" href="/">
+          <Link className="menu-button books-home-link" href="/">
             Home
-          </a>
+          </Link>
         </div>
       </header>
 
@@ -462,7 +470,13 @@ export default function BooksPage() {
                   key={book.title}
                 >
                   <div className="library-feature-cover">
-                    <img src={book.image} alt={book.alt} />
+                    <Image
+                      src={book.image}
+                      alt={book.alt}
+                      width={600}
+                      height={900}
+                      sizes="(max-width: 760px) 72vw, 24vw"
+                    />
                   </div>
                   <div className="book-meta">
                     <span>{book.kind}</span>
@@ -548,10 +562,10 @@ export default function BooksPage() {
           </div>
           <div className="footer-column">
             <strong>Explore</strong>
-            <a href="/">Home</a>
-            <a href="/#about">About</a>
-            <a href="/books">Books</a>
-            <a href="/#ideas">Writing</a>
+            <Link href="/">Home</Link>
+            <Link href="/#about">About</Link>
+            <Link href="/books">Books</Link>
+            <Link href="/#ideas">Writing</Link>
           </div>
           <div className="footer-column">
             <strong>Find your next book</strong>

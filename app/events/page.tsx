@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 type InPersonEvent = {
   dates: string;
@@ -104,16 +105,16 @@ export default function EventsPage() {
 
       <header className="site-header">
         <div className="nav-wrap">
-          <a className="brand" href="/" aria-label="Brian D. McLaren home">
+          <Link className="brand" href="/" aria-label="Brian D. McLaren home">
             <span className="brand-mark" aria-hidden="true">
               BM
             </span>
             <span className="brand-name">Brian D. McLaren</span>
-          </a>
+          </Link>
 
           <nav className="desktop-nav" aria-label="Main navigation">
-            <a href="/#about">About</a>
-            <a href="/books">Books</a>
+            <Link href="/#about">About</Link>
+            <Link href="/books">Books</Link>
             <a
               href="https://payhip.com/BrianMcLaren"
               target="_blank"
@@ -121,19 +122,19 @@ export default function EventsPage() {
             >
               Store
             </a>
-            <a href="/#speaking">Speaking</a>
-            <a href="/#ideas">Writing</a>
-            <a href="/events" aria-current="page">
+            <Link href="/#speaking">Speaking</Link>
+            <Link href="/#ideas">Writing</Link>
+            <Link href="/events" aria-current="page">
               Events
-            </a>
-            <a className="nav-cta" href="/#newsletter">
+            </Link>
+            <Link className="nav-cta" href="/#newsletter">
               Join EDGEWISE
-            </a>
+            </Link>
           </nav>
 
-          <a className="menu-button books-home-link" href="/">
+          <Link className="menu-button books-home-link" href="/">
             Home
-          </a>
+          </Link>
         </div>
       </header>
 
@@ -277,9 +278,9 @@ export default function EventsPage() {
                   conversation about <em>The Beautiful Logic of a Meaningful
                   Life</em>, just answer a few questions to get started.
                 </p>
-                <a className="text-link" href="/#speaking">
+                <Link className="text-link" href="/#speaking">
                   Begin a speaking inquiry →
-                </a>
+                </Link>
               </article>
               {mediaAppearances.map((item) => (
                 <article className="event-card" key={item.title}>
@@ -309,9 +310,9 @@ export default function EventsPage() {
                 <span>Speaking inquiries</span>
                 <h3>Start a conversation about 2027</h3>
                 <p>
-                  <a className="text-link" href="/#speaking">
+                  <Link className="text-link" href="/#speaking">
                     Begin a speaking inquiry →
-                  </a>
+                  </Link>
                 </p>
               </article>
               <article>
@@ -343,10 +344,10 @@ export default function EventsPage() {
           </div>
           <div className="footer-column">
             <strong>Explore</strong>
-            <a href="/">Home</a>
-            <a href="/#about">About</a>
-            <a href="/books">Books</a>
-            <a href="/#ideas">Writing</a>
+            <Link href="/">Home</Link>
+            <Link href="/#about">About</Link>
+            <Link href="/books">Books</Link>
+            <Link href="/#ideas">Writing</Link>
           </div>
           <div className="footer-column">
             <strong>Events</strong>
