@@ -3,7 +3,7 @@ import { ensureSchema, getDb } from "../../../db";
 import { speakingInquiries } from "../../../db/schema";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const DEFAULT_RECIPIENT = "mclaren.brian@gmail.com";
+const DEFAULT_RECIPIENT = "jodi@jodimclaren.com";
 
 type Inquiry = {
   name: string;
