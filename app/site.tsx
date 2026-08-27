@@ -519,7 +519,13 @@ export function BrianSite() {
                     </div>
                   </div>
                 </article>
-                <article className="next-card next-card-typographic">
+                <article className="next-card">
+                  <div className="next-card-cover-link">
+                    <img
+                      src="/the-beautiful-logic-of-a-meaningful-life.jpg"
+                      alt="Cover of The Beautiful Logic of a Meaningful Life"
+                    />
+                  </div>
                   <div className="next-card-copy">
                     <span className="kicker">Nonfiction · 2027</span>
                     <h3>The Beautiful Logic of a Meaningful Life</h3>
@@ -670,15 +676,6 @@ export function BrianSite() {
                 events, podcasts, and community conversations.
               </p>
               <div className="availability-card">
-                <strong>Available for Podcast Interviews</strong>
-                <p>
-                  Brian is currently booking podcast interviews for his new
-                  book releases: The Great Rift (Nov 2026), The Beautiful
-                  Logic of a Meaningful Life (May 2027), and Ethnogensis
-                  (Summer/Fall 2027).
-                </p>
-              </div>
-              <div className="availability-card">
                 <strong>Scheduling note</strong>
                 <p>
                   Brian is taking 2026 away from public speaking. Starting in
@@ -690,6 +687,15 @@ export function BrianSite() {
                   students and young adults, b) seminarians and clergy, and c)
                   large gatherings where he can talk about his recent and
                   upcoming books.
+                </p>
+              </div>
+              <div className="availability-card">
+                <strong>Available for Podcast and Press Interviews</strong>
+                <p>
+                  Brian is currently booking podcast interviews for his new
+                  book releases: The Great Rift (Nov 2026), The Beautiful
+                  Logic of a Meaningful Life (May 2027), and Ethnogensis
+                  (Summer/Fall 2027).
                 </p>
               </div>
               <p className="speaking-topics-heading">Past public speaking topics</p>

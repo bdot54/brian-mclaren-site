@@ -181,7 +181,7 @@ export default function EventsPage() {
                 <h2 id="in-person-heading">2027 appearances</h2>
               </div>
               <p>
-                Brian's public schedule opens back up in 2027. Dates marked
+                Brian’s public schedule opens back up in 2027. Dates marked
                 tentative are still being finalized.
               </p>
             </div>
@@ -273,7 +273,7 @@ export default function EventsPage() {
                   </li>
                 </ul>
                 <p>
-                  If you'd like to invite Brian to join you for a podcast
+                  If you’d like to invite Brian to join you for a podcast
                   conversation about <em>The Beautiful Logic of a Meaningful
                   Life</em>, just answer a few questions to get started.
                 </p>
@@ -351,7 +351,7 @@ export default function EventsPage() {
           <div className="footer-column">
             <strong>Events</strong>
             <p className="footer-library-note">
-              New dates are added here as they're confirmed.
+              New dates are added here as they’re confirmed.
             </p>
             <a href="#main">Back to the top ↑</a>
           </div>
