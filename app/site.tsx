@@ -478,7 +478,7 @@ export function BrianSite() {
               </article>
 
               <div className="next-work">
-                <article className="next-card">
+                <article className="next-card next-card-uncropped">
                   <a
                     className="next-card-cover-link"
                     href={bookLinks["The Great Rift"]}
