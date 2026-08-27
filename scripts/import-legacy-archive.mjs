@@ -271,17 +271,26 @@ function rewriteLegacyUrls(value) {
   );
 }
 
-const localRecords = records.map(({ sourceUrl, ...record }) => ({
-  ...record,
-  title: record.title.replace(/\bbrianmclaren\.net\b/gi, "the archive"),
-  body: rewriteLegacyUrls(record.body),
-  excerpt: rewriteLegacyUrls(record.excerpt),
-}));
+const localRecords = records.map((record) => {
+  const localRecord = { ...record };
+  delete localRecord.sourceUrl;
+
+  return {
+    ...localRecord,
+    title: record.title.replace(/\bbrianmclaren\.net\b/gi, "the archive"),
+    body: rewriteLegacyUrls(record.body),
+    excerpt: rewriteLegacyUrls(record.excerpt),
+  };
+});
 
 await rm(archiveRoot, { force: true, recursive: true });
 await mkdir(contentRoot, { recursive: true });
 
-const index = localRecords.map(({ body, ...record }) => record);
+const index = localRecords.map((record) => {
+  const indexRecord = { ...record };
+  delete indexRecord.body;
+  return indexRecord;
+});
 const terms = {};
 
 for (const record of localRecords) {

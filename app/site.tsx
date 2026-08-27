@@ -1,6 +1,8 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
 
 const bookLinks = {
   "Faith After Doubt":
@@ -345,9 +347,13 @@ export function BrianSite() {
             <figure className="portrait-wrap">
               <div className="portrait-red" aria-hidden="true" />
               <div className="portrait-frame">
-                <img
+                <Image
                   src="/brian-portrait.jpg"
                   alt="Portrait of Brian D. McLaren"
+                  width={899}
+                  height={1200}
+                  sizes="(max-width: 900px) 88vw, 38vw"
+                  priority
                 />
               </div>
               <figcaption className="portrait-caption">
@@ -441,7 +447,13 @@ export function BrianSite() {
             <div className="current-grid">
               <article className="feature-book">
                 <div className="feature-cover-wrap">
-                  <img src="/the-last-voyage.jpg" alt="" />
+                  <Image
+                    src="/the-last-voyage.jpg"
+                    alt=""
+                    width={1320}
+                    height={1980}
+                    sizes="(max-width: 900px) 70vw, 28vw"
+                  />
                 </div>
                 <div className="feature-copy">
                   <span className="kicker">Latest novel · Nautilus silver</span>
@@ -486,7 +498,13 @@ export function BrianSite() {
                     rel="noreferrer"
                     aria-label="Pre-order The Great Rift on Bookshop.org"
                   >
-                    <img src="/the-great-rift.jpg" alt="Cover of The Great Rift" />
+                    <Image
+                      src="/the-great-rift.jpg"
+                      alt="Cover of The Great Rift"
+                      width={1320}
+                      height={2115}
+                      sizes="(max-width: 900px) 44vw, 16vw"
+                    />
                   </a>
                   <div className="next-card-copy">
                     <span className="kicker">Coming November 2026</span>
@@ -521,9 +539,12 @@ export function BrianSite() {
                 </article>
                 <article className="next-card">
                   <div className="next-card-cover-link">
-                    <img
+                    <Image
                       src="/the-beautiful-logic-of-a-meaningful-life.jpg"
                       alt="Cover of The Beautiful Logic of a Meaningful Life"
+                      width={2550}
+                      height={3075}
+                      sizes="(max-width: 900px) 44vw, 16vw"
                     />
                   </div>
                   <div className="next-card-copy">
@@ -569,7 +590,13 @@ export function BrianSite() {
                   key={book.title}
                 >
                   <div className="book-cover">
-                    <img src={book.image} alt={book.alt} />
+                    <Image
+                      src={book.image}
+                      alt={book.alt}
+                      width={600}
+                      height={900}
+                      sizes="(max-width: 760px) 72vw, 18vw"
+                    />
                   </div>
                   <div className="book-meta">
                     <span>{book.theme}</span>
@@ -598,9 +625,12 @@ export function BrianSite() {
                 <cite>— Fr. Richard Rohr</cite>
               </div>
               <figure className="about-portrait">
-                <img
+                <Image
                   src="/brian-portrait-outdoors.jpg"
                   alt="Brian D. McLaren outdoors in the mountains"
+                  width={1200}
+                  height={1198}
+                  sizes="(max-width: 900px) 88vw, 32vw"
                 />
               </figure>
             </div>
@@ -884,12 +914,12 @@ export function BrianSite() {
                   Brian is stepping back from most public events in 2026.
                   Follow updates here and join EDGEWISE for 2027 news.
                 </p>
-                <a
+                <Link
                   className="text-link"
                   href="/archive/important-2026-update"
                 >
                   Read the update →
-                </a>
+                </Link>
               </article>
               <article className="event-card">
                 <span className="kicker">Watch</span>
