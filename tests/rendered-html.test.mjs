@@ -74,7 +74,7 @@ test("uses server-side transactional email for speaking inquiries", async () => 
   assert.match(speakingRoute, /https:\/\/api\.resend\.com\/emails/);
   assert.match(speakingRoute, /RESEND_API_KEY/);
   assert.match(speakingRoute, /SPEAKING_FROM_EMAIL/);
-  assert.match(speakingRoute, /mclaren\.brian@gmail\.com/);
+  assert.match(speakingRoute, /jodi@jodimclaren\.com/);
   assert.match(speakingRoute, /reply_to: inquiry\.email/);
   assert.match(speakingRoute, /Idempotency-Key/);
   assert.match(speakingRoute, /escapeHtml/);
