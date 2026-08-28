@@ -1,8 +1,31 @@
+import { env } from "cloudflare:workers";
 import { eq } from "drizzle-orm";
 import { ensureSchema, getDb } from "../../../db";
 import { newsletterSignups } from "../../../db/schema";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+async function subscribeToMailerLite(email: string, firstName: string) {
+  const runtimeEnv = env as unknown as Record<string, string | undefined>;
+  const apiKey = runtimeEnv.MAILERLITE_API_KEY;
+  const groupId = runtimeEnv.MAILERLITE_GROUP_ID;
+
+  if (!apiKey) return;
+
+  await fetch("https://connect.mailerlite.com/api/subscribers", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify({
+      email,
+      fields: { name: firstName },
+      groups: groupId ? [groupId] : undefined,
+    }),
+  });
+}
 
 export async function POST(request: Request) {
   try {
@@ -41,6 +64,13 @@ export async function POST(request: Request) {
         email,
         consent: true,
       });
+    }
+
+    try {
+      await subscribeToMailerLite(email, firstName);
+    } catch {
+      // The signup is already saved above; don't fail the request if
+      // MailerLite is unreachable.
     }
 
     return Response.json({ ok: true }, { status: 201 });
