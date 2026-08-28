@@ -1,0 +1,1 @@
+ALTER TABLE `newsletter_signups` ADD `last_name` text DEFAULT '' NOT NULL;
