@@ -4,6 +4,7 @@ export const newsletterSignups = sqliteTable("newsletter_signups", {
   id: integer("id").primaryKey({ autoIncrement: true }),
   email: text("email").notNull().unique(),
   firstName: text("first_name").notNull(),
+  lastName: text("last_name").notNull().default(""),
   consent: integer("consent", { mode: "boolean" }).notNull().default(true),
   createdAt: integer("created_at", { mode: "timestamp" })
     .notNull()

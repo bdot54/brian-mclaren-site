@@ -181,6 +181,7 @@ export function BrianSite() {
   const [selectedPath, setSelectedPath] = useState(pathways[0]);
   const [newsletterStatus, setNewsletterStatus] = useState("");
   const [inquiryStatus, setInquiryStatus] = useState("");
+  const [inquirySubmitted, setInquirySubmitted] = useState(false);
   const [inquiryFormat, setInquiryFormat] = useState("");
   const isMediaInquiry =
     inquiryFormat === "Podcast Interview" || inquiryFormat === "Press Interview";
@@ -213,6 +214,7 @@ export function BrianSite() {
   async function submitInquiry(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const inquiryForm = event.currentTarget;
+    setInquirySubmitted(false);
     setInquiryStatus("Sending your inquiry…");
     const form = new FormData(inquiryForm);
 
@@ -226,6 +228,7 @@ export function BrianSite() {
       if (!response.ok) throw new Error(result.error || "Please try again.");
       inquiryForm.reset();
       setInquiryFormat("");
+      setInquirySubmitted(true);
       setInquiryStatus("Thank you. Your inquiry has been emailed to Brian’s team.");
     } catch (error) {
       setInquiryStatus(
@@ -874,14 +877,36 @@ export function BrianSite() {
                   respond to this inquiry.
                 </span>
               </label>
-              <button className="button button-primary" type="submit">
-                Send inquiry <span className="button-arrow">→</span>
-              </button>
-              {inquiryStatus && (
+              {!inquirySubmitted && (
+                <button className="button button-primary" type="submit">
+                  Send inquiry <span className="button-arrow">→</span>
+                </button>
+              )}
+              {inquirySubmitted ? (
+                <div className="inquiry-success" role="status" aria-live="polite">
+                  <strong>Inquiry submitted successfully.</strong>
+                  <p>{inquiryStatus}</p>
+                  <div className="inquiry-success-actions">
+                    <button
+                      className="button button-secondary"
+                      type="button"
+                      onClick={() => {
+                        setInquirySubmitted(false);
+                        setInquiryStatus("");
+                      }}
+                    >
+                      Stay on this page
+                    </button>
+                    <a className="button button-primary" href="#top">
+                      Return to homepage <span className="button-arrow">→</span>
+                    </a>
+                  </div>
+                </div>
+              ) : inquiryStatus ? (
                 <p className="form-status" role="status">
                   {inquiryStatus}
                 </p>
-              )}
+              ) : null}
             </form>
           </div>
         </section>
@@ -901,9 +926,19 @@ export function BrianSite() {
                 Find current scheduling information, sample conversations, and
                 everything an event or media team needs.
               </p>
-              <a className="text-link" href="/events">
-                See all events →
-              </a>
+              <div className="section-heading-actions">
+                <a className="text-link" href="/events">
+                  See all events →
+                </a>
+                <a
+                  className="text-link"
+                  href="https://cac.org/podcast/learning-how-to-see/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Listen to the podcast ↗
+                </a>
+              </div>
             </div>
 
             <div className="event-grid">
@@ -962,14 +997,6 @@ export function BrianSite() {
                 <p className="eyebrow">Writing & ideas</p>
                 <h2 id="ideas-heading">Notes from the journey</h2>
               </div>
-              <a
-                className="text-link"
-                href="https://cac.org/podcast/learning-how-to-see/"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Listen to the podcast ↗
-              </a>
             </div>
 
             <div className="ideas-grid">
@@ -1049,6 +1076,14 @@ export function BrianSite() {
                 <label className="form-field" htmlFor="newsletter-name">
                   <span>First name</span>
                   <input id="newsletter-name" name="firstName" required />
+                </label>
+                <label className="form-field" htmlFor="newsletter-last-name">
+                  <span>Last name</span>
+                  <input
+                    id="newsletter-last-name"
+                    name="lastName"
+                    required
+                  />
                 </label>
                 <label className="form-field" htmlFor="newsletter-email">
                   <span>Email address</span>

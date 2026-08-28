@@ -5,7 +5,11 @@ import { newsletterSignups } from "../../../db/schema";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-async function subscribeToMailerLite(email: string, firstName: string) {
+async function subscribeToMailerLite(
+  email: string,
+  firstName: string,
+  lastName: string,
+) {
   const runtimeEnv = env as unknown as Record<string, string | undefined>;
   const apiKey = runtimeEnv.MAILERLITE_API_KEY;
   const groupId = runtimeEnv.MAILERLITE_GROUP_ID;
@@ -21,7 +25,7 @@ async function subscribeToMailerLite(email: string, firstName: string) {
     },
     body: JSON.stringify({
       email,
-      fields: { name: firstName },
+      fields: { name: firstName, last_name: lastName },
       groups: groupId ? [groupId] : undefined,
     }),
   });
@@ -31,6 +35,7 @@ export async function POST(request: Request) {
   try {
     const payload = (await request.json()) as {
       firstName?: string;
+      lastName?: string;
       email?: string;
       consent?: string;
       website?: string;
@@ -41,11 +46,17 @@ export async function POST(request: Request) {
     }
 
     const firstName = payload.firstName?.trim().slice(0, 80) ?? "";
+    const lastName = payload.lastName?.trim().slice(0, 80) ?? "";
     const email = payload.email?.trim().toLowerCase().slice(0, 240) ?? "";
 
-    if (!firstName || !EMAIL_PATTERN.test(email) || payload.consent !== "yes") {
+    if (
+      !firstName ||
+      !lastName ||
+      !EMAIL_PATTERN.test(email) ||
+      payload.consent !== "yes"
+    ) {
       return Response.json(
-        { error: "Please enter your name and a valid email address." },
+        { error: "Please enter your full name and a valid email address." },
         { status: 400 },
       );
     }
@@ -61,13 +72,19 @@ export async function POST(request: Request) {
     if (existing.length === 0) {
       await db.insert(newsletterSignups).values({
         firstName,
+        lastName,
         email,
         consent: true,
       });
+    } else {
+      await db
+        .update(newsletterSignups)
+        .set({ firstName, lastName, consent: true })
+        .where(eq(newsletterSignups.email, email));
     }
 
     try {
-      await subscribeToMailerLite(email, firstName);
+      await subscribeToMailerLite(email, firstName, lastName);
     } catch {
       // The signup is already saved above; don't fail the request if
       // MailerLite is unreachable.
