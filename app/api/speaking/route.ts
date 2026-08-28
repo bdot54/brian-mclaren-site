@@ -3,7 +3,11 @@ import { ensureSchema, getDb } from "../../../db";
 import { speakingInquiries } from "../../../db/schema";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const DEFAULT_RECIPIENT = "jodi@jodimclaren.com";
+const DEFAULT_RECIPIENTS = [
+  "mclaren.brian@gmail.com",
+  "mclaren.grace@gmail.com",
+  "jodi@jodimclaren.com",
+];
 
 type Inquiry = {
   name: string;
@@ -93,7 +97,13 @@ async function emailInquiry(inquiry: Inquiry) {
   const runtimeEnv = env as unknown as Record<string, string | undefined>;
   const apiKey = runtimeEnv.RESEND_API_KEY;
   const from = runtimeEnv.SPEAKING_FROM_EMAIL;
-  const to = runtimeEnv.SPEAKING_TO_EMAIL || DEFAULT_RECIPIENT;
+  const configuredRecipients = runtimeEnv.SPEAKING_TO_EMAILS
+    ?.split(",")
+    .map((address) => address.trim())
+    .filter(Boolean);
+  const to = configuredRecipients?.length
+    ? configuredRecipients
+    : DEFAULT_RECIPIENTS;
 
   if (!apiKey || !from) {
     throw new Error("EMAIL_NOT_CONFIGURED");
@@ -109,7 +119,7 @@ async function emailInquiry(inquiry: Inquiry) {
     },
     body: JSON.stringify({
       from,
-      to: [to],
+      to,
       reply_to: inquiry.email,
       subject: `Speaking inquiry from ${inquiry.name}`,
       text: formatInquiryText(inquiry),

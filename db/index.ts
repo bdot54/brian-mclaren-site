@@ -23,6 +23,7 @@ export async function ensureSchema() {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         email TEXT NOT NULL UNIQUE,
         first_name TEXT NOT NULL,
+        last_name TEXT NOT NULL DEFAULT '',
         consent INTEGER NOT NULL DEFAULT 1,
         created_at INTEGER NOT NULL
       )
@@ -54,6 +55,7 @@ export async function ensureSchema() {
   // and a "duplicate column" failure (already-migrated database) is expected
   // and safe to ignore.
   for (const column of [
+    "ALTER TABLE newsletter_signups ADD COLUMN last_name TEXT NOT NULL DEFAULT ''",
     "ALTER TABLE speaking_inquiries ADD COLUMN venue_or_city TEXT NOT NULL DEFAULT ''",
     "ALTER TABLE speaking_inquiries ADD COLUMN link TEXT NOT NULL DEFAULT ''",
   ]) {

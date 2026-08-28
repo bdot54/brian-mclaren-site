@@ -23,10 +23,19 @@ test("builds the Brian McLaren site and its core journeys", async () => {
   assert.match(site, /Begin a speaking inquiry/);
   assert.match(site, /inquiryForm\.reset\(\)/);
   assert.match(site, /emailed to Brian’s team/);
+  assert.match(site, /Inquiry submitted successfully\./);
+  assert.match(site, /Stay on this page/);
+  assert.match(site, /Return to homepage/);
   assert.doesNotMatch(site, /mailto:/);
   assert.doesNotMatch(site, /event\.currentTarget\.reset\(\)/);
   assert.match(site, /Join EDGEWISE/);
+  assert.match(site, /name="lastName"/);
   assert.match(site, /Writer · teacher · public theologian/);
+  const eventsSectionStart = site.indexOf('id="events"');
+  const ideasSectionStart = site.indexOf('id="ideas"');
+  const podcastLink = site.indexOf("Listen to the podcast");
+  assert.ok(eventsSectionStart < podcastLink);
+  assert.ok(podcastLink < ideasSectionStart);
   assert.match(site, /Brian’s Latest &amp; Upcoming Works/);
   assert.match(site, /Books for the journey/);
   assert.match(site, /className="about-portrait"/);
@@ -65,7 +74,7 @@ test("links Brian’s work and expands every speaking theme", async () => {
   );
 });
 
-test("uses server-side transactional email for speaking inquiries", async () => {
+test("uses server-side transactional email for all speaking inquiry recipients", async () => {
   const speakingRoute = await readFile(
     new URL("../app/api/speaking/route.ts", import.meta.url),
     "utf8",
@@ -74,10 +83,26 @@ test("uses server-side transactional email for speaking inquiries", async () => 
   assert.match(speakingRoute, /https:\/\/api\.resend\.com\/emails/);
   assert.match(speakingRoute, /RESEND_API_KEY/);
   assert.match(speakingRoute, /SPEAKING_FROM_EMAIL/);
+  assert.match(speakingRoute, /SPEAKING_TO_EMAILS/);
+  assert.match(speakingRoute, /mclaren\.brian@gmail\.com/);
+  assert.match(speakingRoute, /mclaren\.grace@gmail\.com/);
   assert.match(speakingRoute, /jodi@jodimclaren\.com/);
   assert.match(speakingRoute, /reply_to: inquiry\.email/);
   assert.match(speakingRoute, /Idempotency-Key/);
   assert.match(speakingRoute, /escapeHtml/);
+});
+
+test("stores first and last names for EDGEWISE signups", async () => {
+  const [newsletterRoute, schema, db] = await Promise.all([
+    readFile(new URL("../app/api/newsletter/route.ts", import.meta.url), "utf8"),
+    readFile(new URL("../db/schema.ts", import.meta.url), "utf8"),
+    readFile(new URL("../db/index.ts", import.meta.url), "utf8"),
+  ]);
+
+  assert.match(newsletterRoute, /payload\.lastName/);
+  assert.match(newsletterRoute, /lastName,/);
+  assert.match(schema, /lastName: text\("last_name"\)/);
+  assert.match(db, /newsletter_signups ADD COLUMN last_name/);
 });
 
 test("links every pathway recommendation to its book page", async () => {

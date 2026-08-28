@@ -8,6 +8,7 @@ export async function POST(request: Request) {
   try {
     const payload = (await request.json()) as {
       firstName?: string;
+      lastName?: string;
       email?: string;
       consent?: string;
       website?: string;
@@ -18,11 +19,17 @@ export async function POST(request: Request) {
     }
 
     const firstName = payload.firstName?.trim().slice(0, 80) ?? "";
+    const lastName = payload.lastName?.trim().slice(0, 80) ?? "";
     const email = payload.email?.trim().toLowerCase().slice(0, 240) ?? "";
 
-    if (!firstName || !EMAIL_PATTERN.test(email) || payload.consent !== "yes") {
+    if (
+      !firstName ||
+      !lastName ||
+      !EMAIL_PATTERN.test(email) ||
+      payload.consent !== "yes"
+    ) {
       return Response.json(
-        { error: "Please enter your name and a valid email address." },
+        { error: "Please enter your full name and a valid email address." },
         { status: 400 },
       );
     }
@@ -38,9 +45,15 @@ export async function POST(request: Request) {
     if (existing.length === 0) {
       await db.insert(newsletterSignups).values({
         firstName,
+        lastName,
         email,
         consent: true,
       });
+    } else {
+      await db
+        .update(newsletterSignups)
+        .set({ firstName, lastName, consent: true })
+        .where(eq(newsletterSignups.email, email));
     }
 
     return Response.json({ ok: true }, { status: 201 });
