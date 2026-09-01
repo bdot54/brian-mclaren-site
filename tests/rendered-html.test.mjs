@@ -99,6 +99,16 @@ test("stores first and last names for EDGEWISE signups", async () => {
 
   assert.match(newsletterRoute, /payload\.lastName/);
   assert.match(newsletterRoute, /lastName,/);
+  assert.match(
+    newsletterRoute,
+    /https:\/\/connect\.mailerlite\.com\/api\/subscribers/,
+  );
+  assert.match(newsletterRoute, /MAILERLITE_API_KEY/);
+  assert.match(newsletterRoute, /MAILERLITE_GROUP_ID/);
+  assert.match(newsletterRoute, /Authorization: `Bearer \$\{apiKey\}`/);
+  assert.match(newsletterRoute, /groups: \[groupId\]/);
+  assert.match(newsletterRoute, /name: firstName/);
+  assert.match(newsletterRoute, /last_name: lastName/);
   assert.match(schema, /lastName: text\("last_name"\)/);
   assert.match(db, /newsletter_signups ADD COLUMN last_name/);
 });

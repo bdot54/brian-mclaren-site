@@ -5,18 +5,24 @@ import { newsletterSignups } from "../../../db/schema";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-async function subscribeToMailerLite(
-  email: string,
-  firstName: string,
-  lastName: string,
-) {
+async function addToMailerLiteGroup({
+  email,
+  firstName,
+  lastName,
+}: {
+  email: string;
+  firstName: string;
+  lastName: string;
+}) {
   const runtimeEnv = env as unknown as Record<string, string | undefined>;
-  const apiKey = runtimeEnv.MAILERLITE_API_KEY;
-  const groupId = runtimeEnv.MAILERLITE_GROUP_ID;
+  const apiKey = runtimeEnv.MAILERLITE_API_KEY?.trim();
+  const groupId = runtimeEnv.MAILERLITE_GROUP_ID?.trim();
 
-  if (!apiKey) return;
+  if (!apiKey || !groupId) {
+    throw new Error("MailerLite is not configured.");
+  }
 
-  await fetch("https://connect.mailerlite.com/api/subscribers", {
+  const response = await fetch("https://connect.mailerlite.com/api/subscribers", {
     method: "POST",
     headers: {
       Authorization: `Bearer ${apiKey}`,
@@ -25,10 +31,18 @@ async function subscribeToMailerLite(
     },
     body: JSON.stringify({
       email,
-      fields: { name: firstName, last_name: lastName },
-      groups: groupId ? [groupId] : undefined,
+      fields: {
+        name: firstName,
+        last_name: lastName,
+      },
+      groups: [groupId],
+      resubscribe: true,
     }),
   });
+
+  if (!response.ok) {
+    throw new Error(`MailerLite rejected the signup (${response.status}).`);
+  }
 }
 
 export async function POST(request: Request) {
@@ -83,12 +97,7 @@ export async function POST(request: Request) {
         .where(eq(newsletterSignups.email, email));
     }
 
-    try {
-      await subscribeToMailerLite(email, firstName, lastName);
-    } catch {
-      // The signup is already saved above; don't fail the request if
-      // MailerLite is unreachable.
-    }
+    await addToMailerLiteGroup({ email, firstName, lastName });
 
     return Response.json({ ok: true }, { status: 201 });
   } catch {
