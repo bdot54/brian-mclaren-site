@@ -45,6 +45,40 @@ async function addToMailerLiteGroup({
   }
 }
 
+async function notifyMailerLiteFailure({
+  email,
+  firstName,
+  lastName,
+  reason,
+}: {
+  email: string;
+  firstName: string;
+  lastName: string;
+  reason: string;
+}) {
+  const runtimeEnv = env as unknown as Record<string, string | undefined>;
+  const apiKey = runtimeEnv.RESEND_API_KEY;
+  const from = runtimeEnv.SPEAKING_FROM_EMAIL;
+  const to = runtimeEnv.NEWSLETTER_ALERT_TO_EMAIL?.trim() || "jodi@jodimclaren.com";
+
+  if (!apiKey || !from) return;
+
+  await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+      "User-Agent": "brian-mclaren-site/1.0",
+    },
+    body: JSON.stringify({
+      from,
+      to,
+      subject: "EDGEWISE signup didn't sync to MailerLite",
+      text: `${firstName} ${lastName} <${email}> signed up for EDGEWISE, but syncing to MailerLite failed: ${reason}\n\nThey're already saved in the site's database, so nothing is lost, but you'll want to add them to MailerLite by hand.`,
+    }),
+  });
+}
+
 export async function POST(request: Request) {
   try {
     const payload = (await request.json()) as {
@@ -97,7 +131,23 @@ export async function POST(request: Request) {
         .where(eq(newsletterSignups.email, email));
     }
 
-    await addToMailerLiteGroup({ email, firstName, lastName });
+    try {
+      await addToMailerLiteGroup({ email, firstName, lastName });
+    } catch (error) {
+      // The signup is already saved above; don't fail the request if
+      // MailerLite is unreachable or misconfigured. Just alert so it
+      // can be added by hand.
+      try {
+        await notifyMailerLiteFailure({
+          email,
+          firstName,
+          lastName,
+          reason: error instanceof Error ? error.message : "Unknown error",
+        });
+      } catch {
+        // Best-effort alert; nothing more to do if this also fails.
+      }
+    }
 
     return Response.json({ ok: true }, { status: 201 });
   } catch {
