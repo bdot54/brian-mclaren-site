@@ -1953,6 +1953,27 @@ img {
   margin: 0 0 1.5rem;
 }
 
+.archive-entry-body a {
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.archive-entry-image {
+  margin: 0 0 2rem;
+}
+
+.archive-entry-image a {
+  display: inline-block;
+  text-decoration: none;
+}
+
+.archive-entry-image img {
+  border: 1px solid var(--ink);
+  height: auto;
+  max-width: 320px;
+  width: 100%;
+}
+
 .archive-not-found {
   padding-top: 20vh;
 }

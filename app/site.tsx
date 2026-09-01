@@ -157,6 +157,11 @@ const topics = [
 
 const recentWriting = [
   {
+    date: "Sep. 2026",
+    title: "The Great Rift Arrives November 3rd",
+    href: "/archive/the-great-rift-arrives-november-3rd",
+  },
+  {
     date: "Aug. 2026",
     title: "The 100 Most-Read Posts, All Time",
     href: "/archive/the-100-most-read-posts-of-all-time",
@@ -165,11 +170,6 @@ const recentWriting = [
     date: "Aug. 2026",
     title: "In Tribute: Dr. John Esposito (1940-2026)",
     href: "/archive/in-tribute-dr-john-esposito-1940-2026",
-  },
-  {
-    date: "Aug. 2026",
-    title: "In Tribute: Dr. Patrick Keifert",
-    href: "/archive/in-tribute-dr-patrick-keifert",
   },
 ];
 

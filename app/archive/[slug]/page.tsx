@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
@@ -21,6 +22,8 @@ type ArchiveEntry = {
 };
 
 const INLINE_LINK = /\[([^\]]+)\]\(([^)]+)\)/g;
+const IMAGE_PARAGRAPH = /^!\[([^\]]*)\]\(([^)]+)\)$/;
+const LINKED_IMAGE_PARAGRAPH = /^\[!\[([^\]]*)\]\(([^)]+)\)\]\(([^)]+)\)$/;
 
 function renderInlineLinks(text: string) {
   const nodes: ReactNode[] = [];
@@ -113,16 +116,43 @@ export default function ArchiveEntryPage() {
           ) : null}
         </div>
         <div className="archive-entry-body">
-          {entry.body.split(/\n{2,}/).map((paragraph, index) => (
-            <p key={`${index}-${paragraph.slice(0, 30)}`}>
-              {paragraph.split("\n").map((line, lineIndex, lines) => (
-                <span key={lineIndex}>
-                  {renderInlineLinks(line)}
-                  {lineIndex < lines.length - 1 ? <br /> : null}
-                </span>
-              ))}
-            </p>
-          ))}
+          {entry.body.split(/\n{2,}/).map((paragraph, index) => {
+            const key = `${index}-${paragraph.slice(0, 30)}`;
+            const trimmed = paragraph.trim();
+            const linkedImageMatch = trimmed.match(LINKED_IMAGE_PARAGRAPH);
+            const imageMatch = linkedImageMatch ?? trimmed.match(IMAGE_PARAGRAPH);
+
+            if (imageMatch) {
+              const [, alt, src, href] = linkedImageMatch
+                ? linkedImageMatch
+                : [imageMatch[0], imageMatch[1], imageMatch[2], undefined];
+              const image = (
+                <Image src={src} alt={alt} width={1320} height={2115} sizes="(max-width: 700px) 60vw, 320px" />
+              );
+              return (
+                <div className="archive-entry-image" key={key}>
+                  {href ? (
+                    <a href={href} target="_blank" rel="noreferrer">
+                      {image}
+                    </a>
+                  ) : (
+                    image
+                  )}
+                </div>
+              );
+            }
+
+            return (
+              <p key={key}>
+                {paragraph.split("\n").map((line, lineIndex, lines) => (
+                  <span key={lineIndex}>
+                    {renderInlineLinks(line)}
+                    {lineIndex < lines.length - 1 ? <br /> : null}
+                  </span>
+                ))}
+              </p>
+            );
+          })}
         </div>
       </article>
     </main>
