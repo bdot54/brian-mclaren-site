@@ -175,24 +175,19 @@ async function sendAutoResponse(inquiry: Inquiry) {
     body: JSON.stringify({
       from,
       to: inquiry.email,
+      reply_to: "jodi@jodimclaren.com",
       subject: "Thank you for reaching out",
       text,
       html,
     }),
   });
 
-  const body = await response.text().catch(() => "");
-
   if (!response.ok) {
+    const body = await response.text().catch(() => "");
     throw new Error(
       `Auto-response rejected by Resend (${response.status}): ${body}`,
     );
   }
-
-  // TEMPORARY DIAGNOSTIC: return what Resend said even on success, so we can
-  // confirm it actually accepted the send (vs. silently dropping it) since
-  // the recipient isn't receiving the email despite no error being thrown.
-  return body;
 }
 
 async function notifyTrackerSheet(inquiry: Inquiry) {
@@ -300,14 +295,7 @@ export async function POST(request: Request) {
     await db.insert(speakingInquiries).values(inquiry);
 
     try {
-      const resendResponseBody = await sendAutoResponse(inquiry);
-      // TEMPORARY DIAGNOSTIC: report success too, with Resend's raw response,
-      // since the recipient isn't receiving the email despite no error being
-      // thrown — this confirms whether Resend is actually accepting the send.
-      await notifyAutoResponseFailure(
-        "DEBUG: speaking inquiry auto-response succeeded",
-        `Resend accepted the auto-response. Raw response:\n\n${resendResponseBody}`,
-      );
+      await sendAutoResponse(inquiry);
     } catch (error) {
       // The inquiry is already saved and the team's been notified above;
       // don't fail the request if the auto-response fails to send. Email
