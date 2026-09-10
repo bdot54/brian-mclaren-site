@@ -2,8 +2,19 @@
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "brian-mclaren-site",
   "main": "./worker/index.ts",
+  "workers_dev": true,
   "compatibility_date": "2026-09-10",
   "compatibility_flags": ["nodejs_compat"],
+  "routes": [
+    {
+      "pattern": "brianmclaren.net",
+      "custom_domain": true
+    },
+    {
+      "pattern": "www.brianmclaren.net",
+      "custom_domain": true
+    }
+  ],
   "d1_databases": [
     {
       "binding": "DB",
