@@ -51,7 +51,7 @@ function formatInquiryText(inquiry: Inquiry) {
     .join("\n");
 }
 
-function formatInquiryHtml(inquiry: Inquiry) {
+function formatInquiryHtml(inquiry: Inquiry, heading = "New speaking inquiry") {
   const rows: Array<readonly [string, string]> = [
     ["Name", inquiry.name],
     ["Email", inquiry.email],
@@ -68,7 +68,7 @@ function formatInquiryHtml(inquiry: Inquiry) {
   ];
 
   return `
-    <h1>New speaking inquiry</h1>
+    <h1>${escapeHtml(heading)}</h1>
     <table cellpadding="8" cellspacing="0" style="border-collapse:collapse">
       ${rows
         .map(
@@ -131,11 +131,15 @@ async function emailInquiry(inquiry: Inquiry) {
 async function sendAutoResponse(inquiry: Inquiry) {
   const runtimeEnv = env as unknown as Record<string, string | undefined>;
   const apiKey = runtimeEnv.RESEND_API_KEY;
+  // TEMPORARY DIAGNOSTIC: falling back to the already-verified SPEAKING_FROM_EMAIL
+  // sender instead of info@brianmclaren.net, to isolate whether that address is
+  // the reason the auto-response isn't sending. Revert to info@brianmclaren.net
+  // (or set SPEAKING_AUTORESPONSE_FROM_EMAIL explicitly) once it's verified in Resend.
   const from =
     runtimeEnv.SPEAKING_AUTORESPONSE_FROM_EMAIL?.trim() ||
-    "Brian D. McLaren's Team <info@brianmclaren.net>";
+    runtimeEnv.SPEAKING_FROM_EMAIL;
 
-  if (!apiKey) return;
+  if (!apiKey || !from) return;
 
   const text = [
     "Thank you so much for your interest in connecting with Brian.",
@@ -146,6 +150,10 @@ async function sendAutoResponse(inquiry: Inquiry) {
     "",
     "With gratitude,",
     "Brian D. McLaren's Team",
+    "",
+    "For your records, here's what you submitted:",
+    "",
+    formatInquiryText(inquiry),
   ].join("\n");
 
   const html = `
@@ -153,6 +161,8 @@ async function sendAutoResponse(inquiry: Inquiry) {
     <p>We've received your inquiry and it's being reviewed. Please allow up to three weeks for a response.</p>
     <p>We're grateful for your patience, and we look forward to being in touch soon.</p>
     <p>With gratitude,<br>Brian D. McLaren's Team</p>
+    <hr>
+    ${formatInquiryHtml(inquiry, "For your records, here's what you submitted")}
   `;
 
   const response = await fetch("https://api.resend.com/emails", {
