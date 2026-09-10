@@ -128,6 +128,54 @@ async function emailInquiry(inquiry: Inquiry) {
   }
 }
 
+async function sendAutoResponse(inquiry: Inquiry) {
+  const runtimeEnv = env as unknown as Record<string, string | undefined>;
+  const apiKey = runtimeEnv.RESEND_API_KEY;
+  const from =
+    runtimeEnv.SPEAKING_AUTORESPONSE_FROM_EMAIL?.trim() ||
+    "Brian D. McLaren's Team <info@brianmclaren.net>";
+
+  if (!apiKey) return;
+
+  const text = [
+    "Thank you so much for your interest in connecting with Brian.",
+    "",
+    "We've received your inquiry and it's being reviewed. Please allow up to three weeks for a response.",
+    "",
+    "We're grateful for your patience, and we look forward to being in touch soon.",
+    "",
+    "With gratitude,",
+    "Brian D. McLaren's Team",
+  ].join("\n");
+
+  const html = `
+    <p>Thank you so much for your interest in connecting with Brian.</p>
+    <p>We've received your inquiry and it's being reviewed. Please allow up to three weeks for a response.</p>
+    <p>We're grateful for your patience, and we look forward to being in touch soon.</p>
+    <p>With gratitude,<br>Brian D. McLaren's Team</p>
+  `;
+
+  const response = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+      "User-Agent": "brian-mclaren-site/1.0",
+    },
+    body: JSON.stringify({
+      from,
+      to: inquiry.email,
+      subject: "Thank you for reaching out",
+      text,
+      html,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Auto-response rejected by Resend (${response.status}).`);
+  }
+}
+
 export async function POST(request: Request) {
   try {
     const payload = (await request.json()) as {
@@ -182,6 +230,13 @@ export async function POST(request: Request) {
     await ensureSchema();
     const db = getDb();
     await db.insert(speakingInquiries).values(inquiry);
+
+    try {
+      await sendAutoResponse(inquiry);
+    } catch {
+      // The inquiry is already saved and the team's been notified above;
+      // don't fail the request if the auto-response fails to send.
+    }
 
     return Response.json({ ok: true }, { status: 201 });
   } catch (error) {
