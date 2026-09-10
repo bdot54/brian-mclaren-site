@@ -181,22 +181,49 @@ async function sendAutoResponse(inquiry: Inquiry) {
     }),
   });
 
+  const body = await response.text().catch(() => "");
+
   if (!response.ok) {
-    const body = await response.text().catch(() => "");
     throw new Error(
       `Auto-response rejected by Resend (${response.status}): ${body}`,
     );
   }
+
+  // TEMPORARY DIAGNOSTIC: return what Resend said even on success, so we can
+  // confirm it actually accepted the send (vs. silently dropping it) since
+  // the recipient isn't receiving the email despite no error being thrown.
+  return body;
 }
 
-async function notifyAutoResponseFailure(reason: string) {
+async function notifyTrackerSheet(inquiry: Inquiry) {
+  const runtimeEnv = env as unknown as Record<string, string | undefined>;
+  const webhookUrl = runtimeEnv.SPEAKING_SHEET_WEBHOOK_URL;
+  const secret = runtimeEnv.SPEAKING_SHEET_WEBHOOK_SECRET;
+
+  if (!webhookUrl || !secret) return;
+
+  const response = await fetch(webhookUrl, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ ...inquiry, secret }),
+  });
+
+  if (!response.ok) {
+    const body = await response.text().catch(() => "");
+    throw new Error(
+      `Tracker sheet webhook rejected (${response.status}): ${body}`,
+    );
+  }
+}
+
+async function notifyAutoResponseFailure(subject: string, text: string) {
   const runtimeEnv = env as unknown as Record<string, string | undefined>;
   const apiKey = runtimeEnv.RESEND_API_KEY;
   const from = runtimeEnv.SPEAKING_FROM_EMAIL;
 
   if (!apiKey || !from) return;
 
-  await fetch("https://api.resend.com/emails", {
+  const response = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: {
       Authorization: `Bearer ${apiKey}`,
@@ -206,10 +233,15 @@ async function notifyAutoResponseFailure(reason: string) {
     body: JSON.stringify({
       from,
       to: "jodi@jodimclaren.com",
-      subject: "DEBUG: speaking inquiry auto-response failed",
-      text: `The auto-response email failed to send. Here's the exact error:\n\n${reason}`,
+      subject,
+      text,
     }),
   });
+
+  if (!response.ok) {
+    const body = await response.text().catch(() => "");
+    throw new Error(`DEBUG email itself was rejected (${response.status}): ${body}`);
+  }
 }
 
 export async function POST(request: Request) {
@@ -268,14 +300,36 @@ export async function POST(request: Request) {
     await db.insert(speakingInquiries).values(inquiry);
 
     try {
-      await sendAutoResponse(inquiry);
+      const resendResponseBody = await sendAutoResponse(inquiry);
+      // TEMPORARY DIAGNOSTIC: report success too, with Resend's raw response,
+      // since the recipient isn't receiving the email despite no error being
+      // thrown — this confirms whether Resend is actually accepting the send.
+      await notifyAutoResponseFailure(
+        "DEBUG: speaking inquiry auto-response succeeded",
+        `Resend accepted the auto-response. Raw response:\n\n${resendResponseBody}`,
+      );
     } catch (error) {
       // The inquiry is already saved and the team's been notified above;
       // don't fail the request if the auto-response fails to send. Email
       // the exact reason so it can be diagnosed instead of failing silently.
       try {
         await notifyAutoResponseFailure(
-          error instanceof Error ? error.message : "Unknown error",
+          "DEBUG: speaking inquiry auto-response failed",
+          `The auto-response email failed to send. Here's the exact error:\n\n${error instanceof Error ? error.message : "Unknown error"}`,
+        );
+      } catch {
+        // Best-effort; nothing more to do if this also fails.
+      }
+    }
+
+    try {
+      await notifyTrackerSheet(inquiry);
+    } catch (error) {
+      // Same non-blocking pattern: the inquiry is already saved either way.
+      try {
+        await notifyAutoResponseFailure(
+          "DEBUG: speaking inquiry tracker sheet failed",
+          `Tracker sheet: ${error instanceof Error ? error.message : "Unknown error"}`,
         );
       } catch {
         // Best-effort; nothing more to do if this also fails.
