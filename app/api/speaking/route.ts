@@ -182,8 +182,34 @@ async function sendAutoResponse(inquiry: Inquiry) {
   });
 
   if (!response.ok) {
-    throw new Error(`Auto-response rejected by Resend (${response.status}).`);
+    const body = await response.text().catch(() => "");
+    throw new Error(
+      `Auto-response rejected by Resend (${response.status}): ${body}`,
+    );
   }
+}
+
+async function notifyAutoResponseFailure(reason: string) {
+  const runtimeEnv = env as unknown as Record<string, string | undefined>;
+  const apiKey = runtimeEnv.RESEND_API_KEY;
+  const from = runtimeEnv.SPEAKING_FROM_EMAIL;
+
+  if (!apiKey || !from) return;
+
+  await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+      "User-Agent": "brian-mclaren-site/1.0",
+    },
+    body: JSON.stringify({
+      from,
+      to: "jodi@jodimclaren.com",
+      subject: "DEBUG: speaking inquiry auto-response failed",
+      text: `The auto-response email failed to send. Here's the exact error:\n\n${reason}`,
+    }),
+  });
 }
 
 export async function POST(request: Request) {
@@ -243,9 +269,17 @@ export async function POST(request: Request) {
 
     try {
       await sendAutoResponse(inquiry);
-    } catch {
+    } catch (error) {
       // The inquiry is already saved and the team's been notified above;
-      // don't fail the request if the auto-response fails to send.
+      // don't fail the request if the auto-response fails to send. Email
+      // the exact reason so it can be diagnosed instead of failing silently.
+      try {
+        await notifyAutoResponseFailure(
+          error instanceof Error ? error.message : "Unknown error",
+        );
+      } catch {
+        // Best-effort; nothing more to do if this also fails.
+      }
     }
 
     return Response.json({ ok: true }, { status: 201 });
