@@ -86,6 +86,11 @@ const legacyRedirects = [
 ];
 
 const nextConfig: NextConfig = {
+  images: {
+    // Serve the existing optimized source images directly so the site stays
+    // within Cloudflare Workers Free without the paid Images binding.
+    unoptimized: true,
+  },
   async redirects() {
     return legacyRedirects;
   },
