@@ -1,6 +1,7 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "brian-mclaren-site",
+  "account_id": "43f10f00e7e21214ebad6b16bb6e8238",
   "main": "./worker/index.ts",
   "workers_dev": true,
   "compatibility_date": "2026-09-10",
