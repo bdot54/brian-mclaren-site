@@ -144,9 +144,9 @@ async function sendAutoResponse(inquiry: Inquiry) {
   const text = [
     "Thank you so much for your interest in connecting with Brian.",
     "",
-    "We've received your inquiry and it's being reviewed. Please allow up to three weeks for a response.",
+    "We've received your inquiry and it's being reviewed. We expect to get back to you by mid-October, or soon after.",
     "",
-    "We're grateful for your patience, and we look forward to being in touch soon.",
+    "We're grateful for your patience.",
     "",
     "With gratitude,",
     "Brian D. McLaren's Team",
@@ -158,8 +158,8 @@ async function sendAutoResponse(inquiry: Inquiry) {
 
   const html = `
     <p>Thank you so much for your interest in connecting with Brian.</p>
-    <p>We've received your inquiry and it's being reviewed. Please allow up to three weeks for a response.</p>
-    <p>We're grateful for your patience, and we look forward to being in touch soon.</p>
+    <p>We've received your inquiry and it's being reviewed. We expect to get back to you by mid-October, or soon after.</p>
+    <p>We're grateful for your patience.</p>
     <p>With gratitude,<br>Brian D. McLaren's Team</p>
     <hr>
     ${formatInquiryHtml(inquiry, "For your records, here's what you submitted")}
