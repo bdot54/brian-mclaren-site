@@ -158,6 +158,11 @@ const topics = [
 const recentWriting = [
   {
     date: "Sep. 2026",
+    title: "This Season on Learning How to See: The Bible",
+    href: "/archive/this-season-on-learning-how-to-see-the-bible",
+  },
+  {
+    date: "Sep. 2026",
     title: "The Great Rift Arrives November 3rd",
     href: "/archive/the-great-rift-arrives-november-3rd",
   },
@@ -166,14 +171,9 @@ const recentWriting = [
     title: "The 100 Most-Read Posts, All Time",
     href: "/archive/the-100-most-read-posts-of-all-time",
   },
-  {
-    date: "Aug. 2026",
-    title: "In Tribute: Dr. John Esposito (1940-2026)",
-    href: "/archive/in-tribute-dr-john-esposito-1940-2026",
-  },
 ];
 
-const recentPodcasts = [{ date: "Aug. 2025", title: "Faith, Fear, and Facing the Future", href: "https://podcasts.apple.com/us/podcast/39-brian-d-mclaren-faith-fear-and-facing-the-future/id1733794201?i=1000721093891" }];
+const recentPodcasts = [{ date: "Sep. 2026", title: "Learning How to See: The Bible — Genesis 4", href: "https://cac.org/podcast/learning-how-to-see/?season=lhts-ten" }];
 const recentVideos = [{ date: "2025", title: "Interview with Brian D. McLaren: The Last Voyage", href: "https://www.youtube.com/watch?v=hnLNbGbFOLU" }];
 
 export function BrianSite() {
