@@ -92,7 +92,10 @@ const nextConfig: NextConfig = {
     unoptimized: true,
   },
   async redirects() {
-    return legacyRedirects;
+    return [
+      ...legacyRedirects,
+      { source: "/store", destination: "https://payhip.com/BrianMcLaren", permanent: false },
+    ];
   },
 };
 
