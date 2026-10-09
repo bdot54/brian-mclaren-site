@@ -43,9 +43,9 @@ const inPersonEvents: InPersonEvent[] = [
     href: "https://wildgoosefestival.org/",
   },
   {
-    dates: "October 13–17, 2027",
+    dates: "October 2027",
     title: "Theology Beer Camp",
-    location: "Montreat, North Carolina",
+    location: "Dates and location TBA",
   },
   {
     dates: "October 27–31, 2027",
