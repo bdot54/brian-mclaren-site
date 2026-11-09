@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { CodeDeadline } from "./code-deadline";
 import { SouthernLightsSignupForm } from "./signup-form";
 
 const SOUTHERN_LIGHTS_URL = "https://southernlightsconference.com/";
@@ -57,10 +58,40 @@ export default function SouthernLightsPage() {
               </p>
               <h1>A great way to start 2027</h1>
               <p className="hero-dek">
-                Join EDGEWISE, my as-needed newsletter, and you&rsquo;ll receive a
-                15% discount code for the Southern Lights conference on the
-                Georgia coast. Register by November 13 to use it.
+                <CodeDeadline
+                  before={
+                    <>
+                      Use my code <strong>BM27Fall</strong> to save 15% on the
+                      Southern Lights conference on the Georgia coast. Register
+                      by midnight Friday, November 13. Or join EDGEWISE, my
+                      as-needed newsletter, and I&rsquo;ll email you the code.
+                    </>
+                  }
+                  after={
+                    <>
+                      Join EDGEWISE, my as-needed newsletter, and you&rsquo;ll
+                      receive a 15% discount code for the Southern Lights
+                      conference on the Georgia coast. Register by November 13
+                      to use it.
+                    </>
+                  }
+                />
               </p>
+              <CodeDeadline
+                before={
+                  <p style={{ marginTop: "1.5rem" }}>
+                    <a
+                      className="button button-primary"
+                      href={SOUTHERN_LIGHTS_URL}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Register for Southern Lights ↗
+                    </a>
+                  </p>
+                }
+                after={null}
+              />
             </div>
             <div className="library-hero-copy">
               <SouthernLightsSignupForm />

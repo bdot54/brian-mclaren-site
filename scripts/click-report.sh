@@ -1,5 +1,5 @@
 #!/bin/sh
-# Click report for the tracked short links (/rift/..., /sl/...). Usage: scripts/click-report.sh [days=30]
+# Click report for the tracked short links (/rift/..., /sl/..., /slr/..., /buy/...). Usage: scripts/click-report.sh [days=30]
 # Needs Node on PATH (export PATH="$HOME/.local/node/bin:$PATH") and a wrangler login.
 DAYS="${1:-30}"
 cd "$(dirname "$0")/.." || exit 1
@@ -12,7 +12,10 @@ WHERE created_at >= (strftime('%s','now') - $DAYS * 86400) * 1000
 GROUP BY campaign, platform, content
 ORDER BY campaign, clicks DESC;" --json 2>/dev/null | python3 -c '
 import sys, json
-rows = json.load(sys.stdin)[0]["results"]
+text = sys.stdin.read()
+start = min(i for i in (text.find("["), text.find("{")) if i >= 0)
+data, _ = json.JSONDecoder().raw_decode(text[start:])
+rows = (data[0] if isinstance(data, list) else data)["results"]
 if not rows:
     print("No clicks recorded yet.")
 for r in rows:
