@@ -34,7 +34,7 @@ export default function SouthernLightsPage() {
             <Link href="/#about">About</Link>
             <Link href="/books">Books</Link>
             <Link href="/#speaking">Speaking</Link>
-            <Link href="/#ideas">Blog</Link>
+            <Link href="/blog">Blog</Link>
             <Link href="/events">Events</Link>
             <Link className="nav-cta" href="#code">
               Get the discount code

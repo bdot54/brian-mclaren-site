@@ -401,7 +401,7 @@ export default function BooksPage() {
               Books
             </Link>
             <Link href="/#speaking">Speaking</Link>
-            <Link href="/#ideas">Blog</Link>
+            <Link href="/blog">Blog</Link>
             <Link href="/events">Events</Link>
             <Link className="nav-cta" href="/#newsletter">
               Join EDGEWISE
@@ -568,7 +568,7 @@ export default function BooksPage() {
             <Link href="/">Home</Link>
             <Link href="/#about">About</Link>
             <Link href="/books">Books</Link>
-            <Link href="/#ideas">Blog</Link>
+            <Link href="/blog">Blog</Link>
           </div>
           <div className="footer-column">
             <strong>Find your next book</strong>

@@ -37,7 +37,7 @@ export default function RiftPage() {
             <Link href="/#about">About</Link>
             <Link href="/books">Books</Link>
             <Link href="/#speaking">Speaking</Link>
-            <Link href="/#ideas">Blog</Link>
+            <Link href="/blog">Blog</Link>
             <Link href="/events">Events</Link>
             <Link className="nav-cta" href="#chapters">
               Get the first four chapters
@@ -171,7 +171,7 @@ export default function RiftPage() {
                   />
                 </p>
                 <span className="publisher-link">
-                  <Launch before="Pre-order" after="Order" /> on Bookshop.org ↗
+                  <Launch before="Pre-order" after="Order" /> on Amazon ↗
                 </span>
               </a>
 

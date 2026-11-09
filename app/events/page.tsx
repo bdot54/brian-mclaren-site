@@ -151,7 +151,7 @@ export default function EventsPage() {
               Store
             </a>
             <Link href="/#speaking">Speaking</Link>
-            <Link href="/#ideas">Blog</Link>
+            <Link href="/blog">Blog</Link>
             <Link href="/events" aria-current="page">
               Events
             </Link>
@@ -378,7 +378,7 @@ export default function EventsPage() {
             <Link href="/">Home</Link>
             <Link href="/#about">About</Link>
             <Link href="/books">Books</Link>
-            <Link href="/#ideas">Blog</Link>
+            <Link href="/blog">Blog</Link>
           </div>
           <div className="footer-column">
             <strong>Events</strong>

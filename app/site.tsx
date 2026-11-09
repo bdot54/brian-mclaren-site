@@ -323,7 +323,7 @@ export function BrianSite() {
               Store
             </a>
             <a href="#speaking">Speaking</a>
-            <a href="#ideas">Blog</a>
+            <a href="/blog">Blog</a>
             <a href="/events">Events</a>
             <a className="nav-cta" href="#newsletter">
               Join EDGEWISE
@@ -363,7 +363,7 @@ export function BrianSite() {
           <a href="#speaking" onClick={closeMenu}>
             Speaking
           </a>
-          <a href="#ideas" onClick={closeMenu}>
+          <a href="/blog" onClick={closeMenu}>
             Blog
           </a>
           <a href="/events" onClick={closeMenu}>
@@ -506,42 +506,45 @@ export function BrianSite() {
               <article className="feature-book">
                 <div className="feature-cover-wrap">
                   <Image
-                    src="/the-last-voyage.jpg"
+                    src="/the-great-rift.jpg"
                     alt=""
                     width={1320}
-                    height={1980}
+                    height={2115}
                     sizes="(max-width: 900px) 70vw, 28vw"
                   />
                 </div>
                 <div className="feature-copy">
-                  <span className="kicker">Latest novel · Nautilus silver</span>
-                  <h3>The Last Voyage</h3>
+                  <span className="kicker">
+                    <Launch before="Coming November 2026" after="Out now" />
+                  </span>
+                  <Launch
+                    before={
+                      <span className="presale-note">Pre-sale available now</span>
+                    }
+                    after={null}
+                  />
+                  <h3>The Great Rift</h3>
                   <p>
-                    In 2056, a troubled, brilliant crew leaves a collapsing
-                    Earth for Mars—and must decide which human values deserve a
-                    future.
+                    The second novel in the Mars trilogy, a story about what we
+                    carry and what we leave behind.
                   </p>
                   <div className="retailer-links">
-                    <a
-                      href="https://bookshop.org/p/books/the-last-voyage-brian-mclaren/20243554"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      Bookshop <span>↗</span>
+                    <a href={greatRiftPresaleUrl} target="_blank" rel="noreferrer">
+                      Amazon <span>↗</span>
                     </a>
                     <a
-                      href="https://www.barnesandnoble.com/w/the-last-voyage-brian-mclaren/1143718471"
+                      href="https://www.barnesandnoble.com/w/the-great-rift-brian-d-mclaren/1149634824"
                       target="_blank"
                       rel="noreferrer"
                     >
                       Barnes &amp; Noble <span>↗</span>
                     </a>
                     <a
-                      href="https://www.amazon.com/dp/1399814141"
+                      href="https://bookshop.org/p/books/the-great-rift-brian-d-mclaren/21462f123b507d46"
                       target="_blank"
                       rel="noreferrer"
                     >
-                      Amazon <span>↗</span>
+                      Bookshop <span>↗</span>
                     </a>
                   </div>
                 </div>
@@ -551,52 +554,52 @@ export function BrianSite() {
                 <article className="next-card next-card-uncropped">
                   <a
                     className="next-card-cover-link"
-                    href={bookLinks["The Great Rift"]}
+                    href={bookLinks["The Last Voyage"]}
                     target="_blank"
                     rel="noreferrer"
-                    aria-label="Get The Great Rift on Bookshop.org"
+                    aria-label="Get The Last Voyage on Bookshop.org"
                   >
                     <Image
-                      src="/the-great-rift.jpg"
-                      alt="Cover of The Great Rift"
+                      src="/the-last-voyage.jpg"
+                      alt="Cover of The Last Voyage"
                       width={1320}
-                      height={2115}
+                      height={1980}
                       sizes="(max-width: 900px) 44vw, 16vw"
                     />
                   </a>
                   <div className="next-card-copy">
-                    <span className="kicker">
-                      <Launch before="Coming November 2026" after="Out now" />
-                    </span>
-                    <Launch
-                      before={
-                        <span className="presale-note">Pre-sale available now</span>
-                      }
-                      after={null}
-                    />
+                    <span className="kicker">Book one · Nautilus Book Awards Silver Winner</span>
                     <h3>
                       <a
                         className="next-card-title-link"
-                        href={bookLinks["The Great Rift"]}
+                        href={bookLinks["The Last Voyage"]}
                         target="_blank"
                         rel="noreferrer"
                       >
-                        The Great Rift <span aria-hidden="true">↗</span>
+                        The Last Voyage <span aria-hidden="true">↗</span>
                       </a>
                     </h3>
-                    <p>The second novel in the Mars trilogy.</p>
+                    <p>
+                      In 2056, a troubled, brilliant crew leaves a collapsing
+                      Earth for Mars—and must decide which human values deserve
+                      a future.
+                    </p>
                     <div className="retailer-links">
-                      <a href={bookLinks["The Great Rift"]} target="_blank" rel="noreferrer">
+                      <a href={bookLinks["The Last Voyage"]} target="_blank" rel="noreferrer">
                         Bookshop <span>↗</span>
                       </a>
                       <a
-                        href="https://www.barnesandnoble.com/w/the-great-rift-brian-d-mclaren/1149634824"
+                        href="https://www.barnesandnoble.com/w/the-last-voyage-brian-mclaren/1143718471"
                         target="_blank"
                         rel="noreferrer"
                       >
                         Barnes &amp; Noble <span>↗</span>
                       </a>
-                      <a href={greatRiftPresaleUrl} target="_blank" rel="noreferrer">
+                      <a
+                        href="https://www.amazon.com/dp/1399814141"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
                         Amazon <span>↗</span>
                       </a>
                     </div>
@@ -1243,7 +1246,7 @@ export function BrianSite() {
             <a href="#about">About</a>
             <a href="/books">Books</a>
             <a href="#speaking">Speaking</a>
-            <a href="#ideas">Blog</a>
+            <a href="/blog">Blog</a>
           </div>
           <div className="footer-column">
             <strong>Connect</strong>

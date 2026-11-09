@@ -1979,6 +1979,11 @@ img {
   margin: 0 0 1.5rem;
 }
 
+.archive-hero > p a {
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
 .archive-entry-body a {
   text-decoration: underline;
   text-underline-offset: 0.15em;
