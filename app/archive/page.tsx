@@ -44,8 +44,16 @@ export default function ArchivePage() {
       fetch("/archive/index.json").then((response) => response.json()),
       fetch("/archive/search-index.json").then((response) => response.json()),
       fetch("/archive/verified-media.json").then((response) => response.json()),
-    ]).then(([index, searchTerms, media]) => {
-      setArchive({ ...index, count: index.count + media.length, entries: [...media, ...index.entries] });
+      fetch("/api/blog-posts")
+        .then((response) => response.json())
+        .then((data) => data.entries ?? [])
+        .catch(() => []),
+    ]).then(([index, searchTerms, media, livePosts]) => {
+      setArchive({
+        ...index,
+        count: index.count + media.length + livePosts.length,
+        entries: [...livePosts, ...media, ...index.entries],
+      });
       setTerms(searchTerms);
     });
   }, []);

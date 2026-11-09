@@ -48,6 +48,29 @@ export async function ensureSchema() {
     env.DB.prepare(
       "CREATE INDEX IF NOT EXISTS speaking_inquiries_created_at_idx ON speaking_inquiries(created_at)",
     ),
+    env.DB.prepare(`
+      CREATE TABLE IF NOT EXISTS blog_posts (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        slug TEXT NOT NULL UNIQUE,
+        title TEXT NOT NULL,
+        excerpt TEXT NOT NULL DEFAULT '',
+        body TEXT NOT NULL,
+        published INTEGER NOT NULL DEFAULT 1,
+        published_at INTEGER NOT NULL,
+        updated_at INTEGER NOT NULL
+      )
+    `),
+    env.DB.prepare(
+      "CREATE INDEX IF NOT EXISTS blog_posts_published_at_idx ON blog_posts(published_at)",
+    ),
+    env.DB.prepare(`
+      CREATE TABLE IF NOT EXISTS blog_images (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        content_type TEXT NOT NULL,
+        data BLOB NOT NULL,
+        created_at INTEGER NOT NULL
+      )
+    `),
   ]);
 
   // Backfill columns for databases created before venue_or_city/link existed.
@@ -56,6 +79,10 @@ export async function ensureSchema() {
   // and safe to ignore.
   for (const column of [
     "ALTER TABLE newsletter_signups ADD COLUMN last_name TEXT NOT NULL DEFAULT ''",
+    "ALTER TABLE newsletter_signups ADD COLUMN utm_source TEXT NOT NULL DEFAULT ''",
+    "ALTER TABLE newsletter_signups ADD COLUMN utm_medium TEXT NOT NULL DEFAULT ''",
+    "ALTER TABLE newsletter_signups ADD COLUMN utm_campaign TEXT NOT NULL DEFAULT ''",
+    "ALTER TABLE newsletter_signups ADD COLUMN utm_content TEXT NOT NULL DEFAULT ''",
     "ALTER TABLE speaking_inquiries ADD COLUMN venue_or_city TEXT NOT NULL DEFAULT ''",
     "ALTER TABLE speaking_inquiries ADD COLUMN link TEXT NOT NULL DEFAULT ''",
   ]) {

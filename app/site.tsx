@@ -1,6 +1,9 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
+import { Launch } from "./launch";
+import { GREAT_RIFT_PROMO, GreatRiftBanner } from "./promo-banner";
+import { readAttribution } from "./rift/signup-form";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -20,7 +23,9 @@ const bookLinks = {
   "The Last Voyage":
     "https://bookshop.org/p/books/the-last-voyage-brian-mclaren/20243554",
   "The Great Rift":
-    "https://bookshop.org/p/books/the-great-rift-brian-d-mclaren/21462f123b507d46",
+    "https://www.amazon.com/dp/1399838784",
+  "The Beautiful Logic of a Meaningful Life":
+    "https://us.macmillan.com/books/9781250893413/thebeautifullogicofameaningfullife/",
   "The Seventh Story": "https://www.theseventhstory.com/paperback",
   "Naked Spirituality":
     "https://www.harpercollins.com/products/naked-spirituality-brian-d-mclaren",
@@ -158,6 +163,11 @@ const topics = [
 const recentWriting = [
   {
     date: "Sep. 2026",
+    title: "The Story So Far",
+    href: "/archive/the-story-so-far",
+  },
+  {
+    date: "Sep. 2026",
     title: "This Season on Learning How to See: The Bible",
     href: "/archive/this-season-on-learning-how-to-see-the-bible",
   },
@@ -176,8 +186,30 @@ const recentWriting = [
 const recentPodcasts = [{ date: "Sep. 2026", title: "Learning How to See: The Bible — Genesis 4", href: "https://cac.org/podcast/learning-how-to-see/?season=lhts-ten" }];
 const recentVideos = [{ date: "2025", title: "Interview with Brian D. McLaren: The Last Voyage", href: "https://www.youtube.com/watch?v=hnLNbGbFOLU" }];
 
+type LivePost = { slug: string; title: string; publishedAt: string };
+
 export function BrianSite() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [livePosts, setLivePosts] = useState<LivePost[]>([]);
+
+  useEffect(() => {
+    fetch("/api/blog-posts")
+      .then((response) => response.json())
+      .then((data) => setLivePosts(data.entries ?? []))
+      .catch(() => {});
+  }, []);
+
+  const displayedRecentPosts = [
+    ...livePosts.map((post) => ({
+      date: new Intl.DateTimeFormat("en", { month: "short", year: "numeric" }).format(
+        new Date(post.publishedAt),
+      ),
+      title: post.title,
+      href: `/archive/${post.slug}`,
+    })),
+    ...recentWriting,
+  ].slice(0, 4);
+
   const [selectedPath, setSelectedPath] = useState(pathways[0]);
   const [newsletterStatus, setNewsletterStatus] = useState("");
   const [inquiryStatus, setInquiryStatus] = useState("");
@@ -195,15 +227,34 @@ export function BrianSite() {
     const form = new FormData(newsletterForm);
 
     try {
-      const response = await fetch("/api/newsletter", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify(Object.fromEntries(form)),
-      });
+      const response = await fetch(
+        GREAT_RIFT_PROMO ? "/api/rift-signup" : "/api/newsletter",
+        {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify(
+            GREAT_RIFT_PROMO
+              ? {
+                  ...Object.fromEntries(form),
+                  ...readAttribution({
+                    source: "website",
+                    medium: "homepage-form",
+                    campaign: "great-rift",
+                    content: "edgewise-section",
+                  }),
+                }
+              : Object.fromEntries(form),
+          ),
+        },
+      );
       const result = (await response.json()) as { error?: string };
       if (!response.ok) throw new Error(result.error || "Please try again.");
       newsletterForm.reset();
-      setNewsletterStatus("You’re on the list. Welcome.");
+      setNewsletterStatus(
+        GREAT_RIFT_PROMO
+          ? "Welcome to EDGEWISE. Check your inbox for your first four chapters."
+          : "You’re on the list. Welcome.",
+      );
     } catch (error) {
       setNewsletterStatus(
         error instanceof Error ? error.message : "Please try again.",
@@ -247,10 +298,14 @@ export function BrianSite() {
         Skip to content
       </a>
 
-      <div className="announcement">
-        <span>Speaking update</span>
-        <a href="#speaking">2027 calendar opens September 2026 →</a>
-      </div>
+      {GREAT_RIFT_PROMO ? (
+        <GreatRiftBanner />
+      ) : (
+        <div className="announcement">
+          <span>Speaking update</span>
+          <a href="#speaking">2027 calendar opens September 2026 →</a>
+        </div>
+      )}
 
       <header className="site-header">
         <div className="nav-wrap">
@@ -268,7 +323,7 @@ export function BrianSite() {
               Store
             </a>
             <a href="#speaking">Speaking</a>
-            <a href="#ideas">Writing</a>
+            <a href="#ideas">Blog</a>
             <a href="/events">Events</a>
             <a className="nav-cta" href="#newsletter">
               Join EDGEWISE
@@ -309,7 +364,7 @@ export function BrianSite() {
             Speaking
           </a>
           <a href="#ideas" onClick={closeMenu}>
-            Writing
+            Blog
           </a>
           <a href="/events" onClick={closeMenu}>
             Events
@@ -499,7 +554,7 @@ export function BrianSite() {
                     href={bookLinks["The Great Rift"]}
                     target="_blank"
                     rel="noreferrer"
-                    aria-label="Pre-order The Great Rift on Bookshop.org"
+                    aria-label="Get The Great Rift on Bookshop.org"
                   >
                     <Image
                       src="/the-great-rift.jpg"
@@ -510,8 +565,15 @@ export function BrianSite() {
                     />
                   </a>
                   <div className="next-card-copy">
-                    <span className="kicker">Coming November 2026</span>
-                    <span className="presale-note">Pre-sale available now</span>
+                    <span className="kicker">
+                      <Launch before="Coming November 2026" after="Out now" />
+                    </span>
+                    <Launch
+                      before={
+                        <span className="presale-note">Pre-sale available now</span>
+                      }
+                      after={null}
+                    />
                     <h3>
                       <a
                         className="next-card-title-link"
@@ -541,7 +603,13 @@ export function BrianSite() {
                   </div>
                 </article>
                 <article className="next-card">
-                  <div className="next-card-cover-link">
+                  <a
+                    className="next-card-cover-link"
+                    href={bookLinks["The Beautiful Logic of a Meaningful Life"]}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="Pre-order The Beautiful Logic of a Meaningful Life"
+                  >
                     <Image
                       src="/the-beautiful-logic-of-a-meaningful-life.jpg"
                       alt="Cover of The Beautiful Logic of a Meaningful Life"
@@ -549,14 +617,34 @@ export function BrianSite() {
                       height={3075}
                       sizes="(max-width: 900px) 44vw, 16vw"
                     />
-                  </div>
+                  </a>
                   <div className="next-card-copy">
                     <span className="kicker">Nonfiction · 2027</span>
-                    <h3>The Beautiful Logic of a Meaningful Life</h3>
+                    <span className="presale-note">Pre-sale available now</span>
+                    <h3>
+                      <a
+                        className="next-card-title-link"
+                        href={bookLinks["The Beautiful Logic of a Meaningful Life"]}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        The Beautiful Logic of a Meaningful Life{" "}
+                        <span aria-hidden="true">↗</span>
+                      </a>
+                    </h3>
                     <p>
                       A new inquiry into the patterns that help a human life
                       become meaningful.
                     </p>
+                    <div className="retailer-links">
+                      <a
+                        href={bookLinks["The Beautiful Logic of a Meaningful Life"]}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        Pre-Order Now <span>↗</span>
+                      </a>
+                    </div>
                   </div>
                 </article>
               </div>
@@ -995,14 +1083,14 @@ export function BrianSite() {
             <div className="section-heading">
               <div>
                 <p className="eyebrow">Writing & ideas</p>
-                <h2 id="ideas-heading">Notes from the journey</h2>
+                <h2 id="ideas-heading">Notes from the Journey: Brian’s Blog</h2>
               </div>
             </div>
 
             <div className="ideas-grid">
               <div className="post-list ideas-media-list">
                 <h3>Recent posts</h3>
-                {recentWriting.map((post) => (
+                {displayedRecentPosts.map((post) => (
                   <a
                     className="post-row"
                     href={post.href}
@@ -1060,15 +1148,35 @@ export function BrianSite() {
         >
           <div className="section-inner newsletter-grid">
             <div className="newsletter-copy">
-              <p className="eyebrow">Stay in the conversation</p>
-              <h2 id="newsletter-heading">
-                A thoughtful outreach, only when there’s something to say
-              </h2>
-              <p>
-                Join EDGEWISE for updates on new writing, book news, events,
-                and a few useful things worth sharing—sent with care, never
-                clutter.
-              </p>
+              {GREAT_RIFT_PROMO ? (
+                <>
+                  <p className="eyebrow">Join EDGEWISE</p>
+                  <h2 id="newsletter-heading">
+                    Join EDGEWISE, and get the first four chapters of{" "}
+                    <em>The Great Rift</em> free
+                  </h2>
+                  <p>
+                    EDGEWISE is Brian’s occasional newsletter, sent only when
+                    there’s something worth saying. As a welcome gift, new
+                    subscribers also get the first four chapters of his new
+                    novel<Launch before=" (out November 3)" after="" /> and a short recap of{" "}
+                    <em>The Last Voyage</em>. Not a sci-fi reader? Just enjoy
+                    the newsletter.
+                  </p>
+                </>
+              ) : (
+                <>
+                  <p className="eyebrow">Stay in the conversation</p>
+                  <h2 id="newsletter-heading">
+                    A thoughtful outreach, only when there’s something to say
+                  </h2>
+                  <p>
+                    Join EDGEWISE for updates on new writing, book news, events,
+                    and a few useful things worth sharing—sent with care, never
+                    clutter.
+                  </p>
+                </>
+              )}
             </div>
 
             <form className="newsletter-wrap" onSubmit={submitNewsletter}>
@@ -1135,7 +1243,7 @@ export function BrianSite() {
             <a href="#about">About</a>
             <a href="/books">Books</a>
             <a href="#speaking">Speaking</a>
-            <a href="#ideas">Writing</a>
+            <a href="#ideas">Blog</a>
           </div>
           <div className="footer-column">
             <strong>Connect</strong>

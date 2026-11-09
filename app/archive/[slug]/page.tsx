@@ -14,6 +14,7 @@ type ArchiveEntry = {
   publishedAt: string;
   modifiedAt: string;
   body: string;
+  published?: boolean;
   taxonomy: {
     kind: string;
     topics: string[];
@@ -21,7 +22,10 @@ type ArchiveEntry = {
   };
 };
 
-const INLINE_LINK = /\[([^\]]+)\]\(([^)]+)\)/g;
+// Markdown links and bold, plus plain web addresses, with or without square
+// brackets, so Brian can paste a link and have it work.
+const INLINE_MARKUP =
+  /\[([^\]]+)\]\(([^)]+)\)|\*\*([^*]+)\*\*|\[(https?:\/\/[^\]\s]+)\]|(https?:\/\/[^\s<>[\]()]+)/g;
 const IMAGE_PARAGRAPH = /^!\[([^\]]*)\]\(([^)]+)\)$/;
 const LINKED_IMAGE_PARAGRAPH = /^\[!\[([^\]]*)\]\(([^)]+)\)\]\(([^)]+)\)$/;
 
@@ -31,23 +35,42 @@ function renderInlineLinks(text: string) {
   let match: RegExpExecArray | null;
   let key = 0;
 
-  INLINE_LINK.lastIndex = 0;
-  while ((match = INLINE_LINK.exec(text))) {
+  INLINE_MARKUP.lastIndex = 0;
+  while ((match = INLINE_MARKUP.exec(text))) {
     if (match.index > lastIndex) {
       nodes.push(text.slice(lastIndex, match.index));
     }
-    const [, label, href] = match;
-    nodes.push(
-      href.startsWith("/") ? (
-        <Link href={href} key={key++}>
-          {label}
-        </Link>
-      ) : (
-        <a href={href} target="_blank" rel="noreferrer" key={key++}>
-          {label}
-        </a>
-      ),
-    );
+    const [, label, href, bold, bracketedUrl, bareUrl] = match;
+    if (bold !== undefined) {
+      nodes.push(<strong key={key++}>{bold}</strong>);
+    } else if (bracketedUrl !== undefined) {
+      nodes.push(
+        <a href={bracketedUrl} target="_blank" rel="noreferrer" key={key++}>
+          {bracketedUrl}
+        </a>,
+      );
+    } else if (bareUrl !== undefined) {
+      const trailing = bareUrl.match(/[.,;:!?]+$/)?.[0] ?? "";
+      const url = trailing ? bareUrl.slice(0, -trailing.length) : bareUrl;
+      nodes.push(
+        <a href={url} target="_blank" rel="noreferrer" key={key++}>
+          {url}
+        </a>,
+      );
+      if (trailing) nodes.push(trailing);
+    } else {
+      nodes.push(
+        href.startsWith("/") ? (
+          <Link href={href} key={key++}>
+            {label}
+          </Link>
+        ) : (
+          <a href={href} target="_blank" rel="noreferrer" key={key++}>
+            {label}
+          </a>
+        ),
+      );
+    }
     lastIndex = match.index + match[0].length;
   }
   if (lastIndex < text.length) {
@@ -66,13 +89,19 @@ export default function ArchiveEntryPage() {
       .then((response) => response.json())
       .then((index: ArchiveIndex) => {
         const record = index.entries.find((item) => item.slug === params.slug);
-        if (!record) {
-          setMissing(true);
-          return null;
+        if (record) {
+          return fetch(`/archive/content/${record.id}.json`).then((response) =>
+            response.json(),
+          );
         }
-        return fetch(`/archive/content/${record.id}.json`).then((response) =>
-          response.json(),
-        );
+        // Not in the static WordPress import — check Brian's live posts.
+        return fetch(`/api/blog-posts/${params.slug}`).then((response) => {
+          if (!response.ok) {
+            setMissing(true);
+            return null;
+          }
+          return response.json();
+        });
       })
       .then((record) => record && setEntry(record));
   }, [params.slug]);
@@ -96,6 +125,11 @@ export default function ArchiveEntryPage() {
       <Link href="/archive" className="archive-back">
         ← Back to the archive
       </Link>
+      {entry.published === false ? (
+        <p className="archive-draft-banner">
+          Draft preview — this post isn’t published yet. Only you can see this page.
+        </p>
+      ) : null}
       <article>
         <p className="eyebrow">Archive entry</p>
         <time dateTime={entry.publishedAt}>

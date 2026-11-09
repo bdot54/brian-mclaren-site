@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Launch } from "../launch";
+import { GreatRiftBanner } from "../promo-banner";
 
 type InPersonEvent = {
   dates: string;
@@ -19,7 +21,7 @@ type MediaAppearance = {
 
 const inPersonEvents: InPersonEvent[] = [
   {
-    dates: "January 21–24, 2027",
+    dates: "January 22–24, 2027",
     title: "Southern Lights Conference",
     location: "St. Simons Island, Georgia",
     href: "https://southernlightsconference.com/",
@@ -31,10 +33,21 @@ const inPersonEvents: InPersonEvent[] = [
     href: "https://montreat.org/events",
   },
   {
-    dates: "July 18–31, 2027",
-    title: "Ring Lake Ranch",
+    dates: "May 19, 2027",
+    title: "Episcopal Diocese of Washington Convention",
+    location: "Washington, DC",
+  },
+  {
+    dates: "July 18–24, 2027",
+    title: "Ring Lake Ranch: The Beautiful Logic of a Meaningful Life",
     location: "Dubois, Wyoming",
-    href: "https://ringlake.org/",
+    href: "https://ringlake.org/programs-2027/",
+  },
+  {
+    dates: "July 25–31, 2027",
+    title: "Ring Lake Ranch: Engaged Christian Contemplation",
+    location: "Dubois, Wyoming (the two weeks are registered separately, and you can join either or both)",
+    href: "https://ringlake.org/programs-2027/",
   },
   {
     dates: "September 2–5, 2027",
@@ -43,20 +56,33 @@ const inPersonEvents: InPersonEvent[] = [
     href: "https://wildgoosefestival.org/",
   },
   {
-    dates: "October 13–17, 2027",
+    dates: "October 2027",
     title: "Theology Beer Camp",
-    location: "Montreat, North Carolina",
+    location: "Dates and location TBA",
+    href: "https://theologybeer.camp/",
+  },
+  {
+    dates: "October 2027",
+    title: "Convergence Music Project",
+    location: "Dates and location TBA",
+    href: "https://convergencemp.com/",
   },
   {
     dates: "October 27–31, 2027",
-    title: "Center for Action and Contemplation Event",
+    title: "Center for Action and Contemplation THRESHOLDS Event",
     location: "Albuquerque, New Mexico",
   },
   {
+    dates: "November 7–17, 2027",
+    title: "Caravan: Egypt, Cradle of Civilization Journey",
+    location: "Egypt",
+    href: "https://www.oncaravan.org/tours/egypt",
+  },
+  {
     dates: "TBA",
-    title: "Additional dates open",
+    title: "Schedule nearly full",
     location:
-      "Brian has a few remaining dates open for public appearances, especially for youth and young adult gatherings.",
+      "Brian may add one or two large events in 2027, and he is accepting invitations for 2028.",
     href: "/#speaking",
     linkText: "To inquire, click here →",
   },
@@ -103,6 +129,8 @@ export default function EventsPage() {
         Skip to content
       </a>
 
+      <GreatRiftBanner />
+
       <header className="site-header">
         <div className="nav-wrap">
           <Link className="brand" href="/" aria-label="Brian D. McLaren home">
@@ -123,7 +151,7 @@ export default function EventsPage() {
               Store
             </a>
             <Link href="/#speaking">Speaking</Link>
-            <Link href="/#ideas">Writing</Link>
+            <Link href="/#ideas">Blog</Link>
             <Link href="/events" aria-current="page">
               Events
             </Link>
@@ -262,7 +290,10 @@ export default function EventsPage() {
                 <ul className="podcast-releases">
                   <li>
                     <strong>The Great Rift</strong>
-                    <span>Sci-fi novel · releases November 3, 2026</span>
+                    <span>
+                      Sci-fi novel ·{" "}
+                      <Launch before="releases" after="released" /> November 3, 2026
+                    </span>
                   </li>
                   <li>
                     <strong>The Beautiful Logic of a Meaningful Life</strong>
@@ -347,7 +378,7 @@ export default function EventsPage() {
             <Link href="/">Home</Link>
             <Link href="/#about">About</Link>
             <Link href="/books">Books</Link>
-            <Link href="/#ideas">Writing</Link>
+            <Link href="/#ideas">Blog</Link>
           </div>
           <div className="footer-column">
             <strong>Events</strong>

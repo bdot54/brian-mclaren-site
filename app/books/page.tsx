@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { GreatRiftBanner } from "../promo-banner";
 
 type CatalogueBook = {
   title: string;
@@ -18,7 +19,7 @@ const featuredBooks = [
     image: "/the-great-rift.jpg",
     alt: "Cover of The Great Rift",
     copy: "The second novel in the Mars trilogy—a story of survival, belonging, and the difficult work of beginning again.",
-    href: "https://bookshop.org/p/books/the-great-rift-brian-d-mclaren/21462f123b507d46",
+    href: "https://www.amazon.com/dp/1399838784",
   },
   {
     title: "The Last Voyage",
@@ -73,7 +74,7 @@ const fiction: CatalogueBook[] = [
     year: "2026",
     detail: "The Last Voyage trilogy · Book two · Forthcoming",
     image: "/the-great-rift.jpg",
-    href: "https://bookshop.org/p/books/the-great-rift-brian-d-mclaren/21462f123b507d46",
+    href: "https://www.amazon.com/dp/1399838784",
   },
   {
     title: "The Last Voyage",
@@ -377,6 +378,8 @@ export default function BooksPage() {
         Skip to content
       </a>
 
+      <GreatRiftBanner />
+
       <div className="announcement library-announcement">
         <span>The complete library</span>
         <a href="#catalogue">Thirty books and collaborations →</a>
@@ -398,7 +401,7 @@ export default function BooksPage() {
               Books
             </Link>
             <Link href="/#speaking">Speaking</Link>
-            <Link href="/#ideas">Writing</Link>
+            <Link href="/#ideas">Blog</Link>
             <Link href="/events">Events</Link>
             <Link className="nav-cta" href="/#newsletter">
               Join EDGEWISE
@@ -565,7 +568,7 @@ export default function BooksPage() {
             <Link href="/">Home</Link>
             <Link href="/#about">About</Link>
             <Link href="/books">Books</Link>
-            <Link href="/#ideas">Writing</Link>
+            <Link href="/#ideas">Blog</Link>
           </div>
           <div className="footer-column">
             <strong>Find your next book</strong>

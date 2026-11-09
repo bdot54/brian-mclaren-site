@@ -144,7 +144,7 @@ async function sendAutoResponse(inquiry: Inquiry) {
   const text = [
     "Thank you so much for your interest in connecting with Brian.",
     "",
-    "We've received your inquiry and it's being reviewed. We expect to get back to you by mid-October, or soon after.",
+    "We've received your inquiry and it's being reviewed. We expect to get back to you within 3 weeks of your submission.",
     "",
     "We're grateful for your patience.",
     "",
@@ -158,7 +158,7 @@ async function sendAutoResponse(inquiry: Inquiry) {
 
   const html = `
     <p>Thank you so much for your interest in connecting with Brian.</p>
-    <p>We've received your inquiry and it's being reviewed. We expect to get back to you by mid-October, or soon after.</p>
+    <p>We've received your inquiry and it's being reviewed. We expect to get back to you within 3 weeks of your submission.</p>
     <p>We're grateful for your patience.</p>
     <p>With gratitude,<br>Brian D. McLaren's Team</p>
     <hr>
